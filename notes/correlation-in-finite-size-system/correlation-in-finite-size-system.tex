@@ -24,12 +24,25 @@
 \usepackage{dsfont}
 \usepackage{qcircuit} % quantum circuit
 
+\newtheorem{theorem}{Theorem}[section]
+
+\hypersetup{
+    colorlinks=true,
+    linkcolor=blue,
+    filecolor=magenta,      
+    urlcolor=blue,
+    pdftitle={Overleaf Example},
+    pdfpagemode=FullScreen,
+    }
+\usepackage[numbers,sort&compress]{natbib}
+
 \newcommand{\vac}{\mrm{vac}}
 \newcommand{\Bra}[1]{\left\langle #1 \right|}
 \newcommand{\Ket}[1]{\left| #1 \right\rangle}
 \newcommand{\bra}[1]{\langle #1 |}
 \newcommand{\ket}[1]{| #1 \rangle}
-\newcommand{\anglelr}[1]{\left\langle #1 \right\rangle}
+\newcommand{\anglelr}[1]{\langle #1 \rangle}
+\newcommand{\Anglelr}[1]{\left\langle #1 \right\rangle}
 \newcommand{\braket}[2]{\langle #1 | #2 \rangle}
 \newcommand{\Bbraket}[2]{\left\langle #1 \right|\left. #2 \right\rangle}
 \newcommand{\dif}[1]{\frac{\mathrm{d}}{\mathrm{d}#1}}
@@ -78,7 +91,7 @@
 \section{Foundations}
 
 \subsection{Correlation Functions}
-As mentioned in our work, at the ground state, the multi-spin correlation function of the Kitaev model is finite if and only if it can be written in the form of a string. Therefore, we only need to discuss the following form of the correlation function
+As mentioned in our work~\cite{wang2026exactorganizationdensitymatrices}, at the ground state, the multi-spin correlation function of the Kitaev model is finite if and only if it can be written in the form of a string. Therefore, we only need to discuss the following form of the correlation function
 \[
 \anglelr{
     \prod_{\anglelr{ij}\in\mathfrak{D}}
@@ -120,11 +133,358 @@ According to the two requirements, \textbf{the smallest possible topologically n
     (a)\includegraphics[height=0.2\textheight]{figures/minimal-system.pdf}
     \hspace{1cm}
     (b)\includegraphics[height=0.2\textheight]{figures/minimal-system_brick-wall.pdf}
-    \caption{(a) The smallest topologically non-trivial system consists of 8 unit cells, which is equivalent to 16 spins. The two vectors that define the periodic boundary condition are $\hat{\bo{p}}_1 = 2\hat{\bo{a}}_1$ and $\hat{\bo{p}}_2 = 4\hat{\bo{a}}_2 - 2\hat{\bo{a}}_1$, respectively. (b) For numerical simplicity, the honeycomb lattice is rearranged into a brick-wall geometry, and the spins are relabeled according to their Euclidean coordinates in the lattice.}
-    \label{fig:placeholder}
+    \caption{(a) The smallest topologically non-trivial system consists of 8 unit cells, which is equivalent to 16 spins. The two vectors that define the periodic boundary condition are $\hat{\bo{p}}_1 = 2\hat{\bo{a}}_1$ and $\hat{\bo{p}}_2 = 4\hat{\bo{a}}_2$, respectively. (b) For numerical simplicity, the honeycomb lattice is rearranged into a brick-wall geometry, and the spins are relabeled according to their Euclidean coordinates in the lattice. In both figures, red dots indicate identical lattice sites.}
+    \label{fig:lattice}
 \end{figure}
 \section{Finite-Size Correlation}
-We only have to focus on the two-point correlation functions. Suppose that the system has a periodic boundary condition, for which the 
+We only have to focus on the two-point correlation functions. Here we set that the system satisfies the \textbf{periodic boundary condition}, which is characterized by two independent vectors, $\hat{\bo{p}}_1 = 2\hat{\bo{a}}_1$ and $\hat{\bo{p}}_2 = 4\hat{\bo{a}}_2$, as illustrated in Fig.\ref{fig:lattice}.a. The geometry adopted here follows the one illustrated in Ref.~\cite{Pedrocchi-Chesi-Loss_2011}
+
+\subsection{Momentum States in Finite Systems}
+For slave fermions in the parton construction, the boundary condition of the system could be periodic (PBC) or anti-periodic (APBC), depending on which topological sector we choose~\cite{Kou-Levin-Wen_2008}. Here, we only consider the PBC in both the horizontal and vertical directions. 
+\begin{equation}\label{eq:PBC}
+    f_{\sigma\mu\bo{x}} = f_{\sigma\mu,(\bo{x} + \hat{\bo{p}}_1)} = f_{\sigma\mu,(\bo{x} + \hat{\bo{p}}_2)}
+\end{equation}
+To determine the allowed momentum states, we first Fourier transform the fermions as follows
+\[
+f_{\sigma\mu\bo{x}} = \frac{1}{\sqrt{N/2}}\sum_{\bo{k}} e^{i\bo{k}\cdot\bo{x}} f_{\sigma\mu\bo{k}}
+\]
+With this expression, Eq.~\eqref{eq:PBC} implies that the allowed momentum $\bo{k}$ must satisfy
+\begin{equation}\label{eq:condition-init}
+    \left\{
+    \begin{array}{lll}
+        \bo{k}\cdot\hat{\bo{p}}_1 = 2n_1\pi & ; & n_1 = 0,1,\cdots,N_h-1\\
+        \bo{k}\cdot\hat{\bo{p}}_2 = 2n_2\pi & ; & n_2 = 0,1,\cdots,N_v-1
+    \end{array}
+    \right.
+\end{equation}
+In our case illustrated in Fig.~\ref{fig:lattice}, $N_h=2$ and $N_v = 4$, representing the number of unit cells included in the system in the horizontal and vertical directions, respectively. Consider the unit vectors $\hat{\bo{a}}_1 = \hat{\bo{e}}_x$ and $\hat{\bo{a}}_2 = \frac{1}{2}\hat{\bo{e}}_x + \frac{\sqrt{3}}{2}\hat{\bo{e}}_y$. We can define the unit vectors in the momentum space as 
+\[
+\left\{
+\begin{aligned}
+& \hat{\bo{b}}_1 = 2\pi\hat{\bo{e}}_y \\
+& \hat{\bo{b}}_2 = \sqrt{3}\pi\hat{\bo{e}}_x - \pi\hat{\bo{e}}_y
+\end{aligned}
+\right.
+\]
+such that $\hat{\bo{a}}_i\cdot\hat{\bo{b}}_j = 2\pi \delta_{ij}$. With these basis vectors, the allowed momentum states are
+\begin{equation}\label{eq:allowed-momentum}
+    \bo{k} = \frac{n_1}{2}\hat{\bo{b}}_1 + \frac{n_2}{4}\hat{\bo{b}}_2 \quad ; \quad n_1=0,1 \quad,\quad n_2=0,1,2,3
+\end{equation}
+
+
+\subsection{Two-Points Correlation Functions}
+The correlation functions can be calculated more easily in the normal fermion language. As defined in the appendix, the $c$-Majorana fermions can be written in terms of $\gamma$-fermions,
+\[
+\left\{
+\begin{aligned}
+& c_{\bo{x}A} =  \gamma^\dagger_{\bo{x}} + \gamma_{\bo{x}} = \frac{1}{\sqrt{N/2}}\sum_{\bo{k}}\lr{\gamma^\dagger_k e^{-ik\bo{x}} + \gamma_{\bo{k}} e^{ik\bo{x}}} \\
+& c_{\bo{x}B} = i\lr{\gamma^\dagger_{\bo{x}} - \gamma_{\bo{x}}} = \frac{i}{\sqrt{N/2}}\sum_{\bo{k}}\lr{\gamma^\dagger_k e^{-ik\bo{x}} - \gamma_{\bo{k}} e^{ik\bo{x}}}
+\end{aligned}
+\right.
+\]
+And the ground state is 
+\[
+\ket{\psi} = A\exp\lr{\sum_{k\in\mrm{HBZ}}g_k\gamma^\dagger_k\gamma^\dagger_{-k}}
+\]
+where 
+\[
+A = \prod_{k\in\mrm{HBZ}}\lr{1 + \abs{g_k}^2}^{-1/2}
+\]
+is the normalization constant. Similar to Numbu-Gor'kov Green's function, there are two types of fermion pairing, $AA(BB)$ and $AB$. Both types of correlation functions can be simplified to the problem of solving the $\gamma$-fermion correlation function as we will see later. The two $\gamma$-fermion correlation functions we have to know are $\anglelr{\gamma_{\bo{k}}\gamma_{k'}}$ and $\anglelr{\gamma^\dagger_k\gamma_{k'}}$. Their analytical forms are given as follows
+\[
+\left\{
+\begin{aligned}
+& \anglelr{\gamma^\dagger_k \gamma_{k'}} = \frac{\abs{g_k}^2}{1+\abs{g_k}^2}\delta_{kk'} = v_k^2\delta_{kk'} = \frac{1}{2}\lr{1-\frac{R_{\bo{k}}}{\abs{s_{\bo{k}}}}}\delta_{kk'}\\
+& \anglelr{\gamma_{\bo{k}}\gamma_{k'}} = \frac{g_k}{1+\abs{g_k}^2}\delta_{k,-k'} = i\mrm{sgn}\lr{I_k}u_kv_k\delta_{k,-k'} = i\frac{I_k}{2\abs{s_{\bo{k}}}}\delta_{k,-k'}
+\end{aligned}
+\right.
+\]
+and the fermionic commutation relations can give other two types of correlation functions
+\[
+\left\{
+\begin{aligned}
+& \anglelr{\gamma_{\bo{k}}\gamma_{k'}^\dagger} = \delta_{kk'} - \anglelr{\gamma^\dagger_{k'}\gamma_{\bo{k}}} = u^2_k\delta_{kk'} = \frac{1}{2}\lr{1+\frac{R_{\bo{k}}}{\abs{s_{\bo{k}}}}}\delta_{kk'} \\
+& \anglelr{\gamma_{\bo{k}}^\dagger\gamma_{k'}^\dagger} = \anglelr{\gamma_{k'}\gamma_{\bo{k}}}^* = -i\mrm{sgn}(I_{k'})u_{k'}v_{k'}\delta_{k',-k} = i\mrm{sgn}(I_{k})u_{k}v_{k}\delta_{k,-k'} = \anglelr{\gamma_{\bo{k}}\gamma_{k'}}
+\end{aligned}
+\right.
+\]
+
+
+
+With these relations, we can start to compute the $c$-Majorana correlation functions. For $AA$-pairings, the correlation function is,
+\begin{align*}
+  \anglelr{c_{\bo{x}A}c_{\bo{x}'A}} &= \frac{1}{N/2}\sum_{\bo{k}}\lr{ \anglelr{\gamma_{\bo{k}}\gamma_{-\bo{k}}} + \anglelr{\gamma_{-\bo{k}}^\dagger\gamma^\dagger_{k}} +
+  \anglelr{\gamma_{\bo{k}}\gamma_{k}^\dagger} + 
+  \anglelr{\gamma_{-\bo{k}}^\dagger\gamma_{-\bo{k}}}
+  }e^{i\bo{k}\cdot\lr{\bo{x}-\bo{x'}}} \\
+  &= \frac{1}{N/2}\sum_{\bo{k}}\lr{1-\frac{R_{\bo{k}}}{\abs{s_{\bo{k}}}}}e^{i\bo{k}\cdot\lr{\bo{x}'-\bo{x}}} \\
+  &= \frac{1}{N/2}\sum_{\bo{k}}\lr{1-\frac{R_{\bo{k}}}{\abs{s_{\bo{k}}}}}\cos\lr{\bo{k}\cdot\lr{\bo{x}'-\bo{x}}} \in \mathbb{R}
+\end{align*}
+The imaginary part is an odd function in the momentum space, hence it vanishes after the integration. However, this implies that the Majorana correlation function is a real number, which is impossible since
+\[
+\anglelr{c_ic_j}^* = \anglelr{c_jc_i} = -\anglelr{c_ic_j}
+\]
+which must be an imaginary number unless $i=j$. So we conclude that
+\begin{equation}\label{correlationAA.e}
+  \anglelr{c_{\bo{x}A}c_{\bo{x'}A}} = \anglelr{c_{\bo{x}B}c_{\bo{x'}B}} = \delta_{\bo{x}\bo{x'}}
+\end{equation}
+
+
+As for $AB$-pairings, a similar calculation gives
+\begin{align*}
+  \anglelr{c_{\bo{x}A}c_{\bo{x}'B}} &= \frac{i}{N/2}\sum_{\bo{k}}\lr{ \anglelr{-\gamma_{\bo{k}}\gamma_{-\bo{k}}} + \anglelr{\gamma_{-\bo{k}}^\dagger\gamma^\dagger_{k}} +
+  \anglelr{\gamma_{\bo{k}}\gamma_{k}^\dagger} - 
+  \anglelr{\gamma_{-\bo{k}}^\dagger\gamma_{-\bo{k}}}
+  }e^{i\bo{k}\cdot\lr{\bo{x}-\bo{x'}}} \\
+  &= \frac{i}{N/2}\sum_{\bo{k}}\lr{\frac{R_{\bo{k}}}{\abs{s_{\bo{k}}}} - i\frac{I_k}{\abs{s_{\bo{k}}}}}e^{i\bo{k}\cdot\lr{\bo{x}'-\bo{x}}} = \frac{i}{N/2}\sum_{\bo{k}}\frac{s^*_{\bo{k}}}{\abs{s_{\bo{k}}}}e^{i\bo{k}\cdot\lr{\bo{x}'-\bo{x}}} 
+\end{align*}
+This result is pure imaginary, and can be further simplified,
+\begin{equation}\label{correlationAB.e}
+  \anglelr{c_{\bo{x}A}c_{\bo{x}'B}} = \frac{i}{N/2}\sum_{\bo{k}}\cos\lrm{\bo{k}\cdot\lr{\bo{x}'-\bo{x}} - \theta_{\bo{k}}} 
+  = 
+  \frac{i}{N/2}
+  \sum_{\bo{k}}
+  \frac{1}{\abs{s_{\bo{k}}}}\lrm{R_{\bo{k}} \cos\lr{\bo{k} \cdot \delta\bo{x}} + I_{\bo{k}}\sin\lr{\bo{k}\cdot\delta\bo{x}} }
+\end{equation}
+where $s_{\bo{k}} = \abs{s_{\bo{k}}}e^{i\theta_{\bo{k}}}$. Notice that the above formulation is general and can be used directly in the case of finite systems. 
+
+\subsection{String Correlation Functions}
+
+
+
+\appendix
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+
+\section{Exactly Solving for the Ground State}
+According to equation (29) of Ref.~\cite{Kitaev_2006}, we can diagonalize the Kitaev Hamiltonian in the momentum space if the gauge is fixed to be $u_{ij} = +1\forall\; (ij)$, 
+\[\hat{H} = \sum_{\bo{k}}\psi^\dagger_{k}U(k)\psi_{k} = \frac{1}{2}\sum_{\bo{k}}\lrm{is_{\bo{k}}d_{k,A}^\dagger d_{k,B} - is_{\bo{k}}^*d_{k,B}^\dagger d_{k,A}}\]
+where
+\[\psi_k \equiv \frac{1}{\sqrt{2N}}\sum_{\mu}e^{-ik\cdot r_\mu}\begin{pmatrix}
+                                                             c_{\mu,A} \\
+                                                             c_{\mu,B}
+                                                           \end{pmatrix} = \begin{pmatrix}
+                                                                             d_{k,A} \\
+                                                                             d_{k,B}
+                                                                           \end{pmatrix}\]
+\[U(k) = \frac{1}{2}\begin{pmatrix}
+                      0 & is_{\bo{k}} \\
+                      -is_{\bo{k}}^* & 0 
+                    \end{pmatrix} \quad , \quad s_{\bo{k}} = 2\lr{J_xe^{ik\cdot \lr{\bo{a}_2 - \bo{a}_1}} + J_ye^{ik\cdot \bo{a}_2} + J_z}\]
+Note that the index $\mu$ above is the Bravais lattice point, and $A$,$B$ represent the sublattice. If we further define a normal fermion operator, 
+\begin{equation}\label{gamm def.e}
+  \gamma_\mu \equiv \frac{1}{2}\lr{c_{\mu,A} + ic_{\mu,B}}
+\end{equation}
+ then its Fourier transform would be 
+\[\gamma_{k} = \frac{1}{\sqrt{2N}}\sum_{\mu}\gamma_{\mu}e^{-ik\cdot r_\mu} = \frac{1}{2}\lr{d_{k,A} + id_{k,B}}\]
+In this way, the operator $d$ can be expressed in terms of $\gamma$ fermion,
+\[
+\left\{
+\begin{aligned}
+& d_{k,A} = \gamma_{-\bo{k}}^\dagger + \gamma_{k} \\
+& d_{k,B} = i\lr{\gamma_{-\bo{k}}^\dagger - \gamma_{k}}
+\end{aligned}
+\right.
+\]
+Using the $\gamma$ operators to rewrite the Hamiltonian gives
+\[\hat{H} = \sum_{\bo{k}}\lrm{R_\bo{k}\cdot\lr{\gamma_{\bo{k}}^\dagger \gamma_{\bo{k}} - \gamma_{-\bo{k}}\gamma_{-\bo{k}}^\dagger} - iI_\bo{k}\cdot\lr{\gamma_{k}^\dagger \gamma_{-\bo{k}}^\dagger - \gamma_{-\bo{k}}\gamma_{k}}} = \sum_{\bo{k}}\phi_k^\dagger\bo{H}(k)\phi_k\]
+where $R_{\bo{k}} \equiv \mrm{Re}\lrg{s_{\bo{k}}}$ and $I_k \equiv \mrm{Im}\lrg{s_{\bo{k}}}$, and 
+\[\bo{H}(k) \equiv \begin{pmatrix}
+                R_{\bo{k}} & -iI_{\bo{k}} \\
+                iI_k & -R_{\bo{k}} 
+              \end{pmatrix} \quad,\quad \phi_k \equiv \begin{pmatrix}
+                                                        \gamma_{\bo{k}} \\
+                                                        \gamma_{-\bo{k}}^\dagger 
+                                                      \end{pmatrix}\]
+Since 
+\[\bo{H}(k)^2 = \lr{R_{\bo{k}}^2 + I_k^2}\mathds{1} = \abs{s_{\bo{k}}}^2\mathds{1}\]
+we can see that the eigenvalues are $\epsilon_{k} = \pm\abs{s_{\bo{k}}}$, which is consistent with Kitaev's result (equation (32) in Ref.\cite{KitaevOriginal}). To diagonalize the matrix $\bo{H}$ we have to apply the Bogoliubov transformation,
+\[U = \frac{1}{\sqrt{2\abs{s_{\bo{k}}}}}\begin{pmatrix}
+                                   \mrm{sgn}(I_k)\sqrt{\abs{s_{\bo{k}}}+R_{\bo{k}}} & -i\sqrt{\abs{s_{\bo{k}}}-R_{\bo{k}}} \\
+                                   i\sqrt{\abs{s_{\bo{k}}}-R_{\bo{k}}} & -\mrm{sgn}(I_k)\sqrt{\abs{s_{\bo{k}}}+R_{\bo{k}}} 
+                                 \end{pmatrix} = \begin{pmatrix}
+                                                   \mrm{sgn}(I_k) u_k & -iv_k \\
+                                                   i v_k &  -\mrm{sgn}(I_k) u_k
+                                                 \end{pmatrix} = v_k\sigma^y + \mrm{sgn}(I_k)u_k\sigma^z\]
+such that\footnote{Those parameters in the matrix $U$ have the following properties: \textbf{(i)} $u_k = u_{-k}$, \textbf{(ii)} $v_{k} = v_{-k}$, and  \textbf{(iii)} $\mrm{sgn}(I_{k}) = -\mrm{sgn}(I_{-k})$} 
+\[U\bo{H}U^\dagger = \begin{pmatrix}
+                       \abs{s_{\bo{k}}} & 0 \\
+                       0 & -\abs{s_{\bo{k}}} 
+                     \end{pmatrix}\]
+Therefore, the excitation that diagonalize the Hamiltonian is 
+\begin{equation}\label{Bogo.e}
+\begin{pmatrix}
+    a_k \\
+    a_{-k}^\dagger 
+  \end{pmatrix} = U\begin{pmatrix}
+                     \gamma_{\bo{k}} \\
+                     \gamma^\dagger_{-k} 
+                   \end{pmatrix} = \begin{pmatrix}
+                                     \mrm{sgn}(I_k) u_k\gamma_{\bo{k}} - iv_k\gamma^\dagger_{-k} \\
+                                     i v_k\gamma_{\bo{k}} - \mrm{sgn}(I_k) u_k\gamma^\dagger_{-k} 
+                                   \end{pmatrix}
+\end{equation}
+As a result, the Kitaev ground state is the vacuum state of the Bogoliubov fermion, i.e., $a_{k}\ket{M} = 0$, which means $\ket{M}$ can be written as a BCS ground state just as we met in the BCS theory. The ground state can be written as the coherent state\footnote{
+The coefficient $g_k$ can be represented in terms of $u_k$ and $v_k$. As I have mentioned, the BCS-like ground state is expected to be the vacuum state of $a_k$ fermions for all possible $k$, thus, we have
+\[
+\lr{\mrm{sgn}(I_k) u_k\gamma_{\bo{k}} - iv_k\gamma_{-\bo{k}}^\dagger}\prod_{k}\lr{\mathds{1} + g_k\gamma_{\bo{k}}^\dagger \gamma_{-\bo{k}}^\dagger}\ket{\vac_\gamma} = 0
+\]
+Based on this, we obtain that 
+\[\mrm{sgn}(I_k) u_kg_k - iv_k = 0\]
+therefore
+\begin{equation}\label{g_k solution.e}
+  g_k = \mrm{sgn}(I_k)i\frac{v_k}{u_k} = \mrm{sgn}(I_k) i\sqrt{\frac{\abs{s_{\bo{k}}} - R_{\bo{k}}}{\abs{s_{\bo{k}}} + R_{\bo{k}}}} = i\frac{\abs{s_{\bo{k}}} - R_{\bo{k}}}{I_k}
+\end{equation}
+} of the $\gamma$-fermion pair,
+\begin{align*}
+  \ket{M} &= A\lrm{g}\exp\lr{\sum_{\bo{k}}g_k \gamma^\dagger_k \gamma^\dagger_{-k}}\ket{\vac_\gamma}\\
+   &= A\lrm{g}\exp\lr{\sum_{\mu\nu}g_{\mu\nu} \gamma^\dagger_\mu \gamma^\dagger_{\nu}}\ket{\vac_\gamma}\\
+   &= A\lrm{g}\lrm{\mathds{1} + \sum_{\mu\nu}g_{\mu\nu} \gamma^\dagger_\mu \gamma^\dagger_{\nu} + \frac{1}{2!}\sum_{\mu\nu\kappa\lambda}g_{\mu\nu}g_{\kappa\lambda
+   } \gamma^\dagger_\mu \gamma^\dagger_{\nu}\gamma^\dagger_\kappa \gamma^\dagger_{\lambda} + \cdots}\ket{\vac_\gamma}
+\end{align*}
+where $\ket{\vac_\gamma}$ is the vacuum state of the $\gamma$-fermions, and $g_{\mu\nu} = \frac{1}{2N}\sum_{\bo{k}}g_ke^{-ik\cdot(r_\mu-r_\nu)}$. 
+
+\section{Sum Rules for Correlation Functions}
+
+\[
+\rho 
+= 
+\frac{1}{2^{N-N_p}}
+\mathcal{P}^{(p)}
+\sum_{[\mathfrak{D}]}
+\mathfrak{C}_{\mathfrak{D}}
+\Sigma_{\mathfrak{D}}
+\]
+\[
+\mathcal{P}^{(p)}
+=
+\lr{\frac{\mathds{1} + \tilde{W}_v}{2}}
+\lr{\frac{\mathds{1} + \tilde{W}_h}{2}}
+\prod_{p}\lr{\frac{\mathds{1} + W_p}{2}}
+\]
+
+\begin{align*}
+    \rho^2 
+    &= 
+    \frac{1}{2^{2N-2N_p}}
+    \mathcal{P}^{(p)}
+    \sum_{[\mathfrak{D}]}\sum_{[\mathfrak{D}']}
+    \mathfrak{C}_{\mathfrak{D}}
+    \mathfrak{C}_{\mathfrak{D}'}
+    \varphi(\mathfrak{D},\mathfrak{D}')
+    \Sigma_{\mathfrak{D}\ominus\mathfrak{D}'}\\
+    &=
+    \frac{1}{2^{2N-2N_p}}
+    \mathcal{P}^{(p)}
+    \sum_{[\mathfrak{D}]}\sum_{[\mathfrak{D}']}
+    \mathfrak{C}_{\mathfrak{D}}
+    \mathfrak{C}_{\mathfrak{D}'}
+    \frac{1}{2}
+    \lrm{
+    \varphi(\mathfrak{D},\mathfrak{D}')
+    +
+    \varphi(\mathfrak{D}',\mathfrak{D})
+    }
+    \Sigma_{\mathfrak{D}\ominus\mathfrak{D}'} \\
+    &=
+    \frac{1}{2^{2N-2N_p}}
+    \mathcal{P}^{(p)}
+    \sum_{[\mathfrak{D}]}\sum_{[\mathfrak{D}']}
+    \mathfrak{C}_{\mathfrak{D}}
+    \mathfrak{C}_{\mathfrak{D}'}
+    \vartheta(\mathfrak{D},\mathfrak{D}')
+    \Sigma_{\mathfrak{D}\ominus\mathfrak{D}'} \\
+    &= 
+    \frac{1}{2^{2N-2N_p}}
+    \mathcal{P}^{(p)}
+    \sum_{[\mathfrak{D}^c]}\sum_{[\mathfrak{D}']}
+    \mathfrak{C}_{\mathfrak{D}^c\ominus\mathfrak{D}'}
+    \mathfrak{C}_{\mathfrak{D}'}
+    \vartheta(\mathfrak{D}^c\ominus\mathfrak{D}',\mathfrak{D}')
+    \Sigma_{\mathfrak{D}^c} \\
+    &=
+    \frac{1}{2^{N-N_p}}
+    \mathcal{P}^{(p)}
+    \sum_{[\mathfrak{D}]}
+    \lr{
+        \frac{1}{2^{N-N_p}}
+        \sum_{[\mathfrak{D}']}
+        \mathfrak{C}_{\mathfrak{D}\ominus\mathfrak{D}'}
+        \mathfrak{C}_{\mathfrak{D}'}
+        \eta_{\mathfrak{D}'}
+        \vartheta(\mathfrak{D},\mathfrak{D}')
+    }
+    \Sigma_{\mathfrak{D}}
+\end{align*}
+
+\begin{equation}\label{eq:strong-condition}
+    \frac{1}{2^{N-N_p}}
+    \sum_{[\mathfrak{D}']}
+    \vartheta(\mathfrak{D},\mathfrak{D}')
+    \mathfrak{C}_{\mathfrak{D}\ominus\mathfrak{D}'}
+    \mathfrak{C}_{\mathfrak{D}'}
+    =
+    \mathfrak{C}_{\mathfrak{D}}
+\end{equation}
+\begin{equation}\label{eq:weak-condition}
+    \frac{1}{2^{N-N_p}}
+    \sum_{[\mathfrak{D}']}
+    \mathfrak{C}_{\mathfrak{D}'}^2
+    =
+    1
+\end{equation}
+
+notice that $\eta_{\mathfrak{D}}=1$ if $[\mathfrak{D}]\in \bo{G}$
+
+\[
+    \vartheta(\mathfrak{D},\mathfrak{D}') 
+    = 
+    \frac{1}{2}
+    \lrm{
+    1
+    +
+    \eta_{\mathfrak{D}}
+    \eta_{\mathfrak{D}'}
+    \eta_{\mathfrak{D}'\ominus\mathfrak{D}}
+    }\varphi(\mathfrak{D},\mathfrak{D}')
+    =
+    \vartheta(\mathfrak{D}',\mathfrak{D})
+    =
+    \text{$0$ or $\pm 1$}
+\]
+
+\[
+\varphi(\mathfrak{D}\ominus\mathfrak{D}',\mathfrak{D}') = \eta_{\mathfrak{D}}\eta_{\mathfrak{D}\ominus\mathfrak{D}'} \varphi(\mathfrak{D}',\mathfrak{D})
+=
+\eta_{\mathfrak{D}'} \varphi(\mathfrak{D},\mathfrak{D}')
+\]
+
+\[
+\vartheta(\mathfrak{D}\ominus\mathfrak{D}',\mathfrak{D}')
+=
+\frac{1}{2}
+\lrm{
+    1
+    +
+    \eta_{\mathfrak{D}\ominus\mathfrak{D}'}
+    \eta_{\mathfrak{D}'}
+    \eta_{\mathfrak{D}}
+}
+\varphi(\mathfrak{D}\ominus\mathfrak{D}',\mathfrak{D}') 
+= 
+\eta_{\mathfrak{D}'}
+\vartheta(\mathfrak{D},\mathfrak{D}')
+\]
+
+
+
+\section{blank}
+
+\bibliographystyle{my_apsrev4-2}
+\bibliography{ref}% Produces the bibliography via BibTeX.
+
+
 
 
 \end{document}
