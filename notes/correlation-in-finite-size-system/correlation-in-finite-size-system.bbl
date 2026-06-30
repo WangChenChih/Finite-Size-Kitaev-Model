@@ -1,0 +1,97 @@
+%apsrev4-2.bst 2019-01-14 (MD) hand-edited version of apsrev4-1.bst
+%Control: key (0)
+%Control: author (72) initials jnrlst
+%Control: editor formatted (1) identically to author
+%Control: production of article title (-1) disabled
+%Control: page (0) single
+%Control: year (1) truncated
+%Control: production of eprint (0) enabled
+\begin{thebibliography}{4}%
+\makeatletter
+\providecommand \@ifxundefined [1]{%
+ \@ifx{#1\undefined}
+}%
+\providecommand \@ifnum [1]{%
+ \ifnum #1\expandafter \@firstoftwo
+ \else \expandafter \@secondoftwo
+ \fi
+}%
+\providecommand \@ifx [1]{%
+ \ifx #1\expandafter \@firstoftwo
+ \else \expandafter \@secondoftwo
+ \fi
+}%
+\providecommand \natexlab [1]{#1}%
+\providecommand \enquote  [1]{``#1''}%
+\providecommand \bibnamefont  [1]{#1}%
+\providecommand \bibfnamefont [1]{#1}%
+\providecommand \citenamefont [1]{#1}%
+\providecommand \href@noop [0]{\@secondoftwo}%
+\providecommand \href [0]{\begingroup \@sanitize@url \@href}%
+\providecommand \@href[1]{\@@startlink{#1}\@@href}%
+\providecommand \@@href[1]{\endgroup#1\@@endlink}%
+\providecommand \@sanitize@url [0]{\catcode `\\12\catcode `\$12\catcode
+  `\&12\catcode `\#12\catcode `\^12\catcode `\_12\catcode `\%12\relax}%
+\providecommand \@@startlink[1]{}%
+\providecommand \@@endlink[0]{}%
+\providecommand \url  [0]{\begingroup\@sanitize@url \@url }%
+\providecommand \@url [1]{\endgroup\@href {#1}{\urlprefix }}%
+\providecommand \urlprefix  [0]{URL }%
+\providecommand \Eprint [0]{\href }%
+\providecommand \doibase [0]{https://doi.org/}%
+\providecommand \selectlanguage [0]{\@gobble}%
+\providecommand \bibinfo  [0]{\@secondoftwo}%
+\providecommand \bibfield  [0]{\@secondoftwo}%
+\providecommand \translation [1]{[#1]}%
+\providecommand \BibitemOpen [0]{}%
+\providecommand \bibitemStop [0]{}%
+\providecommand \bibitemNoStop [0]{.\EOS\space}%
+\providecommand \EOS [0]{\spacefactor3000\relax}%
+\providecommand \BibitemShut  [1]{\csname bibitem#1\endcsname}%
+\let\auto@bib@innerbib\@empty
+%</preamble>
+\bibitem [{\citenamefont {Wang}\ \emph {et~al.}(2026)\citenamefont {Wang},
+  \citenamefont {Huang},\ and\ \citenamefont
+  {Yip}}]{wang2026exactorganizationdensitymatrices}%
+  \BibitemOpen
+  \bibfield  {author} {\bibinfo {author} {\bibfnamefont {C.-C.}\ \bibnamefont
+  {Wang}}, \bibinfo {author} {\bibfnamefont {Y.-P.}\ \bibnamefont {Huang}},\
+  and\ \bibinfo {author} {\bibfnamefont {S.}~\bibnamefont {Yip}},\ }\href
+  {https://arxiv.org/abs/2605.18002} {\bibinfo {title} {\bibinfo {title} {Exact
+  Organization of Density Matrices and Entanglement Structure in the Kitaev
+  Spin Liquid}}} (\bibinfo {year} {2026}),\ \Eprint
+  {https://arxiv.org/abs/2605.18002} {arXiv:2605.18002 [cond-mat.str-el]}
+  \BibitemShut {NoStop}%
+\bibitem [{\citenamefont {Pedrocchi}\ \emph {et~al.}(2011)\citenamefont
+  {Pedrocchi}, \citenamefont {Chesi},\ and\ \citenamefont
+  {Loss}}]{Pedrocchi-Chesi-Loss_2011}%
+  \BibitemOpen
+  \bibfield  {author} {\bibinfo {author} {\bibfnamefont {F.~L.}\ \bibnamefont
+  {Pedrocchi}}, \bibinfo {author} {\bibfnamefont {S.}~\bibnamefont {Chesi}},\
+  and\ \bibinfo {author} {\bibfnamefont {D.}~\bibnamefont {Loss}},\ }\bibfield
+  {title} {\emph {\bibinfo {title} {\bibinfo {title} {Physical solutions of the
+  Kitaev honeycomb model}}},\ }\href
+  {https://doi.org/10.1103/PhysRevB.84.165414} {\bibfield  {journal} {\bibinfo
+  {journal} {Phys. Rev. B}\ }\textbf {\bibinfo {volume} {84}},\ \bibinfo
+  {pages} {165414} (\bibinfo {year} {2011})}\BibitemShut {NoStop}%
+\bibitem [{\citenamefont {Kou}\ \emph {et~al.}(2008)\citenamefont {Kou},
+  \citenamefont {Levin},\ and\ \citenamefont {Wen}}]{Kou-Levin-Wen_2008}%
+  \BibitemOpen
+  \bibfield  {author} {\bibinfo {author} {\bibfnamefont {S.-P.}\ \bibnamefont
+  {Kou}}, \bibinfo {author} {\bibfnamefont {M.}~\bibnamefont {Levin}},\ and\
+  \bibinfo {author} {\bibfnamefont {X.-G.}\ \bibnamefont {Wen}},\ }\bibfield
+  {title} {\emph {\bibinfo {title} {\bibinfo {title} {Mutual Chern-Simons
+  theory for ${Z}_{2}$ topological order}}},\ }\href
+  {https://doi.org/10.1103/PhysRevB.78.155134} {\bibfield  {journal} {\bibinfo
+  {journal} {Phys. Rev. B}\ }\textbf {\bibinfo {volume} {78}},\ \bibinfo
+  {pages} {155134} (\bibinfo {year} {2008})}\BibitemShut {NoStop}%
+\bibitem [{\citenamefont {Kitaev}(2006)}]{Kitaev_2006}%
+  \BibitemOpen
+  \bibfield  {author} {\bibinfo {author} {\bibfnamefont {A.}~\bibnamefont
+  {Kitaev}},\ }\bibfield  {title} {\emph {\bibinfo {title} {\bibinfo {title}
+  {Anyons in an exactly solved model and beyond}}},\ }\href
+  {https://doi.org/https://doi.org/10.1016/j.aop.2005.10.005} {\bibfield
+  {journal} {\bibinfo  {journal} {Annals of Physics}\ }\textbf {\bibinfo
+  {volume} {321}},\ \bibinfo {pages} {2} (\bibinfo {year} {2006})},\ \bibinfo
+  {note} {january Special Issue}\BibitemShut {NoStop}%
+\end{thebibliography}%
