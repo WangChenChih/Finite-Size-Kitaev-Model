@@ -24,6 +24,9 @@
 \usepackage{dsfont}
 \usepackage{qcircuit} % quantum circuit
 
+\usepackage{algorithm}
+\usepackage{algpseudocode}
+
 \newtheorem{theorem}{Theorem}[section]
 \theoremstyle{definition}
 \newtheorem{definition}{Definition}[section]
@@ -79,6 +82,8 @@
 \newcommand{\Tr}{\mrm{Tr}}
 \newcommand{\tr}{\mrm{tr}}
 \newcommand{\norm}[1]{\left\lVert#1\right\rVert}
+\newcommand{\tcor}[2]{\langle -ic_{#1}c_{#2} \rangle_M}
+
 \newcommand{\Qcirc}[1]{\begin{minipage}[h]{0.7cm}
 	\vspace{0pt}
 	\Qcircuit @C=1em @R=.7em {#1}
@@ -88,6 +93,8 @@
 \begin{document}
 \maketitle
 \renewcommand\qedsymbol{$\blacksquare$}
+
+
 
 %\fontsize{12pt}{18pt}\selectfont
 
@@ -100,7 +107,7 @@
 \subsection{Correlation Functions}
 As mentioned in our work~\cite{wang2026exactorganizationdensitymatrices}, at the ground state, the multi-spin correlation function of the Kitaev model is finite if and only if it can be written in the form of a string. Therefore, we only need to discuss the following form of the correlation function
 \[
-\anglelr{
+\Anglelr{
     \prod_{\anglelr{ij}\in\mathfrak{D}}
     \dimer{i}{j}
 }
@@ -111,14 +118,14 @@ This kind of correlation function can be exactly evaluated in the Majorana repre
 \]
 into the correlation function and taking the trivial gauge, we have
 \[
-\anglelr{
+\Anglelr{
     \prod_{\anglelr{ij}\in\mathfrak{D}}
     \dimer{i}{j}
 }
 =
-\anglelr{
+\Anglelr{
     \prod_{\anglelr{ij}\in\mathfrak{D}}
-    ic_jc_i
+    (-i) c_ic_j
 }_M
 \]
 
@@ -247,30 +254,241 @@ As for $AB$-pairings, a similar calculation gives
   }e^{i\bo{k}\cdot\lr{\bo{x}-\bo{x'}}} \\
   &= \frac{i}{N/2}\sum_{\bo{k}}\lr{\frac{R_{\bo{k}}}{\abs{s_{\bo{k}}}} - i\frac{I_k}{\abs{s_{\bo{k}}}}}e^{i\bo{k}\cdot\lr{\bo{x}'-\bo{x}}} = \frac{i}{N/2}\sum_{\bo{k}}\frac{s^*_{\bo{k}}}{\abs{s_{\bo{k}}}}e^{i\bo{k}\cdot\lr{\bo{x}'-\bo{x}}} 
 \end{align*}
-This result is pure imaginary, and can be further simplified,
-\begin{equation}\label{correlationAB.e}
-  \anglelr{c_{\bo{x}A}c_{\bo{x}'B}} = \frac{i}{N/2}\sum_{\bo{k}}\cos\lrm{\bo{k}\cdot\lr{\bo{x}'-\bo{x}} - \theta_{\bo{k}}} 
+This result is purely imaginary, and can be further simplified,
+\begin{equation}\label{eq:correlationAB}
+  \anglelr{-ic_{\bo{x}A}c_{\bo{x}'B}} 
   = 
-  \frac{i}{N/2}
+  \frac{1}{N/2}\sum_{\bo{k}}\cos\lrm{\bo{k}\cdot\lr{\bo{x}'-\bo{x}} - \theta_{\bo{k}}} 
+  = 
+  \frac{1}{N/2}
   \sum_{\bo{k}}
   \frac{1}{\abs{s_{\bo{k}}}}\lrm{R_{\bo{k}} \cos\lr{\bo{k} \cdot \delta\bo{x}} + I_{\bo{k}}\sin\lr{\bo{k}\cdot\delta\bo{x}} }
 \end{equation}
 where $s_{\bo{k}} = \abs{s_{\bo{k}}}e^{i\theta_{\bo{k}}}$. Notice that the above formulation is general and can be used directly in the case of finite systems. 
 
-According to the lattice geometry illustrated in Fig.~\ref{fig:lattice}.b, 
+\subsection{Two-Points Correlation Functions in a Finite-Size System}
+In the following discussions, we consider the lattice geometry illustrated in Fig.~\ref{fig:lattice}.c. In this situation, there are three methods for labeling the position of lattice sites. 
+\begin{itemize}
+    \item The first method is to assign a number to each lattice site one by one. The label is denoted by $n$ in this note.
+    
+    \item In the lattice geometry illustrated in Fig.~\ref{fig:lattice}.c, the lattice sites can be sorted into layers labeled by $l$, and the horizontal position of a lattice site in each layer is labeled by $s$, standing for \textit{site}. For example, the position of site number 7 is $(l,s) = (1,3)$, and the position of site number 12 is $(l,s) = (3,0)$. The integer $s$ can be further decomposed as
+    \[
+    s = 2 s_q + s_r
+    \]
+    where $s_q \in \mathbb{N}$ and $s_r = 0\vee 1$ is the remainder.
+
+    \item With the Bravais lattice site expressed as $\bo{x} = x\hat{\bo{a}}_1 + y\hat{\bo{a}}_2$, each lattice site corresponds to a unique pair $(\bo{x},\mu)$, where $\mu = 0,1$, with $0$ representing sublattice $B$ and $1$ representing $A$, respectively.
+
+    \item The following equations describe the relationships among the three labeling methods listed above.
+    \[
+    \left\{
+    \begin{aligned}
+        & n = s + lN_h \\
+        & \mu = n \mod{2}\\
+        & x = s_q + s_r \\
+        & y = l - s_r
+    \end{aligned}
+    \right.
+    \]
+\end{itemize}
+With this definition, the factor $\bo{k}\cdot\delta\bo{x}$ in Eq.~\eqref{eq:correlationAB} can be written as
+\[
+\bo{k}\cdot\delta\bo{x} = \frac{n_1}{2}\delta x + \frac{n_4}{4}\delta y
+\]
+where $n_1$ and $n_2$ are defined by the expression Eq.~\eqref{eq:allowed-momentum} of momentum states, and $\delta x$ and $\delta y$ are components of the position $\bo{x}$ represented in terms of lattice unit vectors $\bo{x} = \delta x \hat{\bo{a}}_1 + \delta y\hat{\bo{a}}_2$. Using this representation, the summation $\sum_{\bo{k}}$ in Eq.~\eqref{eq:correlationAB} can be written as $\sum_{n_1,n_2}$. The only difference is that the momentum is now represented in terms of integers $n_1$ and $n_2$.
+
+\section{String Operators}
+
+\subsection{Constructing String Operators}
+To define string operators, we have to define the \textbf{order} of multiplying the assembly of $\mathbb{Z}_2$ dimer operators to make each string operator uniquely defined.
+
+Given the fact that a class $[\mathfrak{D}]\in\bo{G}$ in the \textbf{good set} $\bo{G}$, in which $\mrm{EP}(\mathfrak{D})$ contains the same amounts of the type-$A$ and type-$B$ endpoints, 
 
 \[
-\left\{
-\begin{aligned}
-    & N = N_hN_v \\
-    & n = s + lN_h \\
-    & \mu = \\
-    & 
-\end{aligned}
-\right.
+\prod_{\anglelr{ij}\in\mathfrak{D}}
+    \dimer{i}{j}
+=
+\prod_{\mathcal{C} \in \mrm{St}(\mathfrak{D})}
+\lr{
+    \prod_{\anglelr{ij}\in\mathcal{C}}
+    \dimer{i}{j}
+}
+\]
+
+\begin{algorithm}[H]
+\caption{Sorting lattice sites into $A$ and $B$ sublattices}\label{alg:AB-sorting}
+
+    \begin{algorithmic}
+        %\State $\mathcal{N} \gets \lrg{0,1,2,\cdots ,N-1}$ \Comment{Label the lattice sites.}
+        
+        \Function{SublatId}{$n$}    \Comment{Define a function that identifies in which sublattice $\mu$ the site $n\in\mathcal{N}$ is.}
+            \State \Return $\mu$
+        \EndFunction
+
+        \State $\mrm{EP_A}(\mathfrak{D}) \gets \lrg{}$; $\mrm{EP_B}(\mathfrak{D}) \gets \lrg{}$ \Comment{The sets that contains type-$A$ and type-$B$ sites, respectively}
+
+        \For{$n \in \mathfrak{D}$}
+            \If{\Call{SublatId}{$n$} $=A$}
+                \State $\mrm{EP_A}(\mathfrak{D}) \gets \mrm{EP_A}(\mathfrak{D}) \cup \lrg{n}$
+            \ElsIf{\Call{SublatId}{$n$} $=B$}
+                \State $\mrm{EP_B}(\mathfrak{D}) \gets \mrm{EP_B}(\mathfrak{D}) \cup \lrg{n}$
+            \EndIf
+        \EndFor
+    \end{algorithmic}
+
+\end{algorithm}
+
+\begin{algorithm}[H]
+\caption{Generate $\mrm{St}(\mathfrak{D})$}\label{alg:St-generator}
+
+    \begin{algorithmic}
+        \State $\mrm{St}(\mathfrak{D}) \gets \lrg{}$
+
+        \For{$i=0$, $i \leq \abs{\mrm{EP}(\mathfrak{D})}/2$, $i$++}
+            \State $n_a \gets \mrm{EP_A}(\mathfrak{D})\lrm{i}$; $n_b \gets \mrm{EP_B}(\mathfrak{D})\lrm{i}$
+            \State $\mrm{St}(\mathfrak{D}) \gets \mrm{St}(\mathfrak{D}) \cup \lrg{(n_a,n_b)}$
+        \EndFor
+    \end{algorithmic}
+
+\end{algorithm}
+
+\begin{algorithm}[H]
+\caption{Dimer operators}
+    \begin{algorithmic}
+        \Require{$n$ and $n'$ must be nearest neighbor, and $\mu(n) = A$ by default}
+        \State $(l,s) \gets \mrm{Dic}(n)$; $(l',s') \gets \mrm{Dic}(n')$
+        \If{$l' = l - 1$}
+            \State $\mrm{dimer}(n,n') = \sigma^z_{n}\sigma^z_{n'}$
+        \ElsIf{$s' = s+1$}
+            \State $\mrm{dimer}(n,n') = \sigma^x_{n}\sigma^x_{n'}$
+        \ElsIf{$s' = s-1$}
+            \State $\mrm{dimer}(n,n') = \sigma^y_{n}\sigma^y_{n'}$
+        \EndIf
+    \end{algorithmic}
+\end{algorithm}
+
+\begin{algorithm}[H]
+\caption{Generate the string operator of a single string}
+    \begin{algorithmic}
+        \State $(l_a, s_a) \gets \mrm{Dic}(n_a)$; $(l_b, s_b) \gets \mrm{Dic}(n_b)$ \Comment{The function $\mrm{Dic}$ translates a lattice label $n$ into the layer-site representation}
+
+        \State $\Sigma_{\mathfrak{D}} \gets 1$ \Comment{Initialize the string operator}
+
+        \State $(l, s) \gets (l_a, s_a)$    \Comment{Initialize the moving point}
+
+        \While{$(l,s) \neq (l_b, s_b)$}
+            \If{$l_b = l_a$}
+                \If{$s_b > s_a$}
+                    \State $(l',s') \gets (l,s+1)$   
+                    
+                \ElsIf{$s_b < s_a$}
+                    \State $(l',s') \gets (l,s-1)$   
+                    
+                \EndIf
+            \ElsIf{$l_b > l_a$} \Comment{Move the moving point to the layer $l_b$ first, and then shift it to the right site $s_b$.}
+
+                \If{the current moving point is in $B$}
+                    \State $(l',s') \gets (l+1, s-1)$
+                \ElsIf{the current moving point is in $A$}
+                    \State $(l',s') \gets (l, s+1)$
+                \EndIf
+                
+            \ElsIf{$l_b < l_a$} \Comment{Move the moving point to the layer $l_b$ first, and then shift it to the right site $s_b$.}
+
+                \If{the current moving point is in $B$}
+                    \State $(l',s') \gets (l-1, s+1)$
+                \ElsIf{the current moving point is in $A$}
+                    \State $(l',s') \gets (l, s+1)$
+                \EndIf
+                
+            \EndIf
+            
+        \State $n \gets \mrm{Dic}^{-1}(l,s)$; $n' \gets \mrm{Dic}^{-1}(l',s')$
+        
+        \State $\Sigma_{\mathfrak{D}} \gets \Sigma_{\mathfrak{D}} \cdot \mrm{dimer}(n,n')$
+        
+        \State $(l,s) \gets (l',s')$ 
+        \EndWhile
+    \end{algorithmic}
+\end{algorithm}
+
+Notice that the periodic boundary condition requires
+\[
+    s + N_h = s \;,\; l + N_v = l
+\]
+Therefore, the function $\mrm{Dic}^{-1}$ must satisfy
+\[
+    \mrm{Dic}^{-1}(s+N_h,l) = \mrm{Dic}^{-1}(s,l+N_v) = \mrm{Dic}^{-1}(s,l)
 \]
 
 \subsection{String Correlation Functions}
+\[
+\prod_{\anglelr{ij}\in\mathfrak{D}}
+    \dimer{i}{j}
+=
+\prod_{\mathcal{C} \in \mrm{St}(\mathfrak{D})}
+\lr{
+    \prod_{\anglelr{ij}\in\mathcal{C}}
+    \dimer{i}{j}
+}
+\]
+We have required $\mathcal{C} \in \bo{G}$. That is to say, each string $\mathcal{C}$ connects a type-$A$ and a type-$B$ endpoint.
+\begin{align*}
+    \prod_{\anglelr{ij}\in\mathcal{C}}
+    \dimer{i}{j}
+    \to
+    \prod_{\anglelr{ij}\in\mathcal{C}}
+        (-i) c_ic_j 
+    &=
+    (-i)^{\abs{\mathcal{C}}} (-1)^{(\abs{\mathcal{C}} - 1)/2}c_{a_{\mathcal{C}}}c_{b_{\mathcal{C}}} \\
+    &=
+    -i
+    (-1)^{\abs{\mathcal{C}}(\abs{\mathcal{C}}+1)/2} (-1)^{(\abs{\mathcal{C}} + 1)/2}c_{a_{\mathcal{C}}}c_{b_{\mathcal{C}}} \\
+    &= -i (-1)^{(\abs{\mathcal{C}} + 1)^2/2} c_{a_{\mathcal{C}}}c_{b_{\mathcal{C}}}
+\end{align*}
+In the derivation, we have used the identity $i^{n} = (-i)^n = (-1)^{n(n-1)/2}$ if $n$ is an even integer. The sign factor $(-1)^{(\abs{\mathcal{C}}-1)/2}$ is due to reversing the direction of dimers to make them point from $B$ to $A$. Notice that in each dimer $\dimer{i}{j}$, the former index $i$ represents the lattice site in the $A$-sublattice, while the latter one $j$ stands for the $B$-sublattice, and the direction of the string $\mathcal{C}$ is always from its type-$A$ endpoint to the type-$B$ one. At the same time, because the two endpoints of each string are in different sublattices, considering the honeycomb lattice geometry, the length $\abs{\mathcal{C}}$ of each string $\mathcal{C}$ must be an odd number. With this property, the factor $(\abs{\mathcal{C}} + 1)^2/2$ that appears in the exponent of the sign factor must be a multiple of $4$, making the sign $(-1)^{(\abs{\mathcal{C}} + 1)^2/2}$ trivial. Therefore, we eventually obtain the correspondence between a string operator and its Majorana representation, which depends only on the endpoints $a_\mathcal{C}$ and $b_\mathcal{C}$ if $\mathcal{C}$ is a \textit{good} string
+\begin{equation}
+    \prod_{\anglelr{ij}\in\mathcal{C} \subset \bo{G}}
+    \dimer{i}{j} 
+    \to 
+    -i c_{a_{\mathcal{C}}}c_{b_{\mathcal{C}}}
+\end{equation}
+
+\begin{equation}
+    \prod_{\anglelr{ij}\in\mathfrak{D}}
+    \dimer{i}{j}
+    =
+    \prod_{\mathcal{C} \in \mrm{St}(\mathfrak{D})}
+    \lr{
+        \prod_{\anglelr{ij}\in\mathcal{C}}
+        \dimer{i}{j}
+    }
+    \to 
+    \prod_{\mathcal{C} \in \mrm{St}(\mathfrak{D})} 
+    \lr{-i c_{a_{\mathcal{C}}}c_{b_{\mathcal{C}}} }
+\end{equation}
+
+\begin{equation}\label{eq:multi-correlation}
+    \mathfrak{C}_{\mathfrak{D}}
+    =
+    \Anglelr{\prod_{\anglelr{ij}\in\mathfrak{D}}
+    \dimer{i}{j}}
+    \to
+    \Anglelr{
+    \prod_{\mathcal{C} \in \mrm{St}(\mathfrak{D})} 
+        \lr{-i c_{a_{\mathcal{C}}}c_{b_{\mathcal{C}}} }
+    }_M
+    =
+    \begin{vmatrix}
+        \tcor{a_1}{b_1} & \tcor{a_1}{b_2} & \tcor{a_1}{b_3} & \cdots \\
+        \tcor{a_2}{b_1} & \tcor{a_2}{b_2} & \tcor{a_2}{b_3} & \cdots \\
+        \tcor{a_3}{b_1} & \tcor{a_3}{b_2} & \tcor{a_3}{b_3} & \cdots \\
+        \vdots & \vdots & \vdots & \ddots
+    \end{vmatrix}
+\end{equation}
+
+
+\section{Plaquette Operators}
 
 
 
