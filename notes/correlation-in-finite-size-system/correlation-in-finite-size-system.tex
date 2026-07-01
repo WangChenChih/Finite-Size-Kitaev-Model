@@ -25,6 +25,12 @@
 \usepackage{qcircuit} % quantum circuit
 
 \newtheorem{theorem}{Theorem}[section]
+\theoremstyle{definition}
+\newtheorem{definition}{Definition}[section]
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{corollary}{Corollary}[theorem]
+\newtheorem{proposition}[theorem]{Proposition}
+
 
 \hypersetup{
     colorlinks=true,
@@ -81,6 +87,7 @@
 
 \begin{document}
 \maketitle
+\renewcommand\qedsymbol{$\blacksquare$}
 
 %\fontsize{12pt}{18pt}\selectfont
 
@@ -429,8 +436,8 @@ where $\ket{\vac_\gamma}$ is the vacuum state of the $\gamma$-fermions, and $g_{
 \end{equation}
 \begin{equation}\label{eq:weak-condition}
     \frac{1}{2^{N-N_p}}
-    \sum_{[\mathfrak{D}']}
-    \mathfrak{C}_{\mathfrak{D}'}^2
+    \sum_{[\mathfrak{D}]}
+    \mathfrak{C}_{\mathfrak{D}}^2
     =
     1
 \end{equation}
@@ -477,7 +484,65 @@ notice that $\eta_{\mathfrak{D}}=1$ if $[\mathfrak{D}]\in \bo{G}$
 \vartheta(\mathfrak{D},\mathfrak{D}')
 \]
 
-
+\begin{lemma}
+    If $[\mathfrak{D}]\in\bo{G}$, then the following identity holds
+    \[
+    \sum_{[\mathfrak{D}']\in\bo{G}}\eta_{\mathfrak{D}\ominus\mathfrak{D}'} 
+    = 
+    \delta_{[\mathfrak{D}],[\varnothing]}
+    \]
+\end{lemma}
+\begin{proof}
+    By definition, the factor $\eta_{\mathfrak{D}}$ can be expressed as $\eta_{\mathfrak{D}} = (-1)^{\Delta(\mathfrak{D})/2}$, where $\Delta(\mathfrak{D}) \equiv n_a(\mathfrak{D})-n_b(\mathfrak{D})$. 
+    \[
+    \Delta(\mathfrak{D}\ominus\mathfrak{D}') 
+    = 
+    \Delta(\mathfrak{D})
+    +
+    \Delta(\mathfrak{D}')
+    - n_a(\mathfrak{D}\cap\mathfrak{D}') 
+    + n_b(\mathfrak{D}\cap\mathfrak{D}') 
+    \]
+    \[
+    \eta_{\mathfrak{D}\ominus\mathfrak{D}'}
+    =
+    (-1)^{\Delta(\mathfrak{D}\ominus\mathfrak{D}')}
+    =
+    \eta_{\mathfrak{D}}\eta_{\mathfrak{D}'}
+    (-1)^{n_a(\mathfrak{D}\cap\mathfrak{D}') }(-1)^{n_b(\mathfrak{D}\cap\mathfrak{D}')}
+    =
+    (-1)^{n_a(\mathfrak{D}\cap\mathfrak{D}') }(-1)^{n_b(\mathfrak{D}\cap\mathfrak{D}')}
+    %(-1)^{ \abs{\mrm{EP}(\mathfrak{D}) \cap \mrm{EP}(\mathfrak{D}')} }
+    \]
+    \[
+    \sum_{[\mathfrak{D}']\in\bo{G}} \eta_{\mathfrak{D}\ominus\mathfrak{D}'}
+    =
+    \sum_{[\mathfrak{D}']\in\bo{G}}(-1)^{n_a(\mathfrak{D}\cap\mathfrak{D}') }(-1)^{n_b(\mathfrak{D}\cap\mathfrak{D}')}
+    \]
+\end{proof}
+\begin{lemma}
+    If $[\mathfrak{D}]\in\bo{G}$, then the following identity holds
+    \[
+    \sum_{[\mathfrak{D}']\in\bo{G}} \Sigma_{\mathfrak{D}'}\Sigma_{\mathfrak{D}}\Sigma_{\mathfrak{D}'} 
+    = 
+    \delta_{[\mathfrak{D}],[\varnothing]}
+    \mathds{1}
+    \]
+\end{lemma}
+\begin{proof}
+    According to the identity $\varphi(\mathfrak{D},\mathfrak{D}') = \eta_{\mathfrak{D}}\eta_{\mathfrak{D}'}\eta_{\mathfrak{D}\ominus\mathfrak{D}'}\varphi(\mathfrak{D}',\mathfrak{D})$, we have the commutation relation 
+    \[
+    \Sigma_{\mathfrak{D}}\Sigma_{\mathfrak{D}'} = \eta_{\mathfrak{D}\ominus\mathfrak{D}'} \Sigma_{\mathfrak{D}'}\Sigma_{\mathfrak{D}}
+    \]
+    In the above identity, we have already considered $[\mathfrak{D}],[\mathfrak{D}']\in\bo{G}$ in our case. With this relation, we could rewrite the summation in the equation we wanted to prove
+    \[
+    \sum_{[\mathfrak{D}']\in\bo{G}} \Sigma_{\mathfrak{D}'}\Sigma_{\mathfrak{D}}\Sigma_{\mathfrak{D}'}
+    =
+    \sum_{[\mathfrak{D}']\in\bo{G}} 
+    \eta_{\mathfrak{D}\ominus\mathfrak{D}'}
+    \Sigma_{\mathfrak{D}}
+    \]
+\end{proof}
 
 \section{blank}
 
