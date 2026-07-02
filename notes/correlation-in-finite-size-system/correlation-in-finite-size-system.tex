@@ -177,8 +177,8 @@ In our case illustrated in Fig.~\ref{fig:lattice}, $N_h=2$ and $N_v = 4$, repres
 \[
 \left\{
 \begin{aligned}
-& \hat{\bo{b}}_1 = 2\pi\hat{\bo{e}}_y \\
-& \hat{\bo{b}}_2 = \sqrt{3}\pi\hat{\bo{e}}_x - \pi\hat{\bo{e}}_y
+& \hat{\bo{b}}_1 =  2\pi\hat{\bo{e}}_x - \frac{2\pi}{\sqrt{3}}\hat{\bo{e}}_y\\
+& \hat{\bo{b}}_2 = \frac{4\pi}{\sqrt{3}}\hat{\bo{e}}_y
 \end{aligned}
 \right.
 \]
@@ -192,8 +192,8 @@ In general, if the relation between two representations $\bo{k} = k_x\hat{\bo{e}
 \begin{array}{ccc}
     \left\{
     \begin{aligned}
-        & k_x = \sqrt{3}\pi k_2 \\
-        & k_y = 2\pi k_1 - \pi k_2
+        & k_x = 2\pi k_1 \\
+        & k_y = \frac{2\pi}{\sqrt{3}}\lr{-k_1 + 2k_2}
     \end{aligned}
     \right.
     &  
@@ -201,8 +201,8 @@ In general, if the relation between two representations $\bo{k} = k_x\hat{\bo{e}
     &
     \left\{
     \begin{aligned}
-        & k_1 = \frac{1}{2\pi}\lr{\frac{1}{\sqrt{3}}k_x + k_y} \\
-        & k_2 = \frac{1}{\sqrt{3}\pi}k_x
+        & k_1 = \frac{1}{2\pi} k_x \\
+        & k_2 = \frac{1}{4\pi}\lr{k_x + \sqrt{3}k_y}
     \end{aligned}
     \right.
 \end{array}
@@ -267,25 +267,25 @@ Or, expressed in terms of reciprocal basis vectors $\bo{k} = k_1\hat{\bo{b}}_1 +
   &\abs{s_k} 
   = 
   2\lrm{
-      J_x^2+J_y^2+J_z^2 + 2J_xJ_y\cos\lr{\sqrt{3}\pi k_2} 
+      J_x^2+J_y^2+J_z^2 + 2J_xJ_y\cos\lr{2\pi k_1} 
       + 
-      2J_xJ_z\cos\lr{\sqrt{3}\pi k_1} 
+      2J_xJ_z\cos\lr{2\pi k_2} 
       + 
-      2J_yJ_z\cos\lr{\sqrt{3}\pi (-k_1 + k_2)}
+      2J_yJ_z\cos\lr{2\pi (k_1 - k_2)}
   }^{1/2} \\
   & R_k 
   = 2\lrm{
-      J_x\cos\lr{\sqrt{3}\pi k_1} 
+      J_x\cos\lr{2\pi k_2} 
       + 
-      J_y\cos\lr{\sqrt{3}\pi (-k_1 + k_2)} 
+      J_y\cos\lr{2\pi (k_1 - k_2)} 
       + 
       J_z
   }\\
   &I_k 
   = 2\lrm{
-      J_x\sin\lr{\sqrt{3}\pi k_1} 
+      J_x\sin\lr{2\pi k_2} 
       - 
-      J_y\sin\lr{\sqrt{3}\pi (-k_1 + k_2)}
+      J_y\sin\lr{2\pi (k_1 - k_2)}
   }
   \end{aligned}
   \right\}
