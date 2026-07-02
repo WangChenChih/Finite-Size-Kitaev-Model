@@ -187,6 +187,27 @@ such that $\hat{\bo{a}}_i\cdot\hat{\bo{b}}_j = 2\pi \delta_{ij}$. With these bas
     \bo{k} = \frac{n_1}{2}\hat{\bo{b}}_1 + \frac{n_2}{4}\hat{\bo{b}}_2 \quad ; \quad n_1=0,1 \quad,\quad n_2=0,1,2,3
 \end{equation}
 
+In general, if the relation between two representations $\bo{k} = k_x\hat{\bo{e}}_x + k_y\hat{\bo{e}}_y = k_1\hat{\bo{b}}_1 + k_2\hat{\bo{b}}_2$ is
+\[
+\begin{array}{ccc}
+    \left\{
+    \begin{aligned}
+        & k_x = \sqrt{3}\pi k_2 \\
+        & k_y = 2\pi k_1 - \pi k_2
+    \end{aligned}
+    \right.
+    &  
+    ,
+    &
+    \left\{
+    \begin{aligned}
+        & k_1 = \frac{1}{2\pi}\lr{\frac{1}{\sqrt{3}}k_x + k_y} \\
+        & k_2 = \frac{1}{\sqrt{3}\pi}k_x
+    \end{aligned}
+    \right.
+\end{array}
+\]
+
 
 \subsection{Two-Points Correlation Functions}
 The correlation functions can be calculated more easily in the normal fermion language. As defined in the appendix, the $c$-Majorana fermions can be written in terms of $\gamma$-fermions,
@@ -225,7 +246,51 @@ and the fermionic commutation relations can give other two types of correlation 
 \right.
 \]
 
-
+Here I list the explicit expression of $s_k$, $R_k$ and $I_k$ and other relevant quantities or functions. We start from 
+\[
+s_k = 2\lr{J_x e^{ik\cdot \hat{\bo{n}}_1} + J_y e^{ik\cdot \hat{\bo{n}}_2} + J_z}
+\]
+Then, if we express the momentum state in terms of $\bo{k} = k_x\hat{\bo{e}}_x + k_y\hat{\bo{e}}_2$, then
+\begin{equation}\label{eq:functions}
+  \left.
+  \begin{aligned}
+  &\abs{s_k} = 2\lrm{J_x^2+J_y^2+J_z^2 + 2J_xJ_y\cos\lr{k_x} + 2J_xJ_z\cos\lr{\frac{1}{2}k_x+\frac{\sqrt{3}}{2}k_y} + 2J_yJ_z\cos\lr{\frac{1}{2}k_x-\frac{\sqrt{3}}{2}k_y}}^{1/2} \\
+  & R_k = 2\lrm{J_x\cos\lr{\frac{1}{2}k_x+\frac{\sqrt{3}}{2}k_y} + J_y\cos\lr{\frac{1}{2}k_x-\frac{\sqrt{3}}{2}k_y} + J_z}\\
+  &I_k = 2\lrm{J_x\sin\lr{\frac{1}{2}k_x+\frac{\sqrt{3}}{2}k_y} - J_y\sin\lr{\frac{1}{2}k_x-\frac{\sqrt{3}}{2}k_y}}
+  \end{aligned}
+  \right\}
+\end{equation}
+Or, expressed in terms of reciprocal basis vectors $\bo{k} = k_1\hat{\bo{b}}_1 + k_2\hat{\bo{b}}_2$, then
+\begin{equation}\label{eq:functions_b}
+  \left.
+  \begin{aligned}
+  &\abs{s_k} 
+  = 
+  2\lrm{
+      J_x^2+J_y^2+J_z^2 + 2J_xJ_y\cos\lr{\sqrt{3}\pi k_2} 
+      + 
+      2J_xJ_z\cos\lr{\sqrt{3}\pi k_1} 
+      + 
+      2J_yJ_z\cos\lr{\sqrt{3}\pi (-k_1 + k_2)}
+  }^{1/2} \\
+  & R_k 
+  = 2\lrm{
+      J_x\cos\lr{\sqrt{3}\pi k_1} 
+      + 
+      J_y\cos\lr{\sqrt{3}\pi (-k_1 + k_2)} 
+      + 
+      J_z
+  }\\
+  &I_k 
+  = 2\lrm{
+      J_x\sin\lr{\sqrt{3}\pi k_1} 
+      - 
+      J_y\sin\lr{\sqrt{3}\pi (-k_1 + k_2)}
+  }
+  \end{aligned}
+  \right\}
+\end{equation}
+Again, these results are general and are valid even in a finite-size system.
 
 With these relations, we can start to compute the $c$-Majorana correlation functions. For $AA$-pairings, the correlation function is,
 \begin{align*}
@@ -293,7 +358,7 @@ In the following discussions, we consider the lattice geometry illustrated in Fi
 \end{itemize}
 With this definition, the factor $\bo{k}\cdot\delta\bo{x}$ in Eq.~\eqref{eq:correlationAB} can be written as
 \[
-\bo{k}\cdot\delta\bo{x} = \frac{n_1}{2}\delta x + \frac{n_4}{4}\delta y
+\bo{k}\cdot\delta\bo{x} = \pi n_1\delta x + \pi \frac{n_4}{2}\delta y
 \]
 where $n_1$ and $n_2$ are defined by the expression Eq.~\eqref{eq:allowed-momentum} of momentum states, and $\delta x$ and $\delta y$ are components of the position $\bo{x}$ represented in terms of lattice unit vectors $\bo{x} = \delta x \hat{\bo{a}}_1 + \delta y\hat{\bo{a}}_2$. Using this representation, the summation $\sum_{\bo{k}}$ in Eq.~\eqref{eq:correlationAB} can be written as $\sum_{n_1,n_2}$. The only difference is that the momentum is now represented in terms of integers $n_1$ and $n_2$.
 
