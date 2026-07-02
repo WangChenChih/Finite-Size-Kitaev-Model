@@ -7,14 +7,14 @@ import scipy.sparse as sp
 from scipy.special import comb, factorial
 from scipy import integrate
 import os
+import json
 
 class SpinSystem:
 
     def __init__(self, 
                  width:int=4, height:int=4, 
                  Jz:float=1, Jx:float=1, Jy:float=1, 
-                 CorrTableCalculate=False, 
-                 tablefilename='table'):
+                 CorrTableCalculate=False):
         '''
         width and height of the chosen geometric region. The shape of the region is restricted 
         to be rectangular. 
@@ -26,39 +26,29 @@ class SpinSystem:
         'tablefilename'. The default tablefilename 'table' is just a random name, it will be changed 
         after the table is made or after the code found that the table has already existed. 
         '''
+        if width%2 != 0 or height%2 != 0:
+            raise ValueError('Both width and height are required to be even to ensure a valid PBC')
+        
         self.width = int(width)
         self.height = int(height)
         self.N = int(width*height) # total number of sites
         self.dim = int(2**(width*height)) # 2^N, the dimenIon of the total Hilbert space
-        self.Np = 0 # which will be calculated by the function PlaquetteConstruction
-
+        
         self._Jx = Jx
         self._Jy = Jy
         self._Jz = Jz
-
-        self.CorrTableExist = not CorrTableCalculate # it will be changed to True after calculation is done
-        self.TableName = tablefilename
-        if self.CorrTableExist:
-            self.corrtable = np.load(tablefilename)
-        else:
-            self.corrtable = np.array([])   # will be updated if the table exists.
-        
-        self.corr_dict = {} # will be updated 
-        self.corr_dict_exist = False
-
-        self.CanonicalFormTable_dic = {}
-        self.CanonicalFormTalbe__dic_exist = False
-
-        self.dimerconfig_exist = False
-        self.dimer_configuration_number = 0
 
         self.I = sp.identity(2, format="csr")
         self.X = np.array([[0,1],[1,0]], dtype = np.complex64)
         self.Y = np.array([[0,-1j],[1j,0]], dtype = np.complex64)
         self.Z = np.array([[1,0],[0,-1]], dtype = np.complex64)
 
+        self.CorrTableCalculate = CorrTableCalculate
+
+        if CorrTableCalculate:
+            self.calculte_CorrTable()
+
         self.rho = np.array([])
-        self.rho_F = np.array([])
 
         return
     
@@ -86,27 +76,130 @@ class SpinSystem:
         self._Jz = Jz
         return
     
+    @property
+    def path(self):
+        file_path = "w_%d_h_%d/Jx_%.3f_Jy_%.3f_Jz_%.3f" % (self.width, self.height, self.Jx, self.Jy, self.Jz)
+        return file_path
+    
     ################### correlation functions ###################
-
-    def sk(self, k1,k2):
+    """
+    Here, the momentum is expressed in terms of reciprocal basis vectors
+    b_1 = (2pi, 2pi/sqrt(3))
+    b_2 = (0, 4pi/sqrt(3))
+    as
+    k = k1 b_1 + k2 b_2
+    which are derived by the lattice basis vectors 
+    a_1 = (1,0)
+    a_2 = (1/2, sqrt(3)/2)
+    """
+    def sk(self, k1:float ,k2:float)->float:
         Jx = self.Jx
         Jy = self.Jy
         Jz = self.Jz
         return 2*np.sqrt(Jx**2 + Jy**2 + Jz**2 + 
-                    2*Jx*Jy*np.cos(k1) + 
-                    2*Jx*Jz*np.cos(k2) + 
-                    2*Jy*Jz*np.cos(k1 - k2))
+                    2*Jx*Jy*np.cos(2*np.pi*k1) + 
+                    2*Jx*Jz*np.cos(2*np.pi*k2) + 
+                    2*Jy*Jz*np.cos(2*np.pi*(k1 - k2)))
     
-    def Rk(self, k1,k2):
+    def Rk(self, k1:float, k2:float)->float:
         Jx = self.Jx
         Jy = self.Jy
         Jz = self.Jz
-        return 2*(Jx*np.cos(k2) + Jy*np.cos(k1 - k2) + Jz)
+        return 2*(Jx*np.cos(2*np.pi*k2) + Jy*np.cos(2*np.pi*(k1 - k2)) + Jz)
     
-    def Ik(self, k1,k2):
+    def Ik(self, k1:float, k2:float)->float:
         Jx = self.Jx
         Jy = self.Jy
-        return 2*(Jx*np.sin(k2) - Jy*np.sin(k1 - k2))
+        return 2*(Jx*np.sin(2*np.pi*k2) - Jy*np.sin(2*np.pi*(k1 - k2)))
+    
+    def corr_init(self, na:int, nb:int)->float:
+        """
+        Two-points correlation function <-icc>. Notice the existance of the imaginary number -i
+        This function is valid only for PBC
+        """
+        xa, ya, mua = self.dictionary_n_to_c(label=na) 
+        xb, yb, mub = self.dictionary_n_to_c(label=nb)
+        dx, dy = xb - xa, yb - ya 
+        corr_fun = 0
+        for nx in range(int(self.width/2)):
+            for ny in range(self.height):
+                k1 = nx / (self.width/2)
+                k2 = ny / (self.width/2)
+                R, I, s = self.Rk(k1=k1, k2=k2), self.Ik(k1=k1, k2=k2), self.sk(k1=k1, k2=k2)
+                phase = 2*np.pi*(k1*dx + k2*dy)
+                corr_fun += (2/self.N) * (R*np.cos(phase) + I*np.sin(phase)) / s
+        return corr_fun
+    
+    def calculte_CorrTable(self):
+        CorrTable = {}
+        for n in range(self.N):
+            if n%2 == 0:    # BB pairing is always zero
+                continue
+
+            CorrTable[n] = self.corr_init(na=n, nb=0)
+        
+        os.makedirs(name=self.path, exist_ok=True)
+        with open(self.path + "CorrTable.json", "w") as file:
+            json.dump(CorrTable, file)  # indent=4 makes it pretty and easy to read
+        return
+    
+    def corr(self, na:int, nb:int)->float:
+        """
+        Two-points correlation function <-icc>. Notice the existance of the imaginary number -i
+        This function is valid only for PBC
+        """
+        if self.CorrTableCalculate == True:
+            self.calculte_CorrTable()
+            self.CorrTableCalculate = False
+            return self.corr_init(na=na, nb=nb)
+        else:
+            with open(self.path + "CorrTable.json", "r") as file:
+                CorrTable = json.load(file)
+
+            la, sa = self.dictionary_n_to_l(label=na)
+            lb, sb = self.dictionary_n_to_l(label=nb)
+
+            dl, ds = (la - lb)%self.height, (sa - sb)%self.width
+            dn = self.dictionary_l_to_n(layer=dl, site=ds)
+            
+            return CorrTable[dn]
+        
+    
+    def Coefficient(self, setA:list, setB:list)->float:
+        '''
+        Calculate the coefficient in front of each basis (configuration) by Wick's theorem.
+        <(-ic_{a1} c_{b1}) (-ic_{a2} c_{b2})... > = sum over all possible parings of 
+        <-ic_{ai} c_{bj}> products.
+        The coefficients can be expressed as the determinents of correlation matrices defined as G_{ij} = <c_Ai c_Bj>
+        The coefficient in front of each basis (configuration). 
+        siteA and siteB are np.arrays, whose elements are end points of the configuration.
+
+        Be careful that the output only contains the <cc> part, the imaginary coefficient arisis from
+        icc and permutations of fermionic operators are not included.
+
+        But we should be careful that <(-ic1c2)(-ic3c4)> changes sign when we permute the fermionic operators to <(-ic1c4)(-ic3c2)>.
+
+        Note that the correlators are purely imaginary, so the calculation can be done under dtype=float 
+        '''
+        if np.size(setA) != np.size(setB):
+            return 0
+            #print('\033[31mError: end-point set sizes unmatched\033[0m')
+        else:
+            if np.size(setA) == 0:   # No end point means vacuum: identity
+                return 1
+            else:
+                # ordering the labels of the lattice points
+                setA.sort()
+                setB.sort()
+
+                coe = 0
+                # determininant method
+                corr_matrix = np.zeros([len(setA), len(setB)])
+                for i in range(len(setA)):
+                    for j in range(len(setB)):
+                        corr_matrix[i,j] = self.corr(na=setA[i], nb=setB[j])   
+                coe = np.linalg.det(corr_matrix)
+                return coe
     
     ################### dictionary ###################
 
@@ -211,12 +304,73 @@ class SpinSystem:
             A = Aj if A is None else sp.kron(A, Aj, format="csr")
         
         return A
-       
-    ################### string operator ###################
+    
+    def PauliString(self, 
+                        siteX:list = [], 
+                        siteY:list = [], 
+                        siteZ:list = [])->np.ndarray:
+        '''
+        Integers in site\mu are positions (labels of sites) where \mu-Pauli matrices being placed 
+        '''
+        matrix = None
+        for i in range(self.N):
 
-    def dimer(self, n1: int, n2:int)->np.ndarray:
+            IfInX = i in siteX 
+            IfInY = i in siteY
+            IfInZ = i in siteZ
+
+            if IfInX:
+                s = self.X
+            elif IfInY:
+                s = self.Y
+            elif IfInZ:
+                s = self.Z
+            else:
+                s = self.I
+            matrix = s if matrix is None else sp.kron(matrix,s, format='csr')
+        
+        return matrix
+    
+    ################### string operator ###################
+    
+    def PauliMultRule(self, type1:str, type2:str)->tuple[np.complex64, str]:
+        '''
+        RULE: the Pauli type must be capital
+        \sigma^type1 \sigma^type2 = ImagCoe \sigma^ResultType
+        '''
+        if type1 == 'X' and type2 == 'Y':
+            ImagCoe = 1j
+            ResultType = 'Z'
+        elif type1 == 'Y' and type2 == 'Z':
+            ImagCoe = 1j
+            ResultType = 'X'
+        elif type1 == 'Z' and type2 == 'X':
+            ImagCoe = 1j
+            ResultType = 'Y'
+        elif type1 == 'Y' and type2 == 'X':
+            ImagCoe = -1j
+            ResultType = 'Z'
+        elif type1 == 'Z' and type2 == 'Y':
+            ImagCoe = -1j
+            ResultType = 'X'
+        elif type1 == 'X' and type2 == 'Z':
+            ImagCoe = -1j
+            ResultType = 'Y'
+        elif type1 == 'id':
+            ImagCoe = 1
+            ResultType = type2
+        elif type2 == 'id':
+            ImagCoe = 1
+            ResultType = type1
+        else:
+            ImagCoe = 1
+            ResultType = 'id'
+
+        return ImagCoe, ResultType
+    
+    def dimer_direction(self, n1: int, n2:int)->str:
         """
-        Input two nearest neighboring sites n1 and n2, and then return the dimer operator in the Kitaev model \dimer(n1,n2)
+        Input two nearest neighboring sites n1 and n2, and then return the direction of the dimer, which will be 'X', 'Y' or 'Z'.
         """
         # n1 is type-A by default. Thus, if the situation is opposite, then we have to switch it to our setting
         mu1, mu2 = n1%2, n2%2
@@ -233,48 +387,116 @@ class SpinSystem:
         l2, s2 = self.dictionary_n_to_l(label=n2)
 
         # determine the direction of the dimer
-        if l2 == l1-1 and s1 == s2:
+        if l2%self.height == (l1-1)%self.height and s1%self.width == (s2-1)%self.width:
+            return 'Z'
+        elif s2%self.width == (s1 + 1)%self.width and l1%self.height == l2%self.height:
+            return 'X'
+        elif s2%self.width == (s1 - 1)%self.width and l1%self.height == l2%self.height:
+            return 'Y'
+        else:
+            raise ValueError("Invalid points for forming a dimer")
+    
+    def dimer(self, n1: int, n2:int)->np.ndarray:
+        """
+        Input two nearest neighboring sites n1 and n2, and then return the dimer operator in the Kitaev model \dimer(n1,n2)
+        """
+        dir = self.dimer_direction(n1=n1, n2=n2)
+        
+        if dir == 'Z':
             return self.two_spin(length=self.N, site1=n1, site2=n2, op1=self.Z, op2=self.Z)
-        elif s2 == s1 + 1 and l1 == l2:
+        elif dir == 'X':
             return self.two_spin(length=self.N, site1=n1, site2=n2, op1=self.X, op2=self.X)
-        elif s2 == s1 - 1 and l1 == l2:
+        elif dir == 'Y':
             return self.two_spin(length=self.N, site1=n1, site2=n2, op1=self.Y, op2=self.Y)
         else:
             raise ValueError("Invalid points for forming a dimer")
-        
+    
     def string_op(self, na:int, nb:int)->np.ndarray:
         """
         Generate the string operator of a single string, whose endpoints are na (in sublattice A) and nb (in sublattice B)
         """
+        stringX = []
+        stringY = []
+        stringZ = []
+
         la, sa = self.dictionary_n_to_l(label=na)
         lb, sb = self.dictionary_n_to_l(label=nb)
         
-        StringOp = sp.identity(self.dim, format="csr")  # initialize the string operator
-        l, s = la, sa   # initialize the moving point
+        l, s = la, sa   # initialize the moving point. RULE: always starts from the type-A endpoint
 
+        ImagCoe_tot = 1 # the imaginary factor due to the Pauli algebra
+        
+        pauli_type = None   # the type of the Pauli spin we want to add at the current site
         while l != lb or s != sb:
-            if lb == la:
-                if sb > sa:
+
+            ########### move the point to generate (l_next, s_next) ###########
+            if lb == l%self.height:
+                if sb > s%self.width:
+                    l_next, s_next = l, s+1
+                    #print('right')
+                else:   #sb < s
                     l_next, s_next = l, s-1
-                else:   #sb < sa
-                    l_next, s_next = l, s-1
-            elif lb > la:
+                    #print('left')
+            elif lb > l%self.height:
                 if self.SubLatID_l(layer=l, site=s) == 0:   # sublattice B
                     l_next, s_next = l+1, s-1
+                    #print('upper left')
                 elif self.SubLatID_l(layer=l, site=s) == 1:   # sublattice A
                     l_next, s_next = l, s+1
-            elif lb < la:
+                    #print('right')
+            elif lb < l%self.height:
                 if self.SubLatID_l(layer=l, site=s) == 0:   # sublattice B
-                    l_next, s_next = l-1, s+1
+                    l_next, s_next = l, s-1
+                    #print('left')
                 elif self.SubLatID_l(layer=l, site=s) == 1:   # sublattice A
-                    l_next, s_next = l, s+1
+                    l_next, s_next = l-1, s+1
+                    #print('lower right')
             else:
                 raise ValueError('invalid algorithm')
+            ####################################################################
             
+            # represent the points in terms of labeling numbers
             n, n_next = self.dictionary_l_to_n(layer=l, site=s), self.dictionary_l_to_n(layer=l_next, site=s_next)
-            StringOp = StringOp @ self.dimer(n1=n, n2=n_next)
+            
+            # determine the pauli type of the spin operator we want to add,
+            if pauli_type is None:  # initial step
+                dir = self.dimer_direction(n1=n, n2=n_next) # the direction of the current dimer
+                #print('dir = ' + dir)
+                pauli_type = dir    # at the first step, the Pauli spin at the initial point is in the same direction as the initial dimer, and it does not intersects with other Pauli spins
+            else:
+                dir_next = self.dimer_direction(n1=n, n2=n_next)
+                #print('dir = ' + dir)
+                #print('dir_next = ' + dir_next)
+                ImagCoe, pauli_type = self.PauliMultRule(type1=dir, type2=dir_next) # equivalent to multiplying two dimer operators
+                #print('pauli_type = ' + pauli_type)
+                ImagCoe_tot = ImagCoe_tot * ImagCoe # update the imaginary coefficient
+                dir = dir_next  # update the dimer direction
+            
+            #  collect the pauli type into the sets
+            if pauli_type == 'X':
+                stringX += [n,]
+            elif pauli_type == 'Y':
+                stringY += [n,]
+            elif pauli_type == 'Z':
+                stringZ += [n,]
+            else:
+                raise ValueError('invalid algorithm for constructing string operators')
+            
+            l, s = l_next%self.height, s_next%self.width   # update
 
-        return StringOp
+        # final step: for the terminal endpoint
+        pauli_type = dir    # at the final step, the Pauli spin at the last point is in the same direction as the last dimer, and it does not intersects with other Pauli spins
+        #  collect the pauli type into the sets
+        if pauli_type == 'X':
+            stringX += [n,]
+        elif pauli_type == 'Y':
+            stringY += [n,]
+        elif pauli_type == 'Z':
+            stringZ += [n,]
+        else:
+            raise ValueError('invalid algorithm for constructing string operators')
+            
+        return ImagCoe_tot * self.PauliString(siteX=stringX, siteY=stringY, siteZ=stringZ)
     
     def SigmaOp(self, setA:list, setB:list)->np.ndarray:
         """
@@ -294,15 +516,129 @@ class SpinSystem:
         for na in setA:
             nb = setB[counting]
 
+            #print(na, nb)
             Sigma = Sigma @ self.string_op(na=na, nb=nb)
 
             counting += 1
 
         return Sigma
     
+    ################### constructing rho ###################
+    
+    def plaquette_projector(self)->tuple[int, np.ndarray]:
+        """
+        The output is the number of plaquettes with the plaquette projector
+        """
+
+        ### sort lattice sites into A and B sublattices
+        A_all = []
+        B_all = []
+        
+        nA = 0
+        nB = 0
+        for i in np.arange(self.N, dtype=int):
+            if i%2 == 0:
+                B_all += [i,]
+            else:
+                A_all += [i,]
+
+        PlaquetteProjector = sp.identity(self.dim, format='csr')
+
+        PlaqX = []
+        PlaqY = []
+        PlaqZ = []
+        
+        p_number = 0
+        
+        for start in B_all:    # each starting point is the lower left corner vertex of the rectangle (hence type-B), and circling counterclockwise 
+            movepoint = start
+            l, s = self.dictionary_n_to_l(label=movepoint)
+
+            PlaqX += [movepoint,]
+            
+            s += 1
+            movepoint = self.dictionary_l_to_n(layer=l,site=s)
+            PlaqZ += [movepoint,]
+            
+            s += 1
+            movepoint = self.dictionary_l_to_n(layer=l,site=s)
+            PlaqY += [movepoint,]
+            
+            l += 1
+            s -= 1
+            movepoint = self.dictionary_l_to_n(layer=l,site=s)
+            PlaqX += [movepoint,]
+
+            s -= 1
+            movepoint = self.dictionary_l_to_n(layer=l,site=s)
+            PlaqZ += [movepoint,]
+
+            s -= 1
+            movepoint = self.dictionary_l_to_n(layer=l,site=s)
+            PlaqY += [movepoint,]
+
+            LocalPla = 0.5*(sp.identity(self.dim, format='csr') + self.PauliString(siteX=PlaqX, siteY=PlaqY, siteZ=PlaqZ))
+
+            PlaquetteProjector = PlaquetteProjector @ LocalPla
+            p_number += 1
+        self.Np = p_number
+        
+        return p_number, PlaquetteProjector
+    
+    def wilson_loop(self, direction:str)->np.ndarray:
+        """
+        The variable direction is either 'horizontal' or 'vertical'. Inputs lying outside these two options are not allowed currently.
+        """
+        LoopX = []
+        LoopY = []
+        LoopZ = []
+        
+        l, s = 0, 0   # moving point, which starts cricling the torus from the site n=0
+        comeback = False
+        if direction == 'horizontal':
+            while not comeback:
+                s += 1
+                s = s%self.width    # PBC
+
+                LoopZ += [self.dictionary_l_to_n(layer=l, site=s)]
+
+                if s%self.width == 0:
+                    comeback = True
+        elif direction == 'vertical':
+            while not comeback:
+                # moving to the upper left
+                s -= 1
+                l += 1
+                s%self.width    # PBC
+                l%self.height    # PBC
+
+                LoopY += [self.dictionary_l_to_n(layer=l, site=s),]
+
+                # moving to the right
+                s += 1
+                s%self.width    # PBC
+                l%self.height    # PBC
+
+                LoopX += [self.dictionary_l_to_n(layer=l, site=s),]
+
+                if s%self.width == 0:
+                    comeback = True
+        else:
+            raise ValueError("The variable direction is either 'horizontal' or 'vertical'. Inputs lying outside these two options are not allowed currently.")
+        
+        return  self.PauliString(siteX=LoopX, siteY=LoopY, siteZ=LoopZ)
+    
+    def topo_projector(self)->np.ndarray:
+        """
+        0.25 * (I + Wh) @ (I + Wv) 
+        """
+        Wh, Wv = self.wilson_loop(direction='horizontal'), self.wilson_loop(direction='vertical')
+        I = sp.identity(self.N, format='csr')
+        return  0.25 * (I + Wh) @ (I + Wv) 
+    
     def EndpointSets(self)->list[list[list,list]]:
         """
-        output
+        output all the possible sets of endpoints
 
         pairing = 
         [   [setA1, setB1],
@@ -331,4 +667,30 @@ class SpinSystem:
                 for j in range(comb(np.size(B_all), n, exact=True)):    # loop over all possible choices of n type-B sites
                     pairing += [[comb_A[i,:], comb_B[j,:]],]
         return pairing
+    
+    def density_matrix(self)->np.ndarray:
+        """
+        Generate the density matrix (the entire system)
+        """
+        config = self.EndpointSets()
+
+        rho = None
+        for D in range(len(config)):
+            setA, setB = config[D]
+
+            Sigma = self.SigmaOp(setA=setA, setB=setB)
+            print('\033[34mProgress Report: Constructing string operators\033[0m')
+
+            coe = self.Coefficient(setA=setA, setB=setB)
+            print('\033[34mProgress Report: Computing coefficients\033[0m')
+
+            rho = coe * Sigma if rho is None else rho + coe * Sigma
+
+            print('\033[34mProgress Report: The %d-th configuration (size: %d sites) done\033[0m' % (D, 2*len(setA)))
+        
+        Np, p_proj = self.plaquette_projector()
+        rho = 2^{-(self.N - Np)} * self.topo_projector() @  p_proj @ rho 
+        self.rho = rho
+        return  rho
+    
     
