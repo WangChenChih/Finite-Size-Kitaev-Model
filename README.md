@@ -26,4 +26,6 @@ conda activate KitaevDensityMatrix
 
 ```
 
+After the environment setting is done, we can test the functions of the module ``SpinModelDM.py`` in the JupyterNotebook ``KitaevDM.ipynb``.
+
 ---
