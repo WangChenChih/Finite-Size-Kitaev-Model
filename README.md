@@ -8,7 +8,7 @@ The program requires the following scientific libraries:
 
 To simplify installation and ensure a consistent environment we use **Conda**.
 
-## Creating the course Python environment
+## Creating the Python environment
 
 After cloning this repository, create the environment:
 
