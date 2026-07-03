@@ -43,7 +43,7 @@ For numerical efficiency, we tend to choose the smallest possible system. Howeve
 
 We start from the Wen plaquette model.
 
-![lattice-geometry](notes/correlation-in-finite-size-system/figures/Wen-Plaquette.png)
+<img src="notes/correlation-in-finite-size-system/figures/Wen-Plaquette.png" width="400" />
 
 There are two requirements for a Wen plaquette system to possess four topologically degenerate ground states:
 
