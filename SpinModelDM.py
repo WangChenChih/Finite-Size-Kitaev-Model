@@ -473,11 +473,11 @@ class SpinSystem:
             
             #  collect the pauli type into the sets
             if pauli_type == 'X':
-                stringX += [n,]
+                stringX.append(n)
             elif pauli_type == 'Y':
-                stringY += [n,]
+                stringY.append(n)
             elif pauli_type == 'Z':
-                stringZ += [n,]
+                stringZ.append(n)
             else:
                 raise ValueError('invalid algorithm for constructing string operators')
             
@@ -487,11 +487,11 @@ class SpinSystem:
         pauli_type = dir    # at the final step, the Pauli spin at the last point is in the same direction as the last dimer, and it does not intersects with other Pauli spins
         #  collect the pauli type into the sets
         if pauli_type == 'X':
-            stringX += [n,]
+            stringX.append(n)
         elif pauli_type == 'Y':
-            stringY += [n,]
+            stringY.append(n)
         elif pauli_type == 'Z':
-            stringZ += [n,]
+            stringZ.append(n)
         else:
             raise ValueError('invalid algorithm for constructing string operators')
             
@@ -537,9 +537,9 @@ class SpinSystem:
         nB = 0
         for i in np.arange(self.N, dtype=int):
             if i%2 == 0:
-                B_all += [i,]
+                B_all.append(i)
             else:
-                A_all += [i,]
+                A_all.append(i)
 
         PlaquetteProjector = sp.identity(self.dim, format='csr')
 
@@ -553,28 +553,28 @@ class SpinSystem:
             movepoint = start
             l, s = self.dictionary_n_to_l(label=movepoint)
 
-            PlaqX += [movepoint,]
+            PlaqX.append(movepoint)
             
             s += 1
             movepoint = self.dictionary_l_to_n(layer=l,site=s)
-            PlaqZ += [movepoint,]
+            PlaqZ.append(movepoint)
             
             s += 1
             movepoint = self.dictionary_l_to_n(layer=l,site=s)
-            PlaqY += [movepoint,]
+            PlaqY.append(movepoint)
             
             l += 1
             s -= 1
             movepoint = self.dictionary_l_to_n(layer=l,site=s)
-            PlaqX += [movepoint,]
+            PlaqX.append(movepoint)
 
             s -= 1
             movepoint = self.dictionary_l_to_n(layer=l,site=s)
-            PlaqZ += [movepoint,]
+            PlaqZ.append(movepoint,)
 
             s -= 1
             movepoint = self.dictionary_l_to_n(layer=l,site=s)
-            PlaqY += [movepoint,]
+            PlaqY.append(movepoint)
 
             LocalPla = 0.5*(sp.identity(self.dim, format='csr') + self.PauliString(siteX=PlaqX, siteY=PlaqY, siteZ=PlaqZ))
 
@@ -598,7 +598,7 @@ class SpinSystem:
                 s += 1
                 s = s%self.width    # PBC
 
-                LoopZ += [self.dictionary_l_to_n(layer=l, site=s)]
+                LoopZ.append(self.dictionary_l_to_n(layer=l, site=s))
 
                 if s%self.width == 0:
                     comeback = True
@@ -610,14 +610,14 @@ class SpinSystem:
                 s%self.width    # PBC
                 l%self.height    # PBC
 
-                LoopY += [self.dictionary_l_to_n(layer=l, site=s),]
+                LoopY.append(self.dictionary_l_to_n(layer=l, site=s))
 
                 # moving to the right
                 s += 1
                 s%self.width    # PBC
                 l%self.height    # PBC
 
-                LoopX += [self.dictionary_l_to_n(layer=l, site=s),]
+                LoopX.append(self.dictionary_l_to_n(layer=l, site=s))
 
                 if s%self.width == 0:
                     comeback = True
@@ -654,16 +654,16 @@ class SpinSystem:
         nB = 0
         for i in np.arange(self.N, dtype=int):
             if i%2 == 0:
-                B_all += [i,]
+                B_all.append(i)
             else:
-                A_all += [i,]
+                A_all.append(i)
         
         for n in range(np.size(A_all)+1):   # loop over number of pairings. n=0 means no pairing, i.e. vacuum: identity matrix. n=2 means 2 pairings, i.e. 4 end points.
             comb_A = np.array(list(combinations(A_all, n)))
             comb_B = np.array(list(combinations(B_all, n)))
             for i in range(comb(np.size(A_all), n, exact=True)):    # loop over all possible choices of n type-A sites
                 for j in range(comb(np.size(B_all), n, exact=True)):    # loop over all possible choices of n type-B sites
-                    pairing += [[comb_A[i,:], comb_B[j,:]],]
+                    pairing.append([comb_A[i,:], comb_B[j,:]])
         return pairing
     
     def calculate_coe(self, update:bool=False)->dict:
@@ -781,7 +781,7 @@ class SpinSystem:
         """
         config_trans = config.copy()
         for l in range(self.height):
-            for s in range(int(self.width/2)):
+            for s in range(self.width):
                 n = self.dictionary_l_to_n(layer=l, site=s) # the unit vector in the x-direction crosses TWO lattice sites
                 config_trans[n] = config[self.dictionary_l_to_n(layer = l - move[1], site = s - 2*move[0])] # The factor 2 preceding ``move[0]`` is due to the fact that the unit vector in the x-direction crosses TWO lattice sites
         return  config_trans
@@ -853,12 +853,14 @@ class SpinSystem:
             find_next_rep = True
             while find_next_rep:
                 rep_state = state_list[0]
-                rep_list += [rep_state,] # start with the first element of the state list at each iteration step
+                rep_list.append(rep_state) # start with the first element of the state list at each iteration step
                 for x in range(int(self.width/2)): # the unit vector in the x-direction crosses TWO lattice sites
                     for y in range(self.height):
                         nt = self.spin_to_state(config=self.translation_op(config=self.state_to_spin(label=rep_state), move=[x,y]))
                         if nt in state_list:
-                            print('remove %d' % nt)
+                            #print('remove %d' % nt)
+                            if nt == 65535:
+                                print('the representative that is equivalent to 65535 is %d' % rep_state)
                             state_list.remove(nt)
 
                 if state_list == []:
@@ -888,12 +890,12 @@ class SpinSystem:
             with open("w_%d_h_%d/period_dict.json" % (self.width, self.height), "r") as file:
                 period_dic = json.load(file)
         else:
-            rep_list = self.representative_set(update=update)
+            rep_list = self.representative_set()
             period_dic = {}
             for n in rep_list:
                 ######## search the period in x
                 x_search = True
-                Rx = 0
+                Rx = 1  # period R=0 trivially satisfies T^R = 1
                 while x_search:
                     nt = self.spin_to_state(config=self.translation_op(config=self.state_to_spin(label=n), move=[Rx,0]))
                     if nt != n:
@@ -902,14 +904,14 @@ class SpinSystem:
                         x_search = False
                 ######## search the period in y
                 y_search = True
-                Ry = 0
+                Ry = 1
                 while y_search:
                     nt = self.spin_to_state(config=self.translation_op(config=self.state_to_spin(label=n), move=[0,Ry]))
                     if nt != n:
-                        Rx += 1
+                        Ry += 1
                     else:
-                        x_search = False
-            period_dic["%d" % n] = [Rx, Ry]
+                        y_search = False
+                period_dic["%d" % n] = [Rx, Ry]
             with open("w_%d_h_%d/period_dict.json" % (self.width, self.height), 'w') as file:
                 json.dump(period_dic, file)
         return  period_dic
@@ -937,21 +939,20 @@ class SpinSystem:
             with open("w_%d_h_%d/momentum_sectors.json" % (self.width, self.height), "r") as file:
                 momentum_sectors_dict = json.load(file)
         else:
-            rep_list = self.representative_set(update=update)
-            period_dict = self.period_dict(update=update)
+            rep_list = self.representative_set()
+            period_dict = self.period_dict()
 
             momentum_sectors_dict = {}
             for mx in range(int(self.width/2)):  # the unit vector in the x-direction crosses TWO lattice sites
-                for my in range(int(self.height)):
-                    rep_list_tem = rep_list.copy()
+                for my in range(self.height):
                     
                     k_sector = []   #   start collecting representatives into the momentum sector
-                    for n in rep_list_tem:
+                    for n in rep_list:
                         [Rx, Ry] = period_dict["%d" % n]
-                        if (mx*Rx % (self.width)/2) == 0 and (my*Ry % self.height) == 0:    # meaning that exp(ikR) = 1
-                            k_sector += [n,]
-                            rep_list.remove(n)
-                    momentum_sectors_dict["(%d,%d)"] = k_sector
+                        print("Rx=%d, Ry=%d, mx=%d, my=%d" % (Rx, Ry, mx, my))
+                        if mx*Rx % (self.width/2) == 0 and my*Ry % self.height == 0:    # meaning that exp(ikR) = 1
+                            k_sector.append(n)
+                    momentum_sectors_dict["(%d,%d)" % (mx, my)] = k_sector
             with open("w_%d_h_%d/momentum_sectors.json" % (self.width, self.height), "w") as file:
                 json.dump(momentum_sectors_dict, file)
         
