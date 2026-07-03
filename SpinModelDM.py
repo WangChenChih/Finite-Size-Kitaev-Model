@@ -13,8 +13,7 @@ class SpinSystem:
 
     def __init__(self, 
                  width:int=4, height:int=4, 
-                 Jz:float=1, Jx:float=1, Jy:float=1, 
-                 CorrTableCalculate=False):
+                 Jz:float=1, Jx:float=1, Jy:float=1):
         '''
         width and height of the chosen geometric region. The shape of the region is restricted 
         to be rectangular. 
@@ -927,6 +926,7 @@ class SpinSystem:
 
         First we have to define the periodicity R of a state psi, which is the smallest integer such that T^R |psi> = |psi>
         An allowed representative in the momentum sector k must satisfy exp(ikR) = 1. Otherwise, the corresponding momentum state generated from such a representative will vanish.
+        Each sector represents a diagonal block, with its corresponding momentum, of the density matrix
         
         The momentum states we consider here are
         m_mu = 0, 1, 2, ..., N_mu-1
@@ -949,7 +949,7 @@ class SpinSystem:
                     k_sector = []   #   start collecting representatives into the momentum sector
                     for n in rep_list:
                         [Rx, Ry] = period_dict["%d" % n]
-                        print("Rx=%d, Ry=%d, mx=%d, my=%d" % (Rx, Ry, mx, my))
+                        #print("Rx=%d, Ry=%d, mx=%d, my=%d" % (Rx, Ry, mx, my))
                         if mx*Rx % (self.width/2) == 0 and my*Ry % self.height == 0:    # meaning that exp(ikR) = 1
                             k_sector.append(n)
                     momentum_sectors_dict["(%d,%d)" % (mx, my)] = k_sector
