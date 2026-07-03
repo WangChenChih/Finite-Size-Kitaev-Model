@@ -43,11 +43,6 @@ class SpinSystem:
         self.Y = np.array([[0,-1j],[1j,0]], dtype = np.complex64)
         self.Z = np.array([[1,0],[0,-1]], dtype = np.complex64)
 
-        self.CorrTableCalculate = CorrTableCalculate
-
-        if CorrTableCalculate:
-            self.calculte_CorrTable()
-
         self.rho = np.array([])
 
         return
@@ -58,6 +53,7 @@ class SpinSystem:
     @Jx.setter
     def Jx(self, Jx: float):
         self._Jx = Jx
+        self.calculte_CorrTable()
         return
     
     @property
@@ -66,6 +62,7 @@ class SpinSystem:
     @Jy.setter
     def Jy(self, Jy: float):
         self._Jy = Jy
+        self.calculte_CorrTable()
         return
     
     @property
@@ -74,6 +71,7 @@ class SpinSystem:
     @Jz.setter
     def Jz(self, Jz: float):
         self._Jz = Jz
+        self.calculte_CorrTable()
         return
     
     @property
@@ -139,21 +137,20 @@ class SpinSystem:
             CorrTable[n] = self.corr_init(na=n, nb=0)
         
         os.makedirs(name=self.path, exist_ok=True)
-        with open(self.path + "CorrTable.json", "w") as file:
-            json.dump(CorrTable, file)  # indent=4 makes it pretty and easy to read
+        with open(self.path  + '/' + "CorrTable.json", "w") as file:
+            json.dump(CorrTable, file)  
         return
     
-    def corr(self, na:int, nb:int)->float:
+    def corr(self, na:int, nb:int, update:bool=False)->float:
         """
         Two-points correlation function <-icc>. Notice the existance of the imaginary number -i
         This function is valid only for PBC
         """
-        if self.CorrTableCalculate == True:
-            self.calculte_CorrTable()
-            self.CorrTableCalculate = False
-            return self.corr_init(na=na, nb=nb)
-        else:
-            with open(self.path + "CorrTable.json", "r") as file:
+        if update:
+            os.remove(self.path+'/'+'CorrTable.json')
+
+        if os.path.isfile(self.path+'/'+'CorrTable.json'):
+            with open(self.path + '/' + "CorrTable.json", "r") as file:
                 CorrTable = json.load(file)
 
             la, sa = self.dictionary_n_to_l(label=na)
@@ -162,8 +159,10 @@ class SpinSystem:
             dl, ds = (la - lb)%self.height, (sa - sb)%self.width
             dn = self.dictionary_l_to_n(layer=dl, site=ds)
             
-            return CorrTable[dn]
-        
+            return CorrTable["%d" % dn] 
+        else:
+            self.calculte_CorrTable()
+            return self.corr_init(na=na, nb=nb)
     
     def Coefficient(self, setA:list, setB:list)->float:
         '''
@@ -581,7 +580,6 @@ class SpinSystem:
 
             PlaquetteProjector = PlaquetteProjector @ LocalPla
             p_number += 1
-        self.Np = p_number
         
         return p_number, PlaquetteProjector
     
@@ -633,7 +631,7 @@ class SpinSystem:
         0.25 * (I + Wh) @ (I + Wv) 
         """
         Wh, Wv = self.wilson_loop(direction='horizontal'), self.wilson_loop(direction='vertical')
-        I = sp.identity(self.N, format='csr')
+        I = sp.identity(self.dim, format='csr')
         return  0.25 * (I + Wh) @ (I + Wv) 
     
     def EndpointSets(self)->list[list[list,list]]:
@@ -668,29 +666,293 @@ class SpinSystem:
                     pairing += [[comb_A[i,:], comb_B[j,:]],]
         return pairing
     
-    def density_matrix(self)->np.ndarray:
+    def calculate_coe(self, update:bool=False)->dict:
         """
-        Generate the density matrix (the entire system)
+        calculate the coefficients (expectation values of the string operators) and save the dictionary ``{'D': coe(D)}``
         """
-        config = self.EndpointSets()
+        if update:
+            os.remove(self.path  + '/' + "coefficients.json")
 
-        rho = None
-        for D in range(len(config)):
-            setA, setB = config[D]
+        if os.path.isfile(self.path  + '/' + "coefficients.json"):
+            with open(self.path  + '/' + "coefficients.json", "r") as file:
+                coe_dic = json.load(coe_dic, file)  
+            return  coe_dic
+        else:
+            coe_dic = {}
+            config = self.EndpointSets()
 
-            Sigma = self.SigmaOp(setA=setA, setB=setB)
-            print('\033[34mProgress Report: Constructing string operators\033[0m')
+            for D in range(len(config)):
+                setA, setB = config[D]
 
-            coe = self.Coefficient(setA=setA, setB=setB)
-            print('\033[34mProgress Report: Computing coefficients\033[0m')
+                coe = self.Coefficient(setA=setA, setB=setB)
+                coe_dic[D] = coe
 
-            rho = coe * Sigma if rho is None else rho + coe * Sigma
+                #print('\033[34mProgress Report: Computing coefficients\033[0m')
+                print('\033[34mProgress Report: The %d-th configuration (size: %d sites) done\033[0m' % (D, 2*len(setA)))
 
-            print('\033[34mProgress Report: The %d-th configuration (size: %d sites) done\033[0m' % (D, 2*len(setA)))
+            with open(self.path  + '/' + "coefficients.json", "w") as file:
+                    json.dump(coe_dic, file)  
+            return coe_dic
+    
+    def density_matrix(self, update:bool=False)->np.ndarray:
+        """
+        Generate the density matrix (the entire system). 
+        NOTE: the format of the output and saved density matrix is ``scipy.sparse``. To load the density matrix, please use ``sp.load_npz`` instead of ``np.load``
+        """
+        if update:  # recalculate the density matrix
+            os.remove(self.path+'/'+'density-matrix.npz')
+
+        if os.path.isfile(self.path+'/'+'density-matrix.npz'):
+            return sp.load_npz(self.path+'/'+'density-matrix.npz')   
+        else:
+            config = self.EndpointSets()
+
+            rho = None
+            for D in range(len(config)):
+                setA, setB = config[D]
+
+                Sigma = self.SigmaOp(setA=setA, setB=setB)
+                #print('\033[34mProgress Report: Constructing string operators\033[0m')
+
+                coe = self.Coefficient(setA=setA, setB=setB)
+                #print('\033[34mProgress Report: Computing coefficients\033[0m')
+
+                rho = coe * Sigma if rho is None else rho + coe * Sigma
+                print('\033[34mProgress Report: The %d-th configuration (size: %d sites) done\033[0m' % (D, 2*len(setA)))
+            
+            Np, p_proj = self.plaquette_projector()
+            rho = 2 ** (-(self.N - Np)) * self.topo_projector() @  p_proj @ rho 
+            self.rho = rho
+
+            os.makedirs(name=self.path, exist_ok=True)
+            sp.save_npz(self.path+'/'+'density-matrix.npz', rho)    # do not use np.save to save a sparse matrix
+            
+            return  rho
+
         
-        Np, p_proj = self.plaquette_projector()
-        rho = 2^{-(self.N - Np)} * self.topo_projector() @  p_proj @ rho 
-        self.rho = rho
-        return  rho
+    ################### Translational Symmetry Trick ###################
+    # Here, I would like to take advantage of translational symmetry and the nice property of the Pauli string.
+    # Take the product spin states as the basis vectors, the value of <a|Sigma|b>, where |a> = 
+
+    def state_to_spin(self, label:int)->list:
+        """
+        translate the n-th state to its spin configuration [s1, s2, ..., sN]
+        # Convention
+        0: up, 1: down
+
+        0 -> [...,0,0,0]
+        1 -> [...,0,0,1]
+        2 -> [...,0,1,0]
+        """
+        bin_list = [int(x) for x in bin(label)[2:]]
+        
+        # fill in the missing spins (which are zeros)
+        return [0 for n in range(int(self.N - len(bin_list)))] + bin_list
     
+    def spin_to_state(self, config:list)->int:
+        """
+        translate a spin configuration [s1, s2, ..., sN] to its correaponding state label. 
+        This is the inverse function of ``state_to_spin``
+        # Convention
+        0: up, 1: down
+
+        [...,0,0,0] -> 0
+        [...,0,0,1] -> 1
+        [...,0,1,0] -> 2
+        """
+        return  int("".join(map(str, config)), 2)
     
+    def translation_op(self, config:list, move:list[int,int])->list:
+        """
+        # Variables
+        ``config``: the input spin configuration we want to translate
+        ``move``: [x, y]: the vector of how far we want to translate (in the unit of unit cell, not lattice site)
+
+        Define how a spin configuration are translated to another one
+        Take a three-spin system with PBC for example, we have T([1,0,0]) = T([0,1,0])
+        For a 4 by 4 lattice geometry, the labeling for the sites is
+        [[12,   13, 14, 15]
+        [8,     9,  10, 11]
+        [4,     5,  6,  7]
+        [0,     1,  2,  3]]
+        RULE: left to right, lower to upper
+
+        NOTE: The unit vector in the x-direction crosses TWO lattice sites
+        """
+        config_trans = config.copy()
+        for l in range(self.height):
+            for s in range(int(self.width/2)):
+                n = self.dictionary_l_to_n(layer=l, site=s) # the unit vector in the x-direction crosses TWO lattice sites
+                config_trans[n] = config[self.dictionary_l_to_n(layer = l - move[1], site = s - 2*move[0])] # The factor 2 preceding ``move[0]`` is due to the fact that the unit vector in the x-direction crosses TWO lattice sites
+        return  config_trans
+    
+    def pauli_string_act(self, state:int, paulistr:list[list, list, list])->tuple[np.complex64, int]:
+        """
+        # Output:
+        (phase, state_label)
+
+        Compute 
+        
+        PauliOp|state> = phase |state'>
+
+        Convention: 0: up, 1: down
+        """
+        config = self,self.state_to_spin(label=state)
+        
+        phase = 1   # Pauli Y and Z gives an additional phase factor
+        for i in range(self.N): # here, i is the label of the lattice sites
+            if i in paulistr[0]:
+                config[i] = (config[i]+1)%2 # spin flipping
+            elif i in paulistr[1]:
+                phase = phase * (-1)**config[i] * 1j    # phase
+                config[i] = (config[i]+1)%2 # spin flipping
+            elif i in paulistr[2]:
+                phase = phase * (-1)**config[i] # phase
+            else:
+                pass
+        return  phase, self.spin_to_state(config=config)
+    
+    def pauli_string_sandwitch(self, state_1:int, state_2:int, paulistr:list[list,list,list])->np.complex64:
+        """
+        # Variables
+        ``state_1``, ``state_2``: the state labels of the spin configurations
+        ``paulistr``: [PauliX, PauliY, PauliZ], each set contains the sites where Pauli spin operators of that direction are located
+        
+        # Function
+        Compute <state_1|Pauli_String_Op|state_2>
+        """
+        config_1, config_2 = self.state_to_spin(label=state_1), self.state_to_spin(label=state_2)
+        
+        value = 1
+        for i in range(self.N): # here, i is the label of the lattice sites
+            if i in paulistr[0]:
+                S = self.X
+            elif i in paulistr[1]:
+                S = self.Y
+            elif i in paulistr[2]:
+                S = self.Z
+            else:
+                S = self.I
+
+            value = value * S[config_1[i], config_2[i]]
+        
+        return  value
+    
+    def representative_set(self, update:bool=False)->list:
+        
+        if update:
+            os.remove("w_%d_h_%d/representative_set.json" % (self.width, self.height))
+
+        if os.path.isfile("w_%d_h_%d/representative_set.json" % (self.width, self.height)):
+            with open("w_%d_h_%d/representative_set.json" % (self.width, self.height), "r") as file:
+                rep_list = json.load(file)
+        else:
+            state_list = list(range(self.dim))
+            rep_list = []
+
+            find_next_rep = True
+            while find_next_rep:
+                rep_state = state_list[0]
+                rep_list += [rep_state,] # start with the first element of the state list at each iteration step
+                for x in range(int(self.width/2)): # the unit vector in the x-direction crosses TWO lattice sites
+                    for y in range(self.height):
+                        nt = self.spin_to_state(config=self.translation_op(config=self.state_to_spin(label=rep_state), move=[x,y]))
+                        if nt in state_list:
+                            print('remove %d' % nt)
+                            state_list.remove(nt)
+
+                if state_list == []:
+                    find_next_rep = False
+
+            with open("w_%d_h_%d/representative_set.json" % (self.width, self.height), "w") as file:
+                json.dump(rep_list, file)
+
+        return  rep_list
+    
+    def period_dict(self, update:bool=False)->dict:
+        """
+        A period R is the smallest integer such that T^R |state> = |state>
+        
+        # Output:
+        {
+            "rep1": [Rx_1, Ry_1]
+            "rep2": [Rx_2, Ry_2]
+            ...
+        }
+        where each ``repi`` is an integer
+        """
+        if update:
+            os.remove("w_%d_h_%d/period_dict.json" % (self.width, self.height))
+
+        if os.path.isfile("w_%d_h_%d/period_dict.json" % (self.width, self.height)):
+            with open("w_%d_h_%d/period_dict.json" % (self.width, self.height), "r") as file:
+                period_dic = json.load(file)
+        else:
+            rep_list = self.representative_set(update=update)
+            period_dic = {}
+            for n in rep_list:
+                ######## search the period in x
+                x_search = True
+                Rx = 0
+                while x_search:
+                    nt = self.spin_to_state(config=self.translation_op(config=self.state_to_spin(label=n), move=[Rx,0]))
+                    if nt != n:
+                        Rx += 1
+                    else:
+                        x_search = False
+                ######## search the period in y
+                y_search = True
+                Ry = 0
+                while y_search:
+                    nt = self.spin_to_state(config=self.translation_op(config=self.state_to_spin(label=n), move=[0,Ry]))
+                    if nt != n:
+                        Rx += 1
+                    else:
+                        x_search = False
+            period_dic["%d" % n] = [Rx, Ry]
+            with open("w_%d_h_%d/period_dict.json" % (self.width, self.height), 'w') as file:
+                json.dump(period_dic, file)
+        return  period_dic
+    
+    def momentum_sectors(self, update:bool=False)->dict:
+        """
+        # Output:
+        {
+            "(m1_x, m1_y)": [rep1_k1, rep2_k1, ...]_k1, 
+            "(m2_x, m2_y)": [rep1_k2, rep2_k2, ...]_k2,
+            ... 
+        }
+
+        First we have to define the periodicity R of a state psi, which is the smallest integer such that T^R |psi> = |psi>
+        An allowed representative in the momentum sector k must satisfy exp(ikR) = 1. Otherwise, the corresponding momentum state generated from such a representative will vanish.
+        
+        The momentum states we consider here are
+        m_mu = 0, 1, 2, ..., N_mu-1
+        k_mu = m_mu * 2pi/N_mu
+        """
+        if update:
+            os.remove("w_%d_h_%d/momentum_sectors.json" % (self.width, self.height))
+
+        if os.path.isfile("w_%d_h_%d/momentum_sectors.json" % (self.width, self.height)):
+            with open("w_%d_h_%d/momentum_sectors.json" % (self.width, self.height), "r") as file:
+                momentum_sectors_dict = json.load(file)
+        else:
+            rep_list = self.representative_set(update=update)
+            period_dict = self.period_dict(update=update)
+
+            momentum_sectors_dict = {}
+            for mx in range(int(self.width/2)):  # the unit vector in the x-direction crosses TWO lattice sites
+                for my in range(int(self.height)):
+                    rep_list_tem = rep_list.copy()
+                    
+                    k_sector = []   #   start collecting representatives into the momentum sector
+                    for n in rep_list_tem:
+                        [Rx, Ry] = period_dict["%d" % n]
+                        if (mx*Rx % (self.width)/2) == 0 and (my*Ry % self.height) == 0:    # meaning that exp(ikR) = 1
+                            k_sector += [n,]
+                            rep_list.remove(n)
+                    momentum_sectors_dict["(%d,%d)"] = k_sector
+            with open("w_%d_h_%d/momentum_sectors.json" % (self.width, self.height), "w") as file:
+                json.dump(momentum_sectors_dict, file)
+        
+        return  momentum_sectors_dict
