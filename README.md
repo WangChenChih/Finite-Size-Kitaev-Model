@@ -10,7 +10,7 @@ To simplify installation and ensure a consistent environment we use **Conda**.
 
 ## Creating the course Python environment
 
-After cloning this repository, create the course environment:
+After cloning this repository, create the environment:
 
 ```
 
