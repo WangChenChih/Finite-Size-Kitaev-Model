@@ -26,7 +26,7 @@
      inkscape:document-units="pt"
      inkscape:zoom="1.7968284"
      inkscape:cx="127.44678"
-     inkscape:cy="128.28159"
+     inkscape:cy="128.83812"
      inkscape:window-width="1920"
      inkscape:window-height="1094"
      inkscape:window-x="-11"
@@ -306,7 +306,7 @@
      id="layer9"
      inkscape:label="lattice"
      transform="translate(-129.25182,-74.555312)"
-     style="display:none">
+     style="display:inline">
     <path
        d="M 150.21818,317.12727 V 285.05455"
        clip-path="url(#p49635e785b)"
