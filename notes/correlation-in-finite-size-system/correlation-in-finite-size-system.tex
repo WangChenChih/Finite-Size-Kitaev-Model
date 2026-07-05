@@ -329,7 +329,10 @@ This result is purely imaginary, and can be further simplified,
   \sum_{\bo{k}}
   \frac{1}{\abs{s_{\bo{k}}}}\lrm{R_{\bo{k}} \cos\lr{\bo{k} \cdot \delta\bo{x}} + I_{\bo{k}}\sin\lr{\bo{k}\cdot\delta\bo{x}} }
 \end{equation}
-where $s_{\bo{k}} = \abs{s_{\bo{k}}}e^{i\theta_{\bo{k}}}$. Notice that the above formulation is general and can be used directly in the case of finite systems. 
+where $s_{\bo{k}} = \abs{s_{\bo{k}}}e^{i\theta_{\bo{k}}}$. Notice that the above formulation is general and can be used directly in the case of finite systems.
+
+\subsection{Two-Points Correlation Functions with Magnetic Field}
+In the isotropic limit, applying an external magnetic field makes the Kitaev model equivalent to a Haldane honeycomb model~\cite{Haldane_1988} in the Majorana fermion representation. In general, the correlation functions of $AA$ and $BB$ pairings are finite \alert{continue}. However, since the $\mathbb{Z}_2$ gauge fields are still c-numbers, the ground state still exhibits the pattern that only string-like operators bear finite expectation values. The only difference is that, in the situation with a magnetic field, the N.N.N. coupling contributes to the correlation functions of longer strings, and strings with both endpoints of the same type have finite expectation values in general. 
 
 \subsection{Two-Points Correlation Functions in a Finite-Size System}
 In the following discussions, we consider the lattice geometry illustrated in Fig.~\ref{fig:lattice}.c. In this situation, there are three methods for labeling the position of lattice sites. 
@@ -533,50 +536,62 @@ In the derivation, we have used the identity $i^{n} = (-i)^n = (-1)^{n(n-1)/2}$ 
     \lr{-i c_{a_{\mathcal{C}}}c_{b_{\mathcal{C}}} }
 \end{equation}
 
-\begin{equation}\label{eq:multi-correlation}
+\begin{align}\label{eq:multi-correlation}
     \mathfrak{C}_{\mathfrak{D}}
     =
     \Anglelr{\prod_{\anglelr{ij}\in\mathfrak{D}}
     \dimer{i}{j}}
-    \to
+    &\to
     \Anglelr{
     \prod_{\mathcal{C} \in \mrm{St}(\mathfrak{D})} 
         \lr{-i c_{a_{\mathcal{C}}}c_{b_{\mathcal{C}}} }
-    }_M
-    =
+    }_M \nonumber \\
+    &=
     \begin{vmatrix}
         \tcor{a_1}{b_1} & \tcor{a_1}{b_2} & \tcor{a_1}{b_3} & \cdots \\
         \tcor{a_2}{b_1} & \tcor{a_2}{b_2} & \tcor{a_2}{b_3} & \cdots \\
         \tcor{a_3}{b_1} & \tcor{a_3}{b_2} & \tcor{a_3}{b_3} & \cdots \\
         \vdots & \vdots & \vdots & \ddots
     \end{vmatrix}
-\end{equation}
+\end{align}
 
 \section{Genuine Multipartite Negativity as an Entanglement Monotone}
 
 
-\begin{definition}[separability]
+\begin{definition}[separability\cite{Jungnitsch-Moroder-Guhne_2011}]\label{def:sep}
     A state $\varrho$ is called \textbf{\textit{separable}} if there exists a bipartition of the Hilbert space $\mathcal{H} = \mathcal{H}_A\otimes\mathcal{H}_{\overline{A}}$ such that
-    \[
-    \varrho = \sum_{n} p_n \varrho_n^{(A)}\otimes \varrho_n^{(\overline{A})}
-    \]
-    A state that is separable with respect to a bipartition $A|\overline{A}$ is denoted by $\varrho^{\mrm{sep}}_{A|\overline{A}}$. Such a state is often referred to as a \textit{classically correlated} state.
+    \begin{equation}\label{eq:sep-def}
+        \varrho = \sum_{n} p_n \ket{\psi_n^{(A)}}\bra{\psi_n^{(A)}}
+        \otimes \ket{\phi_n^{(\overline{A})}}\bra{\phi_n^{(\overline{A})}}
+    \end{equation}
+    where $0\leq p_n\leq 1\forall n$ and $\sum_{k}p_n = 1$. In other words, $\lrg{p_n}$ is a \textit{probability distribution}. A state that is separable with respect to a bipartition $A|\overline{A}$ is denoted by $\varrho^{\mrm{sep}}_{A|\overline{A}}$. Such a state is often referred to as a \textit{classically correlated} state.
 \end{definition}
 
-\begin{definition}[biseparability]
-    A state $\varrho$ is called \textbf{\textit{biseparable}} if it can be expressed as a mixture of separable states
+\begin{definition}[biseparability~\cite{Jungnitsch-Moroder-Guhne_2011}]\label{def:bisep}
+    A state $\varrho$ is called \textbf{\textit{biseparable}} if it can be expressed as a mixture of separable states defined by Def.~\ref{def:sep}
     \begin{equation}\label{eq:bisep-state}
         \varrho = \sum_{A \subset \Lambda}p_{A} \varrho^{\mrm{sep}}_{A|\overline{A}}
     \end{equation}
+    where $\lrg{p_A}$ is a probability distribution.
 \end{definition}
 
-\begin{definition}[Genuine Multipartite Entanglement]
-    A state is \textbf{\textit{genuinly multipartite entangled}} if it is \textbf{not biseparable}.
+\begin{definition}[biseparability 2~\cite{Lyu-Chandorkar-Kapoor-Takei-Sorensen-Witczak-Krempa_2026}]\label{def:bisep-2}
+    Ref.~\cite{Lyu-Chandorkar-Kapoor-Takei-Sorensen-Witczak-Krempa_2026} gives a seemingly different definition. A state $\varrho$ is called \textbf{\textit{biseparable}} if it can be expressed as a mixture of \textbf{biseparable pure states}
+    \begin{equation}\label{eq:bisep-state-2}
+        \varrho = \sum_{A \subset \Lambda}p_{A} \ket{\psi}_A\bra{\psi}_A \otimes\ket{\phi}_{\overline{A}}\bra{\phi}_{\overline{A}}
+    \end{equation}
+    where $\lrg{p_A}$ is a probability distribution.
 \end{definition}
 
-\begin{definition}[Positive Partial Transpose (PPT) State]
-    A state $\varrho$ is called a \textbf{\textit{positive partial transpose} (PPT)} state if its partial transpose $\varrho^{T_A}$ with respect to a subregion $A$ has no negative eigenvalue~\cite{Hofmann-Moroder-Guhne_2014, Peres_1996}.
+Compared to Def.~\ref{def:bisep}, Def.~\ref{def:bisep-2} covers a narrower range since separable states $\varrho^{(\mrm{sep})}_{A|\overline{A}}$ in Eq.~\eqref{eq:bisep-state} are not required to be pure. Later, we will see that genuine multipartite negativity, as a monotone of multipartite entanglement, vanishes if a state is biseparable defined by Def.~\ref{def:bisep}. In other words, \textbf{the condition required by Def.~\ref{def:bisep-2} is too strong}. The range of states that are not genuinely multipartite entangled is wider than the range restricted by Def.~\ref{def:bisep-2}. 
+
+\begin{definition}[Genuine Multipartite Entanglement]\label{def:GME}
+    A state is \textbf{\textit{genuinly multipartite entangled}} if it is \textbf{not biseparable}. Note that the definition of \textit{biseparable} adopted here is based on Def.~\ref{def:bisep}.
 \end{definition}
+
+% \begin{definition}[Positive Partial Transpose (PPT) State]
+%     A state $\varrho$ is called a \textbf{\textit{positive partial transpose} (PPT)} state if its partial transpose $\varrho^{T_A}$ with respect to a subregion $A$ has no negative eigenvalue~\cite{Hofmann-Moroder-Guhne_2014, Peres_1996}.
+% \end{definition}
 
 
 Recently, Ref.~\cite{Lyu-Chandorkar-Kapoor-Takei-Sorensen-Witczak-Krempa_2026} introduces a concept of \textbf{\textit{entanglement frustration}} in \textbf{quantum spin liquid} phases, which states that genuine multipartite entanglement can be found only in \textbf{\textit{loopy}} regions that contain closed loops, contrasting the cases in \textbf{\textit{non-loopy regions}}, where genuine multipartite entanglement is significantly suppressed, which may be understood that the entanglement is \textit{frastrated} by the quantum fluctuation. To describe this phenomenon, the authors of Ref.~\cite{Lyu-Chandorkar-Kapoor-Takei-Sorensen-Witczak-Krempa_2026} adopt \textbf{\textit{genuin multipartite negativity}} to quantitatively measure the multipartite entanglement.
@@ -586,25 +601,71 @@ Recently, Ref.~\cite{Lyu-Chandorkar-Kapoor-Takei-Sorensen-Witczak-Krempa_2026} i
     \[
     N_A(\varrho) \equiv \frac{\norm{\varrho^{T_A}}_1 - 1}{2}
     \]
-    where $\norm{A}_1 \equiv \tr \lr{\sqrt{A^\dagger A}}$ is the trace form of a matrix. In other words, the negativity of a state is the sum of the negative eigenvalues of its partial transpose. A \textbf{\textit{minimum negativity}} is the smallest possible negativity among all possible bipartitions of the system $\Lambda \to A|\overline{A}$
+    where $\norm{A}_1 \equiv \tr \lr{\sqrt{A^\dagger A}}$ is the trace form of a matrix. In other words, the negativity of a state is . 
+\end{definition}
+
+\begin{lemma}\label{lemma:neg-compute}
+    The negativity of a state is always positive, and the value is equal to the sum of the absolute value of negative eigenvalues of its partial transpose.
+\end{lemma}
+\begin{proof}
+    First, separate the eigenvalues of $\varrho^{T_A}$ into $R_{+} \cup R_{-}$, where $R_{+}$ contains only positive eigenvalues and $R_{-}$ contains only non-positive ones. By definition, the negativity can be expressed in terms of the eigenvalues of $\varrho^{T_A}$
+    \[
+    N_A(\varrho) = \frac{1}{2}\lr{\sum_{r \in R_+\cup R_-}\sqrt{r^2} - 1} = \frac{1}{2}\lr{\sum_{r_+\in R_+} r_+ - \sum_{r_-\in R_-} r_- - 1 } = \sum_{r_- \in R_-} \abs{r_-} \geq 0
+    \]
+    where we have used the facts that a state traces to one and a partial transpose is a trace-preserving operation.
+\end{proof}
+
+\begin{definition}
+    A \textbf{\textit{minimum negativity}} is the smallest possible negativity among all possible bipartitions of the system $\Lambda \to A|\overline{A}$
     \[
     N^{\mrm{min}}(\varrho) \equiv \min_{A \subset \Lambda} N_A(\varrho)
     \]
-    Such a quantity does not depend on the partition. Suppose the Hilbert space $\mathcal{H}$ can be separated into $n$ local subspaces (parties) $\mathcal{H} = \bigotimes_{k=1}^{n}\mathcal{H}_k$, then there are $2^{n-1} - 1$ different ways to bipartite the system. If such a constraint is provided, then the subregion $A$ is required to be a composition of the given elementary regions. In this case, the minimum negativity is specifically called an \textbf{\textit{$n$-party minimum negativity}}, denoted by $N^{\mrm{min}}_n(\varrho)$. 
+    Such a quantity does not depend on the partition. If the Hilbert space $\mathcal{H}$ is restricted in such a way that it can only be separated into \textbf{\textit{n} local subspaces (parties)} $\mathcal{H} = \bigotimes_{k=1}^{n}\mathcal{H}_k$, then there are $2^{n-1} - 1$ different ways to bipartition the system. If such a constraint is provided, then the subregion $A$ is required to be a composition of the given elementary regions. In this case, the minimum negativity is specifically called an \textbf{\textit{n-party minimum negativity}}, denoted by $\boldsymbol{N^{\mrm{min}}_n(\varrho)}$. 
 \end{definition}
 
 The minimum negativity encodes information about the genuine multipartite entanglement, as it searches over all possible system separations. However, it is not adequate as a monotone that quantifies the GME since $N^{\mrm{min}}(\varrho) > 0$ does not guarantee GME. To achieve this purpose, the authors of \cite{Jungnitsch-Moroder-Guhne_2011} and \cite{Lyu-Chandorkar-Kapoor-Takei-Sorensen-Witczak-Krempa_2026} came up with the following quantity that modifies the previous definition.
 
-\begin{definition}[Genuine Multipartite Negativity (GMN)~\cite{Lyu-Chandorkar-Kapoor-Takei-Sorensen-Witczak-Krempa_2026}]\label{def:GMN_1}
-    Denote by $\mathcal{DC} \equiv \lrg{\lrg{\rho_k}}$ the set of \textit{decomposition} $\lrg{\rho_k}$ of the state $\varrho$, where each decomposition can expand the density matrix as $\varrho = \sum_{k}p_k\rho_k$, then the \textbf{\textit{genuin multipartite negativity} (GMN)} of a state $\varrho$, denoted by $\mathcal{N}(\varrho)$, is defined as 
+\begin{lemma}\label{lemma:sep-zero-neg}
+    The minimum negativity of a separable state is zero.
+\end{lemma}
+\begin{proof}
+    According to Def.~\ref{def:sep}, if a state $\varrho$ is separable, then there exists at least a bipartition $\Lambda \to A|\overline{A}$ such that $\varrho$ can be expressed in the form of Eq.~\eqref{eq:sep-def}. Take such a bipartition to compute the negativity $N_A(\varrho)$, we obtain
+    \[
+    N_A(\varrho) = \frac{1}{2}
+    \lr{
+        \norm{
+            \sum_{n} p_n 
+            \lr{
+            \ket{\psi_n^{(A)}}
+            \bra{\psi_n^{(A)}}
+            }^{T_A}
+            \otimes 
+            \ket{\phi_n^{(\overline{A})}}
+            \bra{\phi_n^{(\overline{A})}}
+        }_1 
+        - 
+        1
+    }
+    \]
+    Because $\ket{\psi_n^{(A)}}\bra{\psi_n^{(A)}}$ is a pure state, its transpose is still a pure state.
+    \[
+    \lr{\ket{\psi_n^{(A)}}\bra{\psi_n^{(A)}}}^{T_A}
+    =
+    \ket{\psi_n^{*(A)}}\bra{\psi_n^{*(A)}}
+    \]
+    With this property, the density matrix after the partial transpose is still a valid density matrix satisfying $\Tr\lr{\varrho^{T_A}} = 1$ and with all the eigenvalues non-negative. According to Lemma~\ref{lemma:neg-compute}, the resulting negativity is zero. Because negativity is always non-negative, this result implies that $  N_A(\varrho)  $ reaches its minimum value when considering the bipartition $A|\overline{A}$.
+\end{proof}
+
+\begin{definition}[Genuine Multipartite Negativity (\textbf{GMN})~\cite{Lyu-Chandorkar-Kapoor-Takei-Sorensen-Witczak-Krempa_2026}]\label{def:GMN_1}
+    Denote by $\mathcal{DC} \equiv \lrg{\lrg{\rho_k}}$ the set of \textit{decomposition} $\lrg{\rho_k}$ of the state $\varrho$, where each decomposition can expand the density matrix as $\varrho = \sum_{k}p_k\rho_k$ with $\lrg{p_k}$ a probability distribution, then the \textbf{\textit{genuin multipartite negativity} (GMN)} of a state $\varrho$, denoted by $\mathcal{N}(\varrho)$, is defined as 
     \begin{equation}\label{eq:GMN}
         \mathcal{N}(\varrho) \equiv \min_{\lrg{\rho_k} \in \mathcal{DC}} \sum_{k}p_k N^{\mrm{min}}(\rho_k)
     \end{equation}
-    A \textbf{\textit{$n$-party genuine multipartite negativity}}, denoted by $\mathcal{N}_n(\varrho)$, is defined in the same way as Eq.~\eqref{eq:GMN}, with each $N^{\mrm{min}}(\rho_k)$ being replaced with the $n$-party genuine multipartite negativity $N^{\mrm{min}}_n(\rho_k)$.
+    A \textbf{\textit{n-party genuine multipartite negativity}}, denoted by $\boldsymbol{\mathcal{N}_n(\varrho)}$, is defined in the same way as Eq.~\eqref{eq:GMN}, with each $N^{\mrm{min}}(\rho_k)$ being replaced with the $n$-party genuine multipartite negativity $N^{\mrm{min}}_n(\rho_k)$.
 \end{definition}
 
-\begin{lemma}
-    A biseparable state has zero genuine multipartite negativity.
+\begin{lemma}\label{lemma:bisep-zero-GMN}
+    A biseparable state has zero GMN. Note that the definition of biseparability adopted here is based on Def.~\ref{def:bisep}.
 \end{lemma}
 \begin{proof}
     If a state $\varrho$ is biseparable, then it can be expressed in the form given by Eq.~\ref{eq:bisep-state}. Evaluating the mixture of the negativity of the separable components in Eq.~\eqref{eq:bisep-state} 
@@ -613,10 +674,17 @@ The minimum negativity encodes information about the genuine multipartite entang
     =
     0
     \]
-    gives zero because the minimum negativity of a separable state is zero. Because the lower limit of the negativity is zero, the previous observation implies that the biseparable decomposition Eq.~\eqref{eq:bisep-state} gives the minimum in Eq.~\eqref{eq:GMN} directly. 
+    gives zero because, according to Lemma~\ref{lemma:sep-zero-neg}, the minimum negativity of a separable state is zero. Because the lower limit of the negativity is zero, the previous observation implies that the biseparable decomposition Eq.~\eqref{eq:bisep-state} gives the minimum in Eq.~\eqref{eq:GMN} directly. 
 \end{proof}
 
-The above definition can be found in Ref.~\cite{Lyu-Chandorkar-Kapoor-Takei-Sorensen-Witczak-Krempa_2026}. The searching of the separation $\lrg{\rho_k}$ that minimizes the functional $\sum_{k}p_k N^{\mrm{min}}(\rho_k)$ can be implemented using semidefinite programming introduced in Ref.~\cite{Jungnitsch-Moroder-Guhne_2011, Hofmann-Moroder-Guhne_2014}.
+\begin{theorem}[GMN as a Monotone]
+    A state is genuinely multipartite entangled if its GMN is finite.
+\end{theorem}
+\begin{proof}
+    Lemma.~\ref{lemma:bisep-zero-GMN} implies that a state having a finite GMN must not be biseparable. According to Def.~\ref{def:GME}, a genuinely multipartite state is a state that is not biseparable. Combining these two facts proves this corollary.
+\end{proof}
+
+The above definition can be found in Ref.~\cite{Lyu-Chandorkar-Kapoor-Takei-Sorensen-Witczak-Krempa_2026}. The searching of the separation $\lrg{\rho_k}$ that minimizes the functional $\sum_{k}p_k N^{\mrm{min}}(\rho_k)$ can be implemented using \textbf{semidefinite programming} introduced in Ref.~\cite{Jungnitsch-Moroder-Guhne_2011, Hofmann-Moroder-Guhne_2014}.
 
 \begin{definition}[Fully Decomposable Witness]
     A \textit{entanglement witness} is \textit{fully decomposable} if $\forall A \subset \Lambda$, there exist \textbf{positive semidefinite}~\cite{Lewenstein-Kraus-Cirac-Horodecki_2000} operators $P$ and $Q$ such that 
@@ -634,9 +702,9 @@ The definition of fully decomposable witnesses can be used to reformulate the ge
     Moreover, Ref.~\cite{Lyu-Chandorkar-Kapoor-Takei-Sorensen-Witczak-Krempa_2026} further shows that the set $\mathfrak{W}$ can be reduced to a set that only contains the partial transpose, $\mathfrak{W} = \lrg{Q_A^{T_A} \; \forall A\;:\; 0 \leq Q_A \leq \mathds{1}}$ of semidefinite operators~\cite{Lewenstein-Kraus-Cirac-Horodecki_2000}.
 \end{definition}
 
-\begin{lemma}
+\begin{theorem}
     Definitions \ref{def:GMN_1} and \ref{def:GMN_2} are equivalent.
-\end{lemma}
+\end{theorem}
 \begin{proof}
     We start by discussing an expression equivalent to the minimum negativity defined in Def.~\ref{def:negativity}. First, decompose the partial transpose of the density matrix $\varrho^{T_A} = \mathcal{O}_+ + \mathcal{O}_-$ into a semidefinite $\mathcal{O}_+ \geq 0$ and a negative part $\mathcal{O}_- < 0$. By definition, the negativity $N(\varrho)$ is equal to the absolute value of the trace of the negative part $\abs{\Tr\lr{\mathcal{O}_-}} = -\Tr\lr{\mathcal{O}_-}$. Suppose an operator $0 \leq Q \leq \mathds{1}$ is semidefinite, then the composition $\mathcal{O}_+ Q$ is always semidefinite, while $\mathcal{O}_-Q$ is always negative, rendering the following expression of the trace
     \[
@@ -700,11 +768,11 @@ The definition of fully decomposable witnesses can be used to reformulate the ge
 
 \section{Exactly Solving for the Ground State}
 According to equation (29) of Ref.~\cite{Kitaev_2006}, we can diagonalize the Kitaev Hamiltonian in the momentum space if the gauge is fixed to be $u_{ij} = +1\forall\; (ij)$, 
-\[\hat{H} = \sum_{\bo{k}}\psi^\dagger_{k}U(k)\psi_{k} = \frac{1}{2}\sum_{\bo{k}}\lrm{is_{\bo{k}}d_{k,A}^\dagger d_{k,B} - is_{\bo{k}}^*d_{k,B}^\dagger d_{k,A}}\]
+\[\hat{H} = \sum_{\bo{k}}\Psi^\dagger_{k}U(k)\Psi_{k} = \frac{1}{2}\sum_{\bo{k}}\lrm{is_{\bo{k}}d_{k,A}^\dagger d_{k,B} - is_{\bo{k}}^*d_{k,B}^\dagger d_{k,A}}\]
 where
-\[\psi_k \equiv \frac{1}{\sqrt{2N}}\sum_{\mu}e^{-ik\cdot r_\mu}\begin{pmatrix}
-                                                             c_{\mu,A} \\
-                                                             c_{\mu,B}
+\[\Psi_k \equiv \frac{1}{\sqrt{2N}}\sum_{\bo{r}}e^{-ik\cdot \bo{r}}\begin{pmatrix}
+                                                             c_{\bo{r},A} \\
+                                                             c_{\bo{r},B}
                                                            \end{pmatrix} = \begin{pmatrix}
                                                                              d_{k,A} \\
                                                                              d_{k,B}
@@ -713,12 +781,12 @@ where
                       0 & is_{\bo{k}} \\
                       -is_{\bo{k}}^* & 0 
                     \end{pmatrix} \quad , \quad s_{\bo{k}} = 2\lr{J_xe^{ik\cdot \lr{\bo{a}_2 - \bo{a}_1}} + J_ye^{ik\cdot \bo{a}_2} + J_z}\]
-Note that the index $\mu$ above is the Bravais lattice point, and $A$,$B$ represent the sublattice. If we further define a normal fermion operator, 
+Note that the index $\bo{r}$ above is the Bravais lattice point, and $A$,$B$ represent the sublattice. If we further define a normal fermion operator, 
 \begin{equation}\label{gamm def.e}
-  \gamma_\mu \equiv \frac{1}{2}\lr{c_{\mu,A} + ic_{\mu,B}}
+  \gamma_{\bo{r}} \equiv \frac{1}{2}\lr{c_{{\bo{r}},A} + ic_{{\bo{r}},B}}
 \end{equation}
  then its Fourier transform would be 
-\[\gamma_{k} = \frac{1}{\sqrt{2N}}\sum_{\mu}\gamma_{\mu}e^{-ik\cdot r_\mu} = \frac{1}{2}\lr{d_{k,A} + id_{k,B}}\]
+\[\gamma_{k} = \frac{1}{\sqrt{2N}}\sum_{{\bo{r}}}\gamma_{{\bo{r}}}e^{-ik\cdot \bo{r}} = \frac{1}{2}\lr{d_{k,A} + id_{k,B}}\]
 In this way, the operator $d$ can be expressed in terms of $\gamma$ fermion,
 \[
 \left\{
@@ -787,11 +855,55 @@ therefore
 } of the $\gamma$-fermion pair,
 \begin{align*}
   \ket{M} &= A\lrm{g}\exp\lr{\sum_{\bo{k}}g_k \gamma^\dagger_k \gamma^\dagger_{-k}}\ket{\vac_\gamma}\\
-   &= A\lrm{g}\exp\lr{\sum_{\mu\nu}g_{\mu\nu} \gamma^\dagger_\mu \gamma^\dagger_{\nu}}\ket{\vac_\gamma}\\
-   &= A\lrm{g}\lrm{\mathds{1} + \sum_{\mu\nu}g_{\mu\nu} \gamma^\dagger_\mu \gamma^\dagger_{\nu} + \frac{1}{2!}\sum_{\mu\nu\kappa\lambda}g_{\mu\nu}g_{\kappa\lambda
-   } \gamma^\dagger_\mu \gamma^\dagger_{\nu}\gamma^\dagger_\kappa \gamma^\dagger_{\lambda} + \cdots}\ket{\vac_\gamma}
+   &= A\lrm{g}\exp\lr{\sum_{{\bo{r}}{\bo{r}'}}g_{{\bo{r}}{\bo{r}'}} \gamma^\dagger_{\bo{r}} \gamma^\dagger_{{\bo{r}'}}}\ket{\vac_\gamma}\\
+   &= A\lrm{g}\lrm{\mathds{1} + \sum_{{\bo{r}}{\bo{r}'}}g_{{\bo{r}}{\bo{r}'}} \gamma^\dagger_{\bo{r}} \gamma^\dagger_{{\bo{r}'}} + \frac{1}{2!}\sum_{{\bo{r}}{\bo{r}'}\kappa\lambda}g_{{\bo{r}}{\bo{r}'}}g_{\kappa\lambda
+   } \gamma^\dagger_{\bo{r}} \gamma^\dagger_{{\bo{r}'}}\gamma^\dagger_\kappa \gamma^\dagger_{\lambda} + \cdots}\ket{\vac_\gamma}
 \end{align*}
-where $\ket{\vac_\gamma}$ is the vacuum state of the $\gamma$-fermions, and $g_{\mu\nu} = \frac{1}{2N}\sum_{\bo{k}}g_ke^{-ik\cdot(r_\mu-r_\nu)}$. 
+where $\ket{\vac_\gamma}$ is the vacuum state of the $\gamma$-fermions, and $g_{{\bo{r}}{\bo{r}'}} = \frac{1}{2N}\sum_{\bo{k}}g_ke^{-ik\cdot(\bo{r}-\bo{r}')}$. 
+
+\subsection{With External Magnetic Field}
+For simplicity, we focus only on the isotropic limit~\cite{Kitaev_2006}. In this situation, applying an external magnetic field $\bo{h} = \lr{h_x,h_y,h_z}$, which is equivalent to adding a Zeeman perturbation $H' = -\sum_{i}\bo{h}\cdot\bog{\sigma}$, makes the Kitaev model equivalent to the Haldane honeycomb model~\cite{Haldane_1988} up to the third-order perturbation. The Hamiltonian under this approximation in the Majorana fermion representation reads
+\begin{align*}
+    H 
+    &= 
+    -\frac{1}{2}J\sum_{\bo{r}}
+    \lr{
+        ic_{\bo{r}A}c_{\bo{r}+\hat{\bo{n}}_1,B} 
+        + 
+        ic_{\bo{r}A}c_{\bo{r}+\hat{\bo{n}}_2,B}
+        +
+        ic_{\bo{r}A}c_{\bo{r}B}
+        +\mrm{H.c.}
+    } \\
+    &\quad\quad\quad
+    - 
+    \frac{1}{2}\kappa
+    \sum_{\bo{r}}\sum_{\mu = A,B}
+    \lr{
+        c_{\bo{r}\mu}c_{\bo{r}+\hat{\bo{n}}_1,\mu}
+        +
+        c_{\bo{r}\mu}c_{\bo{r}+\hat{\bo{n}}_2,\mu}
+        +
+        c_{\bo{r}\mu}c_{\bo{r}+\hat{\bo{n}}_1-\hat{\bo{n}}_2,\mu}
+        +
+        \mrm{H.c.}
+    }
+\end{align*}
+
+\[
+H = 
+\frac{1}{2}
+\sum_{\bo{k}}
+\Psi_{\bo{k}}^\dagger
+\begin{pmatrix}
+  \Delta_{\bo{k}} & is_{\bo{k}} \\
+  -is_{\bo{k}}^* & -\Delta_{\bo{k}}
+\end{pmatrix}
+\Psi_{\bo{k}}
+\]
+\[
+\Delta_{\bo{k}} = 
+\]
 
 \section{Sum Rules for Correlation Functions}
 
