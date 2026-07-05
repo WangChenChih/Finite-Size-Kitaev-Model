@@ -552,7 +552,7 @@ In the derivation, we have used the identity $i^{n} = (-i)^n = (-1)^{n(n-1)/2}$ 
     \end{vmatrix}
 \end{equation}
 
-\section{Genuine Multiparty Negativity as an Entanglement Monotone}
+\section{Genuine Multipartite Negativity as an Entanglement Monotone}
 
 
 \begin{definition}[separability]
@@ -581,12 +581,12 @@ In the derivation, we have used the identity $i^{n} = (-i)^n = (-1)^{n(n-1)/2}$ 
 
 Recently, Ref.~\cite{Lyu-Chandorkar-Kapoor-Takei-Sorensen-Witczak-Krempa_2026} introduces a concept of \textbf{\textit{entanglement frustration}} in quantum spin liquid states, which states that entanglement, involving genuine multipartite entanglement, is diminished in \textbf{\textit{non-loopy regions}}, preventing two nearby spins from sharing entanglement. In the meantime, genuine multipartite entanglement can be found in \textbf{\textit{loopy}} regions that contain closed loops.
 
-\begin{definition}[Negativity]
+\begin{definition}[Negativity]\label{def:negativity}
     For bipartite entanglement, the \textbf{\textit{negativity}} of a state $\rho$ is defined as~\cite{Zyczkowski-Horodecki-Sanpera-Lewenstein_1998, Vidal-Werner_2002}
     \[
     N_A(\varrho) \equiv \frac{\norm{\varrho^{T_A}}_1 - 1}{2}
     \]
-    where $\norm{A}_1 \equiv \tr \lr{\sqrt{A^\dagger A}}$ is the trace form of a matrix. A \textbf{\textit{minimum negativity}} is the smallest possible negativity among all possible bipartitions of the system $\Lambda \to A|\overline{A}$
+    where $\norm{A}_1 \equiv \tr \lr{\sqrt{A^\dagger A}}$ is the trace form of a matrix. In other words, the negativity of a state is the sum of the negative eigenvalues of its partial transpose. A \textbf{\textit{minimum negativity}} is the smallest possible negativity among all possible bipartitions of the system $\Lambda \to A|\overline{A}$
     \[
     N^{\mrm{min}}(\varrho) \equiv \min_{A \subset \Lambda} N_A(\varrho)
     \]
@@ -594,26 +594,86 @@ Recently, Ref.~\cite{Lyu-Chandorkar-Kapoor-Takei-Sorensen-Witczak-Krempa_2026} i
 \end{definition}
 
 The minimum negativity encodes information about the genuine multipartite entanglement, as it searches over all possible system separations. However, it is not adequate as a monotone that quantifies the GME since $N^{\mrm{min}}(\varrho) > 0$ does not guarantee GME. To achieve this purpose, the authors of \cite{Jungnitsch-Moroder-Guhne_2011} and \cite{Lyu-Chandorkar-Kapoor-Takei-Sorensen-Witczak-Krempa_2026} came up with the following quantity that modifies the previous definition.
-\begin{definition}[Genuine Multipartite Negativity (GMN)~\cite{Lyu-Chandorkar-Kapoor-Takei-Sorensen-Witczak-Krempa_2026}]
+\begin{definition}[Genuine Multipartite Negativity (GMN)~\cite{Lyu-Chandorkar-Kapoor-Takei-Sorensen-Witczak-Krempa_2026}]\label{def:GMN_1}
     Denote by $\mathcal{DC} \equiv \lrg{\lrg{\rho_k}}$ the set of \textit{decomposition} $\lrg{\rho_k}$ of the state $\varrho$, where each decomposition can expand the density matrix as $\varrho = \sum_{k}p_k\rho_k$, then the \textbf{\textit{genuin multipartite negativity} (GMN)} of a state $\varrho$, denoted by $\mathcal{N}(\varrho)$, is defined as 
     \[
     \mathcal{N}(\varrho) \equiv \min_{\lrg{\rho_k} \in \mathcal{DC}} \sum_{k}p_k N^{\mrm{min}}(\rho_k)
     \]
 \end{definition}
 
-The above definition is adapted in Ref.~\cite{Lyu-Chandorkar-Kapoor-Takei-Sorensen-Witczak-Krempa_2026}, which is completely based on the density matrix. For a more general setting, Ref.~\cite{Hofmann-Moroder-Guhne_2014, Jungnitsch-Moroder-Guhne_2011} defines the negativity based on a given \textit{fully decomposable entanglement witness} $W$. This definition is also reviewed in the supplementary material of Ref.~\cite{Lyu-Chandorkar-Kapoor-Takei-Sorensen-Witczak-Krempa_2026}. 
+The above definition can be found in Ref.~\cite{Lyu-Chandorkar-Kapoor-Takei-Sorensen-Witczak-Krempa_2026}. The searching of the separation $\lrg{\rho_k}$ that minimizes the functional $\sum_{k}p_k N^{\mrm{min}}(\rho_k)$ can be implemented using semidefinite programming introduced in Ref.~\cite{Jungnitsch-Moroder-Guhne_2011, Hofmann-Moroder-Guhne_2014}. 
 
 \begin{definition}[Fully Decomposable Witness]
-    A \textit{entanglement witness} is \textit{fully decomposable} if $\forall A \subset \Lambda$, there exist \textbf{positive semidefinite} operators $P$ and $Q$ such that 
+    A \textit{entanglement witness} is \textit{fully decomposable} if $\forall A \subset \Lambda$, there exist \textbf{positive semidefinite}~\cite{Lewenstein-Kraus-Cirac-Horodecki_2000} operators $P$ and $Q$ such that 
     \[
     W = P + Q^{T_A}
     \]
-    where $T_A$ stands for the partial transpose with respect to $A$.
+    where $T_A$ stands for the partial transpose with respect to $A$. Ref.~\cite{Lyu-Chandorkar-Kapoor-Takei-Sorensen-Witczak-Krempa_2026} adds one more constraint to the operator $Q$ that $Q \leq \mathds{1}$.
+\end{definition}
+The definition of fully decomposable witnesses can be used to reformulate the genuine multipartite negativity that can be computed numerically more easily.   
+\begin{definition}[Genuine Multipartite Nagativeity~\cite{Jungnitsch-Moroder-Guhne_2011, Hofmann-Moroder-Guhne_2014}]\label{def:GMN_2}
+    Given $\mathfrak{W}$ the set of all decomposable witnesses, the genuine multipartite entanglement of a state $\varrho$ is defined as
+    \[
+    \mathcal{N}(\varrho) \equiv -\min_{W \in \mathfrak{W}}\Tr\lr{\varrho W}
+    \]
+    Moreover, Ref.~\cite{Lyu-Chandorkar-Kapoor-Takei-Sorensen-Witczak-Krempa_2026} further shows that the set $\mathfrak{W}$ can be reduced to a set that only contains the partial transpose, $\mathfrak{W} = \lrg{Q^{T_A}\;:\; 0 \leq Q \leq \mathds{1}}$ of semidefinite operators~\cite{Lewenstein-Kraus-Cirac-Horodecki_2000}.
 \end{definition}
 
-\begin{definition}[Genuine Multipartite Nagativeity~\cite{Jungnitsch-Moroder-Guhne_2011, Hofmann-Moroder-Guhne_2014}]
+\begin{lemma}
+    Definitions \ref{def:GMN_1} and \ref{def:GMN_2} are equivalent.
+\end{lemma}
+\begin{proof}
+    We start by discussing an expression equivalent to the minimum negativity defined in Def.~\ref{def:negativity}. First, decompose the partial transpose of the density matrix $\varrho^{T_A} = \mathcal{O}_+ + \mathcal{O}_-$ into a semidefinite $\mathcal{O}_+ \geq 0$ and a negative part $\mathcal{O}_- < 0$. By definition, the negativity $N(\varrho)$ is equal to the absolute value of the trace of the negative part $\abs{\Tr\lr{\mathcal{O}_-}} = -\Tr\lr{\mathcal{O}_-}$. Suppose an operator $0 \leq Q \leq \mathds{1}$ is semidefinite, then the composition $\mathcal{O}_+ Q$ is always semidefinite, while $\mathcal{O}_-Q$ is always negative, rendering the following expression of the trace
+    \[
+    -\Tr\lr{\varrho^{T_A} Q} 
+    = 
+    -\Tr\lr{\mathcal{O}_+ Q} 
+    - 
+    \Tr\lr{\mathcal{O}_- Q}
+    =
+    -\abs{\Tr\lr{\mathcal{O}_+ Q}}
+    +
+    \abs{\Tr\lr{\mathcal{O}_- Q}}
+    \]
+
+    \[
+    - \min_{0\leq Q \leq\mathds{1}} \Tr\lr{\varrho^{T_A} Q}
+    =
+    - \min_{0\leq Q \leq\mathds{1}} \abs{\Tr\lr{\mathcal{O}_+ Q}}
+    +
+    \max_{0\leq Q \leq\mathds{1}} \abs{\Tr\lr{\mathcal{O}_- Q}}
+    \]
+
+    \[
+    \abs{\Tr\lr{\mathcal{O}_- Q}} \leq \abs{\Tr\mathcal{O}_-} \abs{\Tr Q}
+    \]
+    \[
+    \max_{0\leq Q \leq\mathds{1}} \abs{\Tr\lr{\mathcal{O}_- Q}}
+    =
+    \abs{\Tr\mathcal{O}_-} \max_{0\leq Q \leq\mathds{1}} \abs{\Tr Q}
+    =
+    \abs{\Tr\mathcal{O}_-}
+    =
+    N(\varrho)
+    \]
+
+    \[
+    -\min_{-\leq Q\leq\mathds{1}}\Tr\lr{\varrho^{T_A} Q} = -\min_{-\leq Q\leq\mathds{1}}\Tr\lr{\varrho Q^{T_A}} = N(\varrho)
+    \]
+    \alert{continue}
     
-\end{definition}
+    \begin{align*}
+        \mathcal{L}(\lrg{\rho_k}, W) &= \sum_k p_k N^{\min}(\rho_k) + \mrm{Tr}
+        \lr{
+        W \underbrace{\lr{\rho - \sum_k p_k \rho_k}}_{\text{constraint}} 
+        } \\
+        &= \mrm{Tr}\lr{W\rho} + \sum_k p_k \lr{N^{\min}(\rho_k) - \mrm{Tr}\lr{W\rho_k}}
+    \end{align*}
+    Because $p_k\geq 0 \forall k$, the dual problem requires
+    \[
+    N^{\min}(\rho_k) - \mrm{Tr}\lr{W\rho_k} \geq 0
+    \]
+\end{proof}
 
 \appendix
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
