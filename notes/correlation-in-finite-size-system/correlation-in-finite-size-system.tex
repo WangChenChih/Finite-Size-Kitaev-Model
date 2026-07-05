@@ -663,13 +663,20 @@ where $R_{\bo{k}} \equiv \mrm{Re}\lrg{s_{\bo{k}}}$ and $I_k \equiv \mrm{Im}\lrg{
 Since 
 \[\bo{H}(k)^2 = \lr{R_{\bo{k}}^2 + I_k^2}\mathds{1} = \abs{s_{\bo{k}}}^2\mathds{1}\]
 we can see that the eigenvalues are $\epsilon_{k} = \pm\abs{s_{\bo{k}}}$, which is consistent with Kitaev's result (equation (32) in Ref.\cite{KitaevOriginal}). To diagonalize the matrix $\bo{H}$ we have to apply the Bogoliubov transformation,
-\[U = \frac{1}{\sqrt{2\abs{s_{\bo{k}}}}}\begin{pmatrix}
-                                   \mrm{sgn}(I_k)\sqrt{\abs{s_{\bo{k}}}+R_{\bo{k}}} & -i\sqrt{\abs{s_{\bo{k}}}-R_{\bo{k}}} \\
-                                   i\sqrt{\abs{s_{\bo{k}}}-R_{\bo{k}}} & -\mrm{sgn}(I_k)\sqrt{\abs{s_{\bo{k}}}+R_{\bo{k}}} 
-                                 \end{pmatrix} = \begin{pmatrix}
-                                                   \mrm{sgn}(I_k) u_k & -iv_k \\
-                                                   i v_k &  -\mrm{sgn}(I_k) u_k
-                                                 \end{pmatrix} = v_k\sigma^y + \mrm{sgn}(I_k)u_k\sigma^z\]
+\begin{align*}
+U &= \frac{1}{\sqrt{2\abs{s_{\bo{k}}}}}
+        \begin{pmatrix}
+           \mrm{sgn}(I_k)\sqrt{\abs{s_{\bo{k}}}+R_{\bo{k}}} & -i\sqrt{\abs{s_{\bo{k}}}-R_{\bo{k}}} \\
+           i\sqrt{\abs{s_{\bo{k}}}-R_{\bo{k}}} & -\mrm{sgn}(I_k)\sqrt{\abs{s_{\bo{k}}}+R_{\bo{k}}} 
+         \end{pmatrix} 
+         = 
+         \begin{pmatrix}
+           \mrm{sgn}(I_k) u_k & -iv_k \\
+           i v_k &  -\mrm{sgn}(I_k) u_k
+         \end{pmatrix} \\
+         &= 
+         v_k\sigma^y + \mrm{sgn}(I_k)u_k\sigma^z
+\end{align*}
 such that\footnote{Those parameters in the matrix $U$ have the following properties: \textbf{(i)} $u_k = u_{-k}$, \textbf{(ii)} $v_{k} = v_{-k}$, and  \textbf{(iii)} $\mrm{sgn}(I_{k}) = -\mrm{sgn}(I_{-k})$} 
 \[U\bo{H}U^\dagger = \begin{pmatrix}
                        \abs{s_{\bo{k}}} & 0 \\
