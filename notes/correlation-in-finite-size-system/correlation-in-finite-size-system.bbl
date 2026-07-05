@@ -85,27 +85,27 @@
   {https://doi.org/10.1103/PhysRevB.78.155134} {\bibfield  {journal} {\bibinfo
   {journal} {Phys. Rev. B}\ }\textbf {\bibinfo {volume} {78}},\ \bibinfo
   {pages} {155134} (\bibinfo {year} {2008})}\BibitemShut {NoStop}%
-\bibitem [{\citenamefont {Hofmann}\ \emph {et~al.}(2014)\citenamefont
-  {Hofmann}, \citenamefont {Moroder},\ and\ \citenamefont
-  {Gühne}}]{Hofmann-Moroder-Guhne_2014}%
+\bibitem [{\citenamefont {Haldane}(1988)}]{Haldane_1988}%
   \BibitemOpen
-  \bibfield  {author} {\bibinfo {author} {\bibfnamefont {M.}~\bibnamefont
-  {Hofmann}}, \bibinfo {author} {\bibfnamefont {T.}~\bibnamefont {Moroder}},\
-  and\ \bibinfo {author} {\bibfnamefont {O.}~\bibnamefont {Gühne}},\
-  }\bibfield  {title} {\emph {\bibinfo {title} {\bibinfo {title} {Analytical
-  characterization of the genuine multiparticle negativity}}},\ }\href
-  {https://doi.org/10.1088/1751-8113/47/15/155301} {\bibfield  {journal}
-  {\bibinfo  {journal} {Journal of Physics A: Mathematical and Theoretical}\
-  }\textbf {\bibinfo {volume} {47}},\ \bibinfo {pages} {155301} (\bibinfo
-  {year} {2014})}\BibitemShut {NoStop}%
-\bibitem [{\citenamefont {Peres}(1996)}]{Peres_1996}%
+  \bibfield  {author} {\bibinfo {author} {\bibfnamefont {F.~D.~M.}\
+  \bibnamefont {Haldane}},\ }\bibfield  {title} {\emph {\bibinfo {title}
+  {\bibinfo {title} {Model for a Quantum Hall Effect without Landau Levels:
+  Condensed-Matter Realization of the "Parity Anomaly"}}},\ }\href
+  {https://doi.org/10.1103/PhysRevLett.61.2015} {\bibfield  {journal} {\bibinfo
+   {journal} {Phys. Rev. Lett.}\ }\textbf {\bibinfo {volume} {61}},\ \bibinfo
+  {pages} {2015} (\bibinfo {year} {1988})}\BibitemShut {NoStop}%
+\bibitem [{\citenamefont {Jungnitsch}\ \emph {et~al.}(2011)\citenamefont
+  {Jungnitsch}, \citenamefont {Moroder},\ and\ \citenamefont
+  {G\"uhne}}]{Jungnitsch-Moroder-Guhne_2011}%
   \BibitemOpen
-  \bibfield  {author} {\bibinfo {author} {\bibfnamefont {A.}~\bibnamefont
-  {Peres}},\ }\bibfield  {title} {\emph {\bibinfo {title} {\bibinfo {title}
-  {Separability Criterion for Density Matrices}}},\ }\href
-  {https://doi.org/10.1103/PhysRevLett.77.1413} {\bibfield  {journal} {\bibinfo
-   {journal} {Phys. Rev. Lett.}\ }\textbf {\bibinfo {volume} {77}},\ \bibinfo
-  {pages} {1413} (\bibinfo {year} {1996})}\BibitemShut {NoStop}%
+  \bibfield  {author} {\bibinfo {author} {\bibfnamefont {B.}~\bibnamefont
+  {Jungnitsch}}, \bibinfo {author} {\bibfnamefont {T.}~\bibnamefont
+  {Moroder}},\ and\ \bibinfo {author} {\bibfnamefont {O.}~\bibnamefont
+  {G\"uhne}},\ }\bibfield  {title} {\emph {\bibinfo {title} {\bibinfo {title}
+  {Taming Multiparticle Entanglement}}},\ }\href
+  {https://doi.org/10.1103/PhysRevLett.106.190502} {\bibfield  {journal}
+  {\bibinfo  {journal} {Phys. Rev. Lett.}\ }\textbf {\bibinfo {volume} {106}},\
+  \bibinfo {pages} {190502} (\bibinfo {year} {2011})}\BibitemShut {NoStop}%
 \bibitem [{\citenamefont {Lyu}\ \emph {et~al.}(2026)\citenamefont {Lyu},
   \citenamefont {Chandorkar}, \citenamefont {Kapoor}, \citenamefont {Takei},
   \citenamefont {S{\o}rensen},\ and\ \citenamefont
@@ -147,18 +147,19 @@
   {https://doi.org/10.1103/PhysRevA.65.032314} {\bibfield  {journal} {\bibinfo
   {journal} {Phys. Rev. A}\ }\textbf {\bibinfo {volume} {65}},\ \bibinfo
   {pages} {032314} (\bibinfo {year} {2002})}\BibitemShut {NoStop}%
-\bibitem [{\citenamefont {Jungnitsch}\ \emph {et~al.}(2011)\citenamefont
-  {Jungnitsch}, \citenamefont {Moroder},\ and\ \citenamefont
-  {G\"uhne}}]{Jungnitsch-Moroder-Guhne_2011}%
+\bibitem [{\citenamefont {Hofmann}\ \emph {et~al.}(2014)\citenamefont
+  {Hofmann}, \citenamefont {Moroder},\ and\ \citenamefont
+  {Gühne}}]{Hofmann-Moroder-Guhne_2014}%
   \BibitemOpen
-  \bibfield  {author} {\bibinfo {author} {\bibfnamefont {B.}~\bibnamefont
-  {Jungnitsch}}, \bibinfo {author} {\bibfnamefont {T.}~\bibnamefont
-  {Moroder}},\ and\ \bibinfo {author} {\bibfnamefont {O.}~\bibnamefont
-  {G\"uhne}},\ }\bibfield  {title} {\emph {\bibinfo {title} {\bibinfo {title}
-  {Taming Multiparticle Entanglement}}},\ }\href
-  {https://doi.org/10.1103/PhysRevLett.106.190502} {\bibfield  {journal}
-  {\bibinfo  {journal} {Phys. Rev. Lett.}\ }\textbf {\bibinfo {volume} {106}},\
-  \bibinfo {pages} {190502} (\bibinfo {year} {2011})}\BibitemShut {NoStop}%
+  \bibfield  {author} {\bibinfo {author} {\bibfnamefont {M.}~\bibnamefont
+  {Hofmann}}, \bibinfo {author} {\bibfnamefont {T.}~\bibnamefont {Moroder}},\
+  and\ \bibinfo {author} {\bibfnamefont {O.}~\bibnamefont {Gühne}},\
+  }\bibfield  {title} {\emph {\bibinfo {title} {\bibinfo {title} {Analytical
+  characterization of the genuine multiparticle negativity}}},\ }\href
+  {https://doi.org/10.1088/1751-8113/47/15/155301} {\bibfield  {journal}
+  {\bibinfo  {journal} {Journal of Physics A: Mathematical and Theoretical}\
+  }\textbf {\bibinfo {volume} {47}},\ \bibinfo {pages} {155301} (\bibinfo
+  {year} {2014})}\BibitemShut {NoStop}%
 \bibitem [{\citenamefont {Lewenstein}\ \emph {et~al.}(2000)\citenamefont
   {Lewenstein}, \citenamefont {Kraus}, \citenamefont {Cirac},\ and\
   \citenamefont {Horodecki}}]{Lewenstein-Kraus-Cirac-Horodecki_2000}%
