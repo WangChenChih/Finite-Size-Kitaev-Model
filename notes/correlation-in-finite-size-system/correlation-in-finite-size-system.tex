@@ -96,7 +96,7 @@
 
 
 
-%\fontsize{12pt}{18pt}\selectfont
+\fontsize{12pt}{16pt}\selectfont
 
 \begin{abstract}
     In this note, we discuss how to compute multi-spin correlation functions in a finite-size Kitaev model, which only contains four distinct plaquettes. These correlation functions are crucial in constructing the density matrix of the Kitaev ground state.
@@ -552,15 +552,68 @@ In the derivation, we have used the identity $i^{n} = (-i)^n = (-1)^{n(n-1)/2}$ 
     \end{vmatrix}
 \end{equation}
 
-
-\section{Plaquette Operators}
-
 \section{Genuine Multiparty Negativity as an Entanglement Monotone}
-For bipartite entanglement, the negativity of a state $\rho$ is
-defined as
-\[
-N(\rho) \equiv 
-\]
+
+
+\begin{definition}[separability]
+    A state $\varrho$ is called \textbf{\textit{separable}} if there exists a bipartition of the Hilbert space $\mathcal{H} = \mathcal{H}_A\otimes\mathcal{H}_{\overline{A}}$ such that
+    \[
+    \varrho = \sum_{n} p_n \varrho_n^{(A)}\otimes \varrho_n^{(\overline{A})}
+    \]
+    A state that is separable with respect to a bipartition $A|\overline{A}$ is denoted by $\varrho^{\mrm{sep}}_{A|\overline{A}}$. Such a state is often referred to as a \textit{classically correlated} state.
+\end{definition}
+
+\begin{definition}[biseparability]
+    A state $\varrho$ is called \textbf{\textit{biseparable}} if it can be expressed as a mixture of separable states
+    \[
+    \varrho = \sum_{A \subset \Lambda}p_{A} \varrho^{\mrm{sep}}_{A|\overline{A}}
+    \]
+\end{definition}
+
+\begin{definition}[Genuine Multipartite Entanglement]
+    A state is \textbf{\textit{genuinly multipartite entangled}} if it is \textbf{not biseparable}.
+\end{definition}
+
+\begin{definition}[Positive Partial Transpose (PPT) State]
+    A state $\varrho$ is called a \textbf{\textit{positive partial transpose} (PPT)} state if its partial transpose $\varrho^{T_A}$ with respect to a subregion $A$ has no negative eigenvalue~\cite{Hofmann-Moroder-Guhne_2014, Peres_1996}.
+\end{definition}
+
+
+Recently, Ref.~\cite{Lyu-Chandorkar-Kapoor-Takei-Sorensen-Witczak-Krempa_2026} introduces a concept of \textbf{\textit{entanglement frustration}} in quantum spin liquid states, which states that entanglement, involving genuine multipartite entanglement, is diminished in \textbf{\textit{non-loopy regions}}, preventing two nearby spins from sharing entanglement. In the meantime, genuine multipartite entanglement can be found in \textbf{\textit{loopy}} regions that contain closed loops.
+
+\begin{definition}[Negativity]
+    For bipartite entanglement, the \textbf{\textit{negativity}} of a state $\rho$ is defined as~\cite{Zyczkowski-Horodecki-Sanpera-Lewenstein_1998, Vidal-Werner_2002}
+    \[
+    N_A(\varrho) \equiv \frac{\norm{\varrho^{T_A}}_1 - 1}{2}
+    \]
+    where $\norm{A}_1 \equiv \tr \lr{\sqrt{A^\dagger A}}$ is the trace form of a matrix. A \textbf{\textit{minimum negativity}} is the smallest possible negativity among all possible bipartitions of the system $\Lambda \to A|\overline{A}$
+    \[
+    N^{\mrm{min}}(\varrho) \equiv \min_{A \subset \Lambda} N_A(\varrho)
+    \]
+    Such a quantity does not depend on the partition.
+\end{definition}
+
+The minimum negativity encodes information about the genuine multipartite entanglement, as it searches over all possible system separations. However, it is not adequate as a monotone that quantifies the GME since $N^{\mrm{min}}(\varrho) > 0$ does not guarantee GME. To achieve this purpose, the authors of \cite{Jungnitsch-Moroder-Guhne_2011} and \cite{Lyu-Chandorkar-Kapoor-Takei-Sorensen-Witczak-Krempa_2026} came up with the following quantity that modifies the previous definition.
+\begin{definition}[Genuine Multipartite Negativity (GMN)~\cite{Lyu-Chandorkar-Kapoor-Takei-Sorensen-Witczak-Krempa_2026}]
+    Denote by $\mathcal{DC} \equiv \lrg{\lrg{\rho_k}}$ the set of \textit{decomposition} $\lrg{\rho_k}$ of the state $\varrho$, where each decomposition can expand the density matrix as $\varrho = \sum_{k}p_k\rho_k$, then the \textbf{\textit{genuin multipartite negativity} (GMN)} of a state $\varrho$, denoted by $\mathcal{N}(\varrho)$, is defined as 
+    \[
+    \mathcal{N}(\varrho) \equiv \min_{\lrg{\rho_k} \in \mathcal{DC}} \sum_{k}p_k N^{\mrm{min}}(\rho_k)
+    \]
+\end{definition}
+
+The above definition is adapted in Ref.~\cite{Lyu-Chandorkar-Kapoor-Takei-Sorensen-Witczak-Krempa_2026}, which is completely based on the density matrix. For a more general setting, Ref.~\cite{Hofmann-Moroder-Guhne_2014, Jungnitsch-Moroder-Guhne_2011} defines the negativity based on a given \textit{fully decomposable entanglement witness} $W$. This definition is also reviewed in the supplementary material of Ref.~\cite{Lyu-Chandorkar-Kapoor-Takei-Sorensen-Witczak-Krempa_2026}. 
+
+\begin{definition}[Fully Decomposable Witness]
+    A \textit{entanglement witness} is \textit{fully decomposable} if $\forall A \subset \Lambda$, there exist \textbf{positive semidefinite} operators $P$ and $Q$ such that 
+    \[
+    W = P + Q^{T_A}
+    \]
+    where $T_A$ stands for the partial transpose with respect to $A$.
+\end{definition}
+
+\begin{definition}[Genuine Multipartite Nagativeity~\cite{Jungnitsch-Moroder-Guhne_2011, Hofmann-Moroder-Guhne_2014}]
+    
+\end{definition}
 
 \appendix
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
