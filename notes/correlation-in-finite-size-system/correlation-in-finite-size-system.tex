@@ -565,9 +565,9 @@ In the derivation, we have used the identity $i^{n} = (-i)^n = (-1)^{n(n-1)/2}$ 
 
 \begin{definition}[biseparability]
     A state $\varrho$ is called \textbf{\textit{biseparable}} if it can be expressed as a mixture of separable states
-    \[
-    \varrho = \sum_{A \subset \Lambda}p_{A} \varrho^{\mrm{sep}}_{A|\overline{A}}
-    \]
+    \begin{equation}\label{eq:bisep-state}
+        \varrho = \sum_{A \subset \Lambda}p_{A} \varrho^{\mrm{sep}}_{A|\overline{A}}
+    \end{equation}
 \end{definition}
 
 \begin{definition}[Genuine Multipartite Entanglement]
@@ -579,7 +579,7 @@ In the derivation, we have used the identity $i^{n} = (-i)^n = (-1)^{n(n-1)/2}$ 
 \end{definition}
 
 
-Recently, Ref.~\cite{Lyu-Chandorkar-Kapoor-Takei-Sorensen-Witczak-Krempa_2026} introduces a concept of \textbf{\textit{entanglement frustration}} in quantum spin liquid states, which states that entanglement, involving genuine multipartite entanglement, is diminished in \textbf{\textit{non-loopy regions}}, preventing two nearby spins from sharing entanglement. In the meantime, genuine multipartite entanglement can be found in \textbf{\textit{loopy}} regions that contain closed loops.
+Recently, Ref.~\cite{Lyu-Chandorkar-Kapoor-Takei-Sorensen-Witczak-Krempa_2026} introduces a concept of \textbf{\textit{entanglement frustration}} in \textbf{quantum spin liquid} phases, which states that genuine multipartite entanglement can be found only in \textbf{\textit{loopy}} regions that contain closed loops, contrasting the cases in \textbf{\textit{non-loopy regions}}, where genuine multipartite entanglement is significantly suppressed, which may be understood that the entanglement is \textit{frastrated} by the quantum fluctuation. To describe this phenomenon, the authors of Ref.~\cite{Lyu-Chandorkar-Kapoor-Takei-Sorensen-Witczak-Krempa_2026} adopt \textbf{\textit{genuin multipartite negativity}} to quantitatively measure the multipartite entanglement.
 
 \begin{definition}[Negativity]\label{def:negativity}
     For bipartite entanglement, the \textbf{\textit{negativity}} of a state $\rho$ is defined as~\cite{Zyczkowski-Horodecki-Sanpera-Lewenstein_1998, Vidal-Werner_2002}
@@ -590,18 +590,33 @@ Recently, Ref.~\cite{Lyu-Chandorkar-Kapoor-Takei-Sorensen-Witczak-Krempa_2026} i
     \[
     N^{\mrm{min}}(\varrho) \equiv \min_{A \subset \Lambda} N_A(\varrho)
     \]
-    Such a quantity does not depend on the partition.
+    Such a quantity does not depend on the partition. Suppose the Hilbert space $\mathcal{H}$ can be separated into $n$ local subspaces (parties) $\mathcal{H} = \bigotimes_{k=1}^{n}\mathcal{H}_k$, then there are $2^{n-1} - 1$ different ways to bipartite the system. If such a constraint is provided, then the subregion $A$ is required to be a composition of the given elementary regions. In this case, the minimum negativity is specifically called an \textbf{\textit{$n$-party minimum negativity}}, denoted by $N^{\mrm{min}}_n(\varrho)$. 
 \end{definition}
 
 The minimum negativity encodes information about the genuine multipartite entanglement, as it searches over all possible system separations. However, it is not adequate as a monotone that quantifies the GME since $N^{\mrm{min}}(\varrho) > 0$ does not guarantee GME. To achieve this purpose, the authors of \cite{Jungnitsch-Moroder-Guhne_2011} and \cite{Lyu-Chandorkar-Kapoor-Takei-Sorensen-Witczak-Krempa_2026} came up with the following quantity that modifies the previous definition.
+
 \begin{definition}[Genuine Multipartite Negativity (GMN)~\cite{Lyu-Chandorkar-Kapoor-Takei-Sorensen-Witczak-Krempa_2026}]\label{def:GMN_1}
     Denote by $\mathcal{DC} \equiv \lrg{\lrg{\rho_k}}$ the set of \textit{decomposition} $\lrg{\rho_k}$ of the state $\varrho$, where each decomposition can expand the density matrix as $\varrho = \sum_{k}p_k\rho_k$, then the \textbf{\textit{genuin multipartite negativity} (GMN)} of a state $\varrho$, denoted by $\mathcal{N}(\varrho)$, is defined as 
-    \[
-    \mathcal{N}(\varrho) \equiv \min_{\lrg{\rho_k} \in \mathcal{DC}} \sum_{k}p_k N^{\mrm{min}}(\rho_k)
-    \]
+    \begin{equation}\label{eq:GMN}
+        \mathcal{N}(\varrho) \equiv \min_{\lrg{\rho_k} \in \mathcal{DC}} \sum_{k}p_k N^{\mrm{min}}(\rho_k)
+    \end{equation}
+    A \textbf{\textit{$n$-party genuine multipartite negativity}}, denoted by $\mathcal{N}_n(\varrho)$, is defined in the same way as Eq.~\eqref{eq:GMN}, with each $N^{\mrm{min}}(\rho_k)$ being replaced with the $n$-party genuine multipartite negativity $N^{\mrm{min}}_n(\rho_k)$.
 \end{definition}
 
-The above definition can be found in Ref.~\cite{Lyu-Chandorkar-Kapoor-Takei-Sorensen-Witczak-Krempa_2026}. The searching of the separation $\lrg{\rho_k}$ that minimizes the functional $\sum_{k}p_k N^{\mrm{min}}(\rho_k)$ can be implemented using semidefinite programming introduced in Ref.~\cite{Jungnitsch-Moroder-Guhne_2011, Hofmann-Moroder-Guhne_2014}. 
+\begin{lemma}
+    A biseparable state has zero genuine multipartite negativity.
+\end{lemma}
+\begin{proof}
+    If a state $\varrho$ is biseparable, then it can be expressed in the form given by Eq.~\ref{eq:bisep-state}. Evaluating the mixture of the negativity of the separable components in Eq.~\eqref{eq:bisep-state} 
+    \[
+    \sum_{k}p_k N^{\mrm{min}} \lr{\rho^{(\mrm{sep})}_{A_k|\overline{A_k}}}
+    =
+    0
+    \]
+    gives zero because the minimum negativity of a separable state is zero. Because the lower limit of the negativity is zero, the previous observation implies that the biseparable decomposition Eq.~\eqref{eq:bisep-state} gives the minimum in Eq.~\eqref{eq:GMN} directly. 
+\end{proof}
+
+The above definition can be found in Ref.~\cite{Lyu-Chandorkar-Kapoor-Takei-Sorensen-Witczak-Krempa_2026}. The searching of the separation $\lrg{\rho_k}$ that minimizes the functional $\sum_{k}p_k N^{\mrm{min}}(\rho_k)$ can be implemented using semidefinite programming introduced in Ref.~\cite{Jungnitsch-Moroder-Guhne_2011, Hofmann-Moroder-Guhne_2014}.
 
 \begin{definition}[Fully Decomposable Witness]
     A \textit{entanglement witness} is \textit{fully decomposable} if $\forall A \subset \Lambda$, there exist \textbf{positive semidefinite}~\cite{Lewenstein-Kraus-Cirac-Horodecki_2000} operators $P$ and $Q$ such that 
@@ -616,7 +631,7 @@ The definition of fully decomposable witnesses can be used to reformulate the ge
     \[
     \mathcal{N}(\varrho) \equiv -\min_{W \in \mathfrak{W}}\Tr\lr{\varrho W}
     \]
-    Moreover, Ref.~\cite{Lyu-Chandorkar-Kapoor-Takei-Sorensen-Witczak-Krempa_2026} further shows that the set $\mathfrak{W}$ can be reduced to a set that only contains the partial transpose, $\mathfrak{W} = \lrg{Q^{T_A}\;:\; 0 \leq Q \leq \mathds{1}}$ of semidefinite operators~\cite{Lewenstein-Kraus-Cirac-Horodecki_2000}.
+    Moreover, Ref.~\cite{Lyu-Chandorkar-Kapoor-Takei-Sorensen-Witczak-Krempa_2026} further shows that the set $\mathfrak{W}$ can be reduced to a set that only contains the partial transpose, $\mathfrak{W} = \lrg{Q_A^{T_A} \; \forall A\;:\; 0 \leq Q_A \leq \mathds{1}}$ of semidefinite operators~\cite{Lewenstein-Kraus-Cirac-Horodecki_2000}.
 \end{definition}
 
 \begin{lemma}
@@ -673,7 +688,10 @@ The definition of fully decomposable witnesses can be used to reformulate the ge
     \[
     N^{\min}(\rho_k) - \mrm{Tr}\lr{W\rho_k} \geq 0
     \]
+    \alert{continue}
 \end{proof}
+
+\section{Gauge Fields and Loopy Entanglement Pattern}
 
 \appendix
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
