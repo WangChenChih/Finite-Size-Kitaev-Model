@@ -773,6 +773,62 @@ The definition of fully decomposable witnesses can be used to reformulate the ge
 
 \section{Gauge Fields and Loopy Entanglement Pattern}
 
+\section{Pauli Stabilizer Projectors and GME}
+In Ref.~\cite{Lyu-Chandorkar-Kapoor-Takei-Sorensen-Witczak-Krempa_2026}, \textit{entanglement frustration} consists of two major aspects:
+\begin{enumerate}
+    \item In a quantum spin liquid phase, the GME is suppressed in non-loopy regions.
+    \item In a quantum spin liquid phase, the GME emerges in loopy regions.
+\end{enumerate}
+Based on their observation, we would like to ask two questions:
+\begin{enumerate}
+    \item Which feature of a quantum spin liquid phase causes the suppression of GME in non-loopy regions? 
+    \begin{itemize}
+        \item Symmetry-preserving ground state
+        \item Topological ground state degeneracy
+        \item Fractionalization of excitations 
+        \item Anyon statistics (which is also related to the ground state degeneracy)
+    \end{itemize} 
+    \item For what reason do loops matter? Why does it stabilize the GME?
+\end{enumerate}
+
+two conjectures
+\begin{enumerate}
+    \item Symmetry-preserving density matrices that bear string-like forms are not genuinely multipartite entangled in regions that do not contain loops.
+
+    \item A stabilizer projector as a density matrix is genuinely multipartite entangled.
+\end{enumerate}
+
+\begin{lemma}
+    A density matrix of the following form
+    \begin{equation}\label{eq:proj-rho-not-GME}
+        \rho = \frac{\mathds{1}_\Lambda + \Sigma_\Lambda}{2^{\abs{\Lambda}}}
+    \end{equation}
+    is \textit{\textbf{not} genuinely multipartite entangled}, where $\Sigma_{\Lambda}$ is a Pauli string operator supported on the subsystem $\Lambda$.
+\end{lemma}
+\begin{proof}
+    The system $\Lambda$ can be separated into the bipartitioned $A|\overline{A}$. In this way, the density matrix Eq.~\eqref{eq:proj-rho-not-GME} can be rewritten in the following form 
+    \[
+    \rho = \frac{\mathds{1}_A\mathds{1}_{\overline{A}} + \Sigma_A\Sigma_{\overline{A}}}{2^{\abs{A}+\abs{\overline{A}}}}
+    \]
+    where the two Pauli strings $\Sigma_{A}$ and $\Sigma_{\overline{A}}$, supported on the subregion $A$ and $\overline{A}$, respectively, combine to form the original Pauli string $\Sigma_{\Lambda}$ supported on the initial system. In this expression, the density matrix can be separated directly
+    \[
+    \rho 
+    = 
+    \frac{1}{2}
+    \lr{\frac{\mathds{1}_A + \Sigma_A}{2^{\abs{A}}}}
+    \lr{
+    \frac{\mathds{1}_{\overline{A}} + \Sigma_{\overline{A}}}{2^{\abs{\overline{A}}}}
+    }
+    +
+    \frac{1}{2}
+    \lr{\frac{\mathds{1}_A - \Sigma_A}{2^{\abs{A}}}}
+    \lr{
+    \frac{\mathds{1}_{\overline{A}} - \Sigma_{\overline{A}}}{2^{\abs{\overline{A}}}}
+    }
+    \]
+    which is a separable state with respect to the bipartition $A|BC$, according to Def.~\ref{def:sep}. Since a separable state is by definition a weakly biseparable state, according to Def.~\ref{def:GME}, the above result completes the proof. 
+\end{proof}
+
 \appendix
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
