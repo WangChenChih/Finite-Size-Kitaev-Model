@@ -563,10 +563,10 @@ In the derivation, we have used the identity $i^{n} = (-i)^n = (-1)^{n(n-1)/2}$ 
 \begin{definition}[separability\cite{Jungnitsch-Moroder-Guhne_2011}]\label{def:sep}
     A state $\varrho$ is called \textbf{\textit{separable}} if there exists a bipartition of the Hilbert space $\mathcal{H} = \mathcal{H}_A\otimes\mathcal{H}_{\overline{A}}$ such that
     \begin{equation}\label{eq:sep-def}
-        \varrho = \sum_{n} p_n \ket{\psi_n^{(A)}}\bra{\psi_n^{(A)}}
-        \otimes \ket{\phi_n^{(\overline{A})}}\bra{\phi_n^{(\overline{A})}}
+        \varrho = \sum_{n} p_n \rho^{(A)}_n
+        \otimes \rho^{(\overline{A})}_n
     \end{equation}
-    where $0\leq p_n\leq 1\forall n$ and $\sum_{n}p_n = 1$. In other words, $\lrg{p_n}$ is a \textit{probability distribution}. A state that is separable with respect to a bipartition $A|\overline{A}$ is denoted by $\bog{\varrho^{\mrm{sep}}_{A|\overline{A}}}$. Such a state is often referred to as a \textit{classically correlated} state.
+    where each component $\rho^{(A/\overline{A})}_n$ is a density matrix acting on the subspace $\mathcal{H}_A$ and $\mathcal{H}_{\overline{A}}$. Weights $p_n$ are convex, satisfying $0\leq p_n\leq 1\forall n$ and $\sum_{n}p_n = 1$. In other words, $\lrg{p_n}$ is a \textit{probability distribution}. A state that is separable with respect to a bipartition $A|\overline{A}$ is denoted by $\bog{\varrho^{\mrm{sep}}_{A|\overline{A}}}$. Such a state is often referred to as a \textit{classically correlated} state.
 \end{definition}
 
 \begin{definition}[Weak Biseparability~\cite{Jungnitsch-Moroder-Guhne_2011}]\label{def:bisep}
@@ -637,25 +637,17 @@ The minimum negativity encodes information about the genuine multipartite entang
     \lr{
         \norm{
             \sum_{n} p_n 
-            \lr{
-            \ket{\psi_n^{(A)}}
-            \bra{\psi_n^{(A)}}
-            }^{T_A}
+            \lr{\rho^{(A)}_n}^{T_A}
             \otimes 
-            \ket{\phi_n^{(\overline{A})}}
-            \bra{\phi_n^{(\overline{A})}}
+            \rho^{(\overline{A})}_n
         }_1 
         - 
         1
     }
     \]
-    Because $\ket{\psi_n^{(A)}}\bra{\psi_n^{(A)}}$ is a pure state, its transpose is still a pure state.
-    \[
-    \lr{\ket{\psi_n^{(A)}}\bra{\psi_n^{(A)}}}^{T_A}
+    Because $\rho^{(A)}_n$ is a density matrix, its transpose is still a density matrix $    \lr{\rho^{(A)}_n}^{T_A}
     =
-    \ket{\psi_n^{*(A)}}\bra{\psi_n^{*(A)}}
-    \]
-    With this property, the density matrix after the partial transpose is still a valid density matrix satisfying $\Tr\lr{\varrho^{T_A}} = 1$ and with all the eigenvalues non-negative. According to Lemma~\ref{lemma:neg-compute}, the resulting negativity is zero. Because negativity is always non-negative, this result implies that $  N_A(\varrho)  $ reaches its minimum value when considering the bipartition $A|\overline{A}$.
+    \rho^{(A)*}_n$. With this property, the density matrix after the partial transpose is still a valid density matrix satisfying $\Tr\lr{\varrho^{T_A}} = 1$ and with all the eigenvalues non-negative. According to Lemma~\ref{lemma:neg-compute}, the resulting negativity is zero. Because negativity is always non-negative, this result implies that $  N_A(\varrho)  $ reaches its minimum value when considering the bipartition $A|\overline{A}$.
 \end{proof}
 
 \begin{definition}[Genuine Multipartite Negativity (\textbf{GMN})~\cite{Lyu-Chandorkar-Kapoor-Takei-Sorensen-Witczak-Krempa_2026}]\label{def:GMN_1}
