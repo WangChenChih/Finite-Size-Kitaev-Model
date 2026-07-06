@@ -566,19 +566,19 @@ In the derivation, we have used the identity $i^{n} = (-i)^n = (-1)^{n(n-1)/2}$ 
         \varrho = \sum_{n} p_n \ket{\psi_n^{(A)}}\bra{\psi_n^{(A)}}
         \otimes \ket{\phi_n^{(\overline{A})}}\bra{\phi_n^{(\overline{A})}}
     \end{equation}
-    where $0\leq p_n\leq 1\forall n$ and $\sum_{k}p_n = 1$. In other words, $\lrg{p_n}$ is a \textit{probability distribution}. A state that is separable with respect to a bipartition $A|\overline{A}$ is denoted by $\varrho^{\mrm{sep}}_{A|\overline{A}}$. Such a state is often referred to as a \textit{classically correlated} state.
+    where $0\leq p_n\leq 1\forall n$ and $\sum_{n}p_n = 1$. In other words, $\lrg{p_n}$ is a \textit{probability distribution}. A state that is separable with respect to a bipartition $A|\overline{A}$ is denoted by $\bog{\varrho^{\mrm{sep}}_{A|\overline{A}}}$. Such a state is often referred to as a \textit{classically correlated} state.
 \end{definition}
 
-\begin{definition}[biseparability~\cite{Jungnitsch-Moroder-Guhne_2011}]\label{def:bisep}
-    A state $\varrho$ is called \textbf{\textit{biseparable}} if it can be expressed as a mixture of separable states defined by Def.~\ref{def:sep}
+\begin{definition}[Weak Biseparability~\cite{Jungnitsch-Moroder-Guhne_2011}]\label{def:bisep}
+    A state $\varrho$ is called \textbf{\textit{weakly biseparable}} if it can be expressed as a mixture of separable states defined by Def.~\ref{def:sep}
     \begin{equation}\label{eq:bisep-state}
         \varrho = \sum_{A \subset \Lambda}p_{A} \varrho^{\mrm{sep}}_{A|\overline{A}}
     \end{equation}
     where $\lrg{p_A}$ is a probability distribution.
 \end{definition}
 
-\begin{definition}[biseparability 2~\cite{Lyu-Chandorkar-Kapoor-Takei-Sorensen-Witczak-Krempa_2026}]\label{def:bisep-2}
-    Ref.~\cite{Lyu-Chandorkar-Kapoor-Takei-Sorensen-Witczak-Krempa_2026} gives a seemingly different definition. A state $\varrho$ is called \textbf{\textit{biseparable}} if it can be expressed as a mixture of \textbf{biseparable pure states}
+\begin{definition}[Strong Biseparability~\cite{Lyu-Chandorkar-Kapoor-Takei-Sorensen-Witczak-Krempa_2026}]\label{def:bisep-2}
+    Ref.~\cite{Lyu-Chandorkar-Kapoor-Takei-Sorensen-Witczak-Krempa_2026} gives a seemingly different definition. A state $\varrho$ is called \textbf{\textit{strongly biseparable}} if it can be expressed as a mixture of \textbf{biseparable pure states}
     \begin{equation}\label{eq:bisep-state-2}
         \varrho = \sum_{A \subset \Lambda}p_{A} \ket{\psi}_A\bra{\psi}_A \otimes\ket{\phi}_{\overline{A}}\bra{\phi}_{\overline{A}}
     \end{equation}
@@ -603,7 +603,7 @@ Recently, Ref.~\cite{Lyu-Chandorkar-Kapoor-Takei-Sorensen-Witczak-Krempa_2026} i
     \[
     N_A(\varrho) \equiv \frac{\norm{\varrho^{T_A}}_1 - 1}{2}
     \]
-    where $\norm{A}_1 \equiv \tr \lr{\sqrt{A^\dagger A}}$ is the trace form of a matrix. In other words, the negativity of a state is . 
+    where $\norm{A}_1 \equiv \tr \lr{\sqrt{A^\dagger A}}$ is the trace form of a matrix. 
 \end{definition}
 
 \begin{lemma}\label{lemma:neg-compute}
@@ -628,7 +628,7 @@ Recently, Ref.~\cite{Lyu-Chandorkar-Kapoor-Takei-Sorensen-Witczak-Krempa_2026} i
 The minimum negativity encodes information about the genuine multipartite entanglement, as it searches over all possible system separations. However, it is not adequate as a monotone that quantifies the GME since $N^{\mrm{min}}(\varrho) > 0$ does not guarantee GME. To achieve this purpose, the authors of \cite{Jungnitsch-Moroder-Guhne_2011} and \cite{Lyu-Chandorkar-Kapoor-Takei-Sorensen-Witczak-Krempa_2026} came up with the following quantity that modifies the previous definition.
 
 \begin{lemma}\label{lemma:sep-zero-neg}
-    The minimum negativity of a separable state is zero.
+    A separable state has zero minimum negativity.
 \end{lemma}
 \begin{proof}
     According to Def.~\ref{def:sep}, if a state $\varrho$ is separable, then there exists at least a bipartition $\Lambda \to A|\overline{A}$ such that $\varrho$ can be expressed in the form of Eq.~\eqref{eq:sep-def}. Take such a bipartition to compute the negativity $N_A(\varrho)$, we obtain
@@ -730,8 +730,18 @@ The definition of fully decomposable witnesses can be used to reformulate the ge
     \]
 
     \[
-    \abs{\Tr\lr{\mathcal{O}_- Q}} \leq \abs{\Tr\mathcal{O}_-} \abs{\Tr Q}
+    \abs{\Tr\lr{\mathcal{O}_- Q}} 
+    \leq 
+    \abs{\Tr\lr{\mathcal{O}_-^\dagger\mathcal{O}_-}}^{1/2} 
+    \abs{\Tr \lr{Q^\dagger Q}}^{1/2}
     \]
+    Because both $(-\mathcal{O}_-)$ and $Q$ are positive semidefinite, we have
+    \[
+    \abs{\Tr\lr{\mathcal{O}_-^\dagger\mathcal{O}_-}}^{1/2}  \abs{\Tr \lr{Q^\dagger Q}}^{1/2}
+    \leq
+    \abs{\Tr \mathcal{O_-}} \abs{\Tr Q}
+    \]
+    Altogether, we obtain
     \[
     \max_{0\leq Q \leq\mathds{1}} \abs{\Tr\lr{\mathcal{O}_- Q}}
     =
