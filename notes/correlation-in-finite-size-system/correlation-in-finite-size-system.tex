@@ -589,7 +589,7 @@ Here, I adopt the definition used in Ref.~\cite{Guhne-Toth_2009}. The components
 
 Compared to Def.~\ref{def:bisep}, Def.~\ref{def:bisep-2} covers a narrower range since separable states $\varrho^{(\mrm{sep})}_{A|\overline{A}}$ in Eq.~\eqref{eq:bisep-state} are not required to be pure. Later, we will see that genuine multipartite negativity, as a monotone of multipartite entanglement, vanishes if a state is biseparable defined by Def.~\ref{def:bisep}. In other words, \textbf{the condition required by Def.~\ref{def:bisep-2} is too strong}. The range of states that are not genuinely multipartite entangled is wider than the range restricted by Def.~\ref{def:bisep-2}. 
 
-\begin{lemma}
+\begin{lemma}\label{lemma:special-sep}
     Suppose a system $\Lambda$ can be divided into $n$ parties $\Lambda \to A_1|A_2|\cdots|A_n$, such a division is denoted by $\mathcal{D}_n$, and there exists a series of density matrices $\lrg{\rho^{(A_1)}_k, \rho^{(A_2)}_k,\cdots,\rho^{(A_n)}_k}$ and a probability distribution $\lrg{p_k}$ such that the following convex mixture
     \begin{equation}\label{eq:special-sep}
         \varrho = \sum_{k} p_k \bigotimes_{A\in\mathcal{D}_n}\rho^{(A)}_k 
@@ -804,35 +804,66 @@ two conjectures
 \end{enumerate}
 
 \subsection{General Phenomena}
-\begin{lemma}\label{lemma:single-stabilizer-generator}
-    A density matrix of the following form
-    \begin{equation}\label{eq:proj-rho-not-GME}
-        \rho = \frac{\mathds{1}_\Lambda + \Sigma_\Lambda}{2^{\abs{\Lambda}}}
-    \end{equation}
-    is \textit{\textbf{not} genuinely multipartite entangled}, where $\Sigma_{\Lambda}$ is a Pauli string operator supported on the subsystem $\Lambda$.
+\begin{lemma}\label{lemma:pauli-decompose}
+    Given a series of operators $\lrg{\sigma_i\;:\;i\in \Lambda }$ that commute with each other, the following identity holds
+    \[
+    \mathds{1}_\Lambda + \bigotimes_{i\in\Lambda}\sigma_i 
+    = 
+    \frac{1}{2^{\abs{\Lambda} - 1}} \mathop{\sum_{\lrg{s=\pm}}}_{\prod_is_i = 1}
+    \prod_{i\in\Lambda}
+    \lr{\mathds{1}_i + s_i\sigma_i}
+    \]
 \end{lemma}
 \begin{proof}
-    The system $\Lambda$ can be separated into the bipartitioned $A|\overline{A}$. In this way, the density matrix Eq.~\eqref{eq:proj-rho-not-GME} can be rewritten in the following form 
     \[
-    \rho = \frac{\mathds{1}_A\mathds{1}_{\overline{A}} + \Sigma_A\Sigma_{\overline{A}}}{2^{\abs{A}+\abs{\overline{A}}}}
+    1+\sigma_1\sigma_2 = \frac{1}{2}\lr{1+\sigma_1}\lr{1+\sigma_2} + \frac{1}{2}\lr{1-\sigma_1}\lr{1-\sigma_2}
     \]
-    where the two Pauli strings $\Sigma_{A}$ and $\Sigma_{\overline{A}}$, supported on the subregion $A$ and $\overline{A}$, respectively, combine to form the original Pauli string $\Sigma_{\Lambda}$ supported on the initial system. In this expression, the density matrix can be separated directly
     \[
-    \rho 
-    = 
-    \frac{1}{2}
-    \lr{\frac{\mathds{1}_A + \Sigma_A}{2^{\abs{A}}}}
-    \lr{
-    \frac{\mathds{1}_{\overline{A}} + \Sigma_{\overline{A}}}{2^{\abs{\overline{A}}}}
-    }
-    +
-    \frac{1}{2}
-    \lr{\frac{\mathds{1}_A - \Sigma_A}{2^{\abs{A}}}}
-    \lr{
-    \frac{\mathds{1}_{\overline{A}} - \Sigma_{\overline{A}}}{2^{\abs{\overline{A}}}}
-    }
+    1-\sigma_1\sigma_2 = \frac{1}{2}\lr{1-\sigma_1}\lr{1+\sigma_2} + \frac{1}{2}\lr{1-\sigma_1}\lr{1+\sigma_2}
     \]
-    which is separable with respect to bipartition $A|\overline{A}$, according to Def.~\ref{def:sep}, and the size of the subsysten $A$ is arbitrary. Since a separable state is by definition a weakly biseparable state, according to Def.~\ref{def:GME}, the above result completes the proof. 
+\end{proof}
+\begin{theorem}\label{lemma:single-stabilizer-generator}
+    A density matrix of the following form
+    \begin{equation}\label{eq:proj-rho-not-GME}
+        \varrho = \frac{\mathds{1}_\Lambda + \Sigma_\Lambda}{2^{\abs{\Lambda}}}
+    \end{equation}
+    is \textit{\textbf{not} genuinely multipartite entangled}, where $\Sigma_{\Lambda}$ is a Pauli string operator supported on the subsystem $\Lambda$.
+\end{theorem}
+\begin{proof}
+Since any Pauli string can be decomposed into a product of Pauli operators $\Sigma_{\Lambda} = \bigotimes_{i\in\Lambda}\sigma_i$, according to Lemma~\ref{lemma:pauli-decompose}, the density matrix Eq.~\eqref{eq:proj-rho-not-GME} can be rewritten as
+\[
+\varrho = 
+\frac{\mathds{1}_\Lambda + \bigotimes_{i\in\Lambda}\sigma_i }{2^{\abs{\Lambda}}}
+= 
+\mathop{\sum_{\lrg{s=\pm}}}_{\prod_is_i = 1}
+\frac{1}{2^{\abs{\Lambda} - 1}} 
+\prod_{i\in\Lambda}
+\lr{\frac{\mathds{1}_i + s_i\sigma_i}{2}}
+\]
+Since $\mathop{\sum_{\lrg{s=\pm}}}_{\prod_is_i = 1}
+\frac{1}{2^{\abs{\Lambda} - 1}} = 1$ and each component $\prod_{i\in\Lambda}
+\lr{\frac{\mathds{1}_i + s_i\sigma_i}{2}}$ in the above expression is a valid density matrix, the density matrix $\varrho$ is of the same form as Eq.~\ref{eq:special-sep} a biseparable state according to Lemma~\ref{lemma:special-sep}.  
+% The system $\Lambda$ can be separated into the bipartitioned $A|\overline{A}$. In this way, the density matrix Eq.~\eqref{eq:proj-rho-not-GME} can be rewritten in the following form 
+% \[
+% \rho = \frac{\mathds{1}_A\mathds{1}_{\overline{A}} + \Sigma_A\Sigma_{\overline{A}}}{2^{\abs{A}+\abs{\overline{A}}}}
+% \]
+% where the two Pauli strings $\Sigma_{A}$ and $\Sigma_{\overline{A}}$, supported on the subregion $A$ and $\overline{A}$, respectively, combine to form the original Pauli string $\Sigma_{\Lambda}$ supported on the initial system. In this expression, the density matrix can be separated directly
+% \[
+% \rho 
+% = 
+% \frac{1}{2}
+% \lr{\frac{\mathds{1}_A + \Sigma_A}{2^{\abs{A}}}}
+% \lr{
+% \frac{\mathds{1}_{\overline{A}} + \Sigma_{\overline{A}}}{2^{\abs{\overline{A}}}}
+% }
+% +
+% \frac{1}{2}
+% \lr{\frac{\mathds{1}_A - \Sigma_A}{2^{\abs{A}}}}
+% \lr{
+% \frac{\mathds{1}_{\overline{A}} - \Sigma_{\overline{A}}}{2^{\abs{\overline{A}}}}
+% }
+% \]
+% which is separable with respect to bipartition $A|\overline{A}$, according to Def.~\ref{def:sep}, and the size of the subsysten $A$ is arbitrary. Since a separable state is by definition a weakly biseparable state, according to Def.~\ref{def:GME}, the above result completes the proof. 
 \end{proof}
 
 \begin{corollary}\label{cor:single-generator}
