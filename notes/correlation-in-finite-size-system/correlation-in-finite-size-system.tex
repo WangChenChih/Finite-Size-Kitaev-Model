@@ -560,7 +560,7 @@ In the derivation, we have used the identity $i^{n} = (-i)^n = (-1)^{n(n-1)/2}$ 
 \section{Genuine Multipartite Negativity as an Entanglement Monotone}
 
 
-\begin{definition}[separability\cite{Jungnitsch-Moroder-Guhne_2011}]\label{def:sep}
+\begin{definition}[Separability~\cite{Guhne-Toth_2009}]\label{def:sep}
     A state $\varrho$ is called \textbf{\textit{separable}} if there exists a bipartition of the Hilbert space $\mathcal{H} = \mathcal{H}_A\otimes\mathcal{H}_{\overline{A}}$ such that
     \begin{equation}\label{eq:sep-def}
         \varrho = \sum_{n} p_n \rho^{(A)}_n
@@ -568,6 +568,8 @@ In the derivation, we have used the identity $i^{n} = (-i)^n = (-1)^{n(n-1)/2}$ 
     \end{equation}
     where each component $\rho^{(A/\overline{A})}_n$ is a density matrix acting on the subspace $\mathcal{H}_A$ and $\mathcal{H}_{\overline{A}}$. Weights $p_n$ are convex, satisfying $0\leq p_n\leq 1\forall n$ and $\sum_{n}p_n = 1$. In other words, $\lrg{p_n}$ is a \textit{probability distribution}. A state that is separable with respect to a bipartition $A|\overline{A}$ is denoted by $\bog{\varrho^{\mrm{sep}}_{A|\overline{A}}}$. Such a state is often referred to as a \textit{classically correlated} state.
 \end{definition}
+
+Here, I adopt the definition used in Ref.~\cite{Guhne-Toth_2009}. The components $\rho^{(A/\overline{A})}_n$ may or may not be pure states. In this aspect, this definition is different from that used in Ref.~\cite{Jungnitsch-Moroder-Guhne_2011} and Ref.~\cite{Lyu-Chandorkar-Kapoor-Takei-Sorensen-Witczak-Krempa_2026}, where the definition of separability requires those components to be pure. Later, in Lemma~\ref{lemma:sep-zero-neg}, we will see that \textbf{the separable states given by Eq.~\eqref{eq:sep-def} are states that have zero negativity.}
 
 \begin{definition}[Weak Biseparability~\cite{Jungnitsch-Moroder-Guhne_2011}]\label{def:bisep}
     A state $\varrho$ is called \textbf{\textit{weakly biseparable}} if it can be expressed as a mixture of separable states defined by Def.~\ref{def:sep}
@@ -586,6 +588,17 @@ In the derivation, we have used the identity $i^{n} = (-i)^n = (-1)^{n(n-1)/2}$ 
 \end{definition}
 
 Compared to Def.~\ref{def:bisep}, Def.~\ref{def:bisep-2} covers a narrower range since separable states $\varrho^{(\mrm{sep})}_{A|\overline{A}}$ in Eq.~\eqref{eq:bisep-state} are not required to be pure. Later, we will see that genuine multipartite negativity, as a monotone of multipartite entanglement, vanishes if a state is biseparable defined by Def.~\ref{def:bisep}. In other words, \textbf{the condition required by Def.~\ref{def:bisep-2} is too strong}. The range of states that are not genuinely multipartite entangled is wider than the range restricted by Def.~\ref{def:bisep-2}. 
+
+\begin{lemma}
+    Suppose a system $\Lambda$ can be divided into $n$ parties $\Lambda \to A_1|A_2|\cdots|A_n$, such a division is denoted by $\mathcal{D}_n$, and there exists a series of density matrices $\lrg{\rho^{(A_1)}_k, \rho^{(A_2)}_k,\cdots,\rho^{(A_n)}_k}$ and a probability distribution $\lrg{p_k}$ such that the following convex mixture
+    \begin{equation}\label{eq:special-sep}
+        \varrho = \sum_{k} p_k \bigotimes_{A\in\mathcal{D}_n}\rho^{(A)}_k 
+    \end{equation}
+    is also a density matrix, then $\varrho$ defined in the above equation is \textit{weakly biseparable}.
+\end{lemma}
+\begin{proof}
+    The proof is trivial since each component $\bigotimes_{A\in\mathcal{D}_n}\rho^{(A)}_k$ in Eq.~\eqref{eq:special-sep} is separable. 
+\end{proof}
 
 \begin{definition}[Genuine Multipartite Entanglement]\label{def:GME}
     A state is \textbf{\textit{genuinly multipartite entangled}} if it is \textbf{not biseparable}. Note that the definition of \textit{biseparable} adopted here is based on Def.~\ref{def:bisep}.
@@ -790,7 +803,8 @@ two conjectures
     \item A stabilizer projector as a density matrix is genuinely multipartite entangled.
 \end{enumerate}
 
-\begin{lemma}
+\subsection{General Phenomena}
+\begin{lemma}\label{lemma:single-stabilizer-generator}
     A density matrix of the following form
     \begin{equation}\label{eq:proj-rho-not-GME}
         \rho = \frac{\mathds{1}_\Lambda + \Sigma_\Lambda}{2^{\abs{\Lambda}}}
@@ -818,8 +832,34 @@ two conjectures
     \frac{\mathds{1}_{\overline{A}} - \Sigma_{\overline{A}}}{2^{\abs{\overline{A}}}}
     }
     \]
-    which is a separable state with respect to the bipartition $A|BC$, according to Def.~\ref{def:sep}. Since a separable state is by definition a weakly biseparable state, according to Def.~\ref{def:GME}, the above result completes the proof. 
+    which is separable with respect to bipartition $A|\overline{A}$, according to Def.~\ref{def:sep}, and the size of the subsysten $A$ is arbitrary. Since a separable state is by definition a weakly biseparable state, according to Def.~\ref{def:GME}, the above result completes the proof. 
 \end{proof}
+
+\begin{corollary}\label{cor:single-generator}
+    The ground-state density matrix of a $\mathbb{Z}_2$ string net model (toric code model) in a subsystem containing only one plaquette or star is not genuinely multipartite entangled.
+\end{corollary}
+Lemma~\ref{lemma:single-stabilizer-generator} and its corollary show that \textbf{a single gauge loop (Wilson loop) without matter in a $\mathbb{Z}_2$ gauge theory is not adequate to produce GME, regardless of how large the loop is}. 
+
+\subsection{Biseparability in Kitaev Model}
+We start with a subsystem containing only two adjoint edges in an infinitely large Kitaev model. The density matrix, according to our work~\cite{wang2026exactorganizationdensitymatrices}, reads as
+\begin{equation}
+    \varrho = \frac{1}{2^{3}}\lr{\mathds{1}+\anglelr{\sigma^x_1\sigma^x_2}\sigma^x_1\sigma^x_2 + \anglelr{\sigma^y_3\sigma^y_2}\sigma^y_3\sigma^y_2} 
+    =: 
+    \frac{1}{8}\lr{\mathds{1} - x\sigma^x_1\sigma^x_2 + y\sigma^y_3\sigma^y_2}
+\end{equation}
+
+\[
+\varrho_{s} = \sum_{k} p_k \bigotimes_{i\in\Lambda}\lr{\frac{\mathds{1} + \bo{v}_i^{(k)}\cdot\bog{\sigma}_i}{2}}
+=
+\frac{1}{2^{\abs{\Lambda}}}
+\sum_{A\subset\Lambda} 
+\mathop{\sum_{\lrg{\mu}}}_{\mu=x,y,z}
+\lr{ 
+    \sum_{k} p_k 
+    \prod_{i\in A}v^{(k)\mu_i}_i
+}
+\bigotimes_{i\in A}\sigma_i^{\mu_i}
+\]
 
 \appendix
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
