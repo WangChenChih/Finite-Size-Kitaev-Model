@@ -1004,6 +1004,31 @@ Or, comparing both sides term by term to obtain a series of relations
 \end{align*}
 This relation implies that the spin correlations can be interpreted by a classical probability theory with a probability distribution $\lrg{p_k}$ and classical variables $\lrg{\bo{v}^{(k)}_i}$. Therefore, for a fully separable state, the correlation is not truly quantum. Chances are there is an equivalent classical interpretation that describes the same physical phenomena. 
 
+Suppose that the following operator is a valid density matrix of a spin-1/2 system $\Lambda$, 
+\[
+\varrho 
+= 
+\frac{1}{2^{\abs{\Lambda}}}
+\lr{
+\mathds{1}_\Lambda
++
+\sum_{A\neq \varnothing}c_A\Sigma_{A}\otimes\mathds{1}_{\overline{A}}
+},
+\]
+where $\Sigma_A$ is a Pauli string operator whose support is a subsystem $A\subset\Lambda$, and each component is accompanied by a coefficient $c_A$. Such a density matrix $\varrho$ can be decomposed as follows
+\begin{equation}\label{eq:string-decomposition}
+    \varrho
+    =
+    \sum_{A\neq \varnothing} p_A \frac{1}{2^{\abs{A}}}
+    \lr{\mathds{1}_A + \frac{c_A}{p_A}\Sigma_A} \otimes \frac{1}{2^{\abs{\overline{A}}}}\mathds{1}_{\overline{A}}
+\end{equation}
+Apparently, the operator $\frac{1}{2^{\abs{\overline{A}}}}\mathds{1}_{\overline{A}}$ is a valid density matrix. If we can further confirm that each preceding component $\frac{1}{2^{\abs{A}}}
+\lr{\mathds{1}_A + \frac{c_A}{p_A}\Sigma_A}$ is also a valid density matrix, then we can prove that $\varrho$ is separable. To this end, we need to diagonalize the operator $\frac{c_A}{p_A}\Sigma_A$ to see whether it contains eigenvalues less than $-1$. If there are such eigenvalues, the entire operator will possess negative eigenvalues, which is not allowed for a valid density matrix. Since $\Sigma_A$ is a $\mathbb{Z}_2$ operator that squares to one, the operator $\frac{c_A}{p_A}\Sigma_A$ only possesses two distinct eigenvalues: $\pm c_A/p_A$. Therefore, the criterion of Eq.~\eqref{eq:string-decomposition} takes the form of a biseparable state Eq.~\eqref{def:bisep} is $\abs{c_A} \leq p_A \; \forall A$.
+Because the probability distribution $\lrg{p_A}$ can be adjusted artificially as long as the normalization condition $\sum_{A}p_A$ holds, the above condition can be relaxed to
+\begin{equation}\label{eq:string-decomp-condition}
+    \sum_{A}\abs{c_A} \leq 1
+\end{equation}
+
 
 
 \appendix
