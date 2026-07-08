@@ -6,6 +6,8 @@
 %\usepackage[fleqn]{amsmath}
 %\usepackage{CJK,amsmath}
 \usepackage{amsfonts,amssymb}
+\usepackage{amsmath}
+\numberwithin{equation}{section}    % numbering equations by their section
 \usepackage{fancyhdr}
 %\pagestyle{fancy}
 \usepackage{textcomp}
@@ -33,7 +35,6 @@
 \newtheorem{lemma}[theorem]{Lemma}
 \newtheorem{corollary}{Corollary}[theorem]
 \newtheorem{proposition}[theorem]{Proposition}
-
 
 \hypersetup{
     colorlinks=true,
@@ -83,6 +84,8 @@
 \newcommand{\tr}{\mrm{tr}}
 \newcommand{\norm}[1]{\left\lVert#1\right\rVert}
 \newcommand{\tcor}[2]{\langle -ic_{#1}c_{#2} \rangle_M}
+
+\newcommand{\arrequ}[1]{\begin{aligned}#1\end{aligned}}
 
 \newcommand{\Qcirc}[1]{\begin{minipage}[h]{0.7cm}
 	\vspace{0pt}
@@ -563,13 +566,60 @@ In the derivation, we have used the identity $i^{n} = (-i)^n = (-1)^{n(n-1)/2}$ 
 \begin{definition}[Separability~\cite{Guhne-Toth_2009}]\label{def:sep}
     A state $\varrho$ is called \textbf{\textit{separable}} if there exists a bipartition of the Hilbert space $\mathcal{H} = \mathcal{H}_A\otimes\mathcal{H}_{\overline{A}}$ such that
     \begin{equation}\label{eq:sep-def}
-        \varrho = \sum_{n} p_n \rho^{(A)}_n
+        \varrho^{\mrm{sep}}_{A|\overline{A}} = \sum_{n} p_n \rho^{(A)}_n
         \otimes \rho^{(\overline{A})}_n
     \end{equation}
     where each component $\rho^{(A/\overline{A})}_n$ is a density matrix acting on the subspace $\mathcal{H}_A$ and $\mathcal{H}_{\overline{A}}$. Weights $p_n$ are convex, satisfying $0\leq p_n\leq 1\forall n$ and $\sum_{n}p_n = 1$. In other words, $\lrg{p_n}$ is a \textit{probability distribution}. A state that is separable with respect to a bipartition $A|\overline{A}$ is denoted by $\bog{\varrho^{\mrm{sep}}_{A|\overline{A}}}$. Such a state is often referred to as a \textit{classically correlated} state.
 \end{definition}
 
-Here, I adopt the definition used in Ref.~\cite{Guhne-Toth_2009}. The components $\rho^{(A/\overline{A})}_n$ may or may not be pure states. In this aspect, this definition is different from that used in Ref.~\cite{Jungnitsch-Moroder-Guhne_2011} and Ref.~\cite{Lyu-Chandorkar-Kapoor-Takei-Sorensen-Witczak-Krempa_2026}, where the definition of separability requires those components to be pure. Later, in Lemma~\ref{lemma:sep-zero-neg}, we will see that \textbf{the separable states given by Eq.~\eqref{eq:sep-def} are states that have zero negativity.}
+Here, I adopt the definition used in Ref.~\cite{Guhne-Toth_2009}. The components $\rho^{(A/\overline{A})}_n$ may or may not be pure states. In this regard, this definition is different from that used in Ref.~\cite{Jungnitsch-Moroder-Guhne_2011} and Ref.~\cite{Lyu-Chandorkar-Kapoor-Takei-Sorensen-Witczak-Krempa_2026}, where the definition of separability requires those components to be pure. Later, in Lemma~\ref{lemma:sep-zero-neg}, we will see that \textbf{the separable states given by Eq.~\eqref{eq:sep-def} are states that have zero negativity.}
+
+Notice that the form~\eqref{eq:sep-def} in Def.~\ref{def:sep} is equivalent to the following expression
+\begin{equation}\label{eq:sep-def-pure}
+    \varrho^{\mrm{sep}}_{A|\overline{A}} = \sum_{n} p_n \ket{\psi_n^{(A)}}\bra{\psi^{(A)}_n} \otimes \ket{\psi^{(\overline{A})}_n}\bra{\psi^{(\overline{A})}_n}
+\end{equation}
+with the density matrix in each component being replaced with a pure state. Expanding the density matrices in different components of Eq.~\eqref{eq:sep-def} into mixtures of pure states
+\[
+\rho_n^{(A)} \to \sum_{k} q^{(A)}_{n,k} \ket{\psi_{k,n}^{(A)}}\bra{\psi_{k,n}^{(A)}}
+\]
+where $\lrg{q^{(A)}_{n,k}}$ is a probability distribution normalized as $\sum_{k}q^{(A)}_{n,k} = 1 \;\forall n$, then the separable density matrix can be rewritten in the form of a mixture of pure states
+\begin{equation}\label{eq:sep-relabel}
+    \varrho^{\mrm{sep}}_{A|\overline{A}} 
+    = 
+    \sum_{n}  
+    \sum_{k}
+    \sum_{k'}
+    p_n
+    q^{(A)}_{n,k}
+    q^{(\overline{A})}_{n,k'}
+    \ket{\psi_{n,k}^{(A)}}\bra{\psi^{(A)}_{n,k}} 
+    \otimes 
+    \ket{\psi^{(\overline{A})}_{n.k'}}\bra{\psi^{(\overline{A})}_{n.k'}}
+\end{equation}
+Grouping three probability distributions into a single one: $p_nq^{(A)}_{n,k}q^{(\overline{A})}_{n,k'} \to p_{n,k,k'}$. The new variables also form a probability distribution, since each component is non-negative, and the following normalization condition holds
+\[
+\sum_{n,k,k'}  
+p_{n,k,k'}
+=
+\sum_{n}  
+p_n
+\sum_{k}
+q^{(A)}_{n,k}
+\sum_{k'}
+q^{(\overline{A})}_{n,k'}
+=
+1
+\]
+After proper labeling, \textbf{\textit{Eq.~\eqref{eq:sep-relabel} reduces to Eq.~\eqref{eq:sep-def-pure}, and we conclude that the definition Eq.~\eqref{eq:sep-def-pure} constructed in terms of pure states is equivalent to Def.~\ref{def:sep}}}.
+
+\begin{definition}[Full separability]\label{def:fsp}
+    If a system $\Lambda$ is divided into $n$-parties $\Lambda \to A_1|A_2|\cdots|A_n$, then a state $\varrho^{\mrm{fsp}}$ is called \textit{fully separable} if it can be expressed as
+    \begin{equation}\label{eq:fsp-def}
+        \varrho^{\mrm{fsp}} = \sum_{k} p_k \rho^{(A_1)}_{k} \otimes \rho^{(A_2)}_{k} \otimes \cdots \otimes \rho^{(A_n)}_{k}
+    \end{equation}
+    where $\lrg{p_k}$ is a probability distribution, and every component $\rho_k^{(A_i)}$ is a valid density matrix.
+\end{definition}
+Again, \textbf{\textit{each component $\rho_k^{(A_i)}$ may or may not be pure, since both cases are equivalent to each other}}. The proof is similar to what we used when proving Eq.~\eqref{eq:sep-def} is equivalent to Eq.~\eqref{eq:sep-def-pure}.
 
 \begin{definition}[Weak Biseparability~\cite{Jungnitsch-Moroder-Guhne_2011}]\label{def:bisep}
     A state $\varrho$ is called \textbf{\textit{weakly biseparable}} if it can be expressed as a mixture of separable states defined by Def.~\ref{def:sep}
@@ -593,7 +643,7 @@ At first glance, \textbf{Ref.~\cite{Guhne-Toth_2009} and Ref.~\cite{Lyu-Chandork
 \begin{equation}\label{eq:equiv-bisep}
     \varrho = \sum_{k}p_k \ket{\psi^{\mrm{bsp}}_k}\bra{\psi^{\mrm{bsp}}_{k}}
 \end{equation}
-where each $\ket{\psi^{\mrm{bsp}}_k} = \ket{\varphi_{A}} \ket{\varphi_{\overline{A}}}$ is biseparable with respect to some subsystem $A$. There may be more than one state $\psi^{\mrm{bsp}}_k$ labeled by $k$ that is biseparable with respect to the division $A|\overline{A}$. Therefore, we can sort them according to their way of dividing the system and collect the states that bipartite the system with respect to division $A|\overline{A}$ into a set $D(A)$. In this way, the summation can be rewritten as 
+where each $\ket{\psi^{\mrm{bsp}}_k} = \ket{\varphi^{(A)}} \ket{\varphi^{(\overline{A})}}$ is biseparable with respect to some subsystem $A$, and $\lrg{p_k}$ is a probability distribution. There may be more than one state $\psi^{\mrm{bsp}}_k$ labeled by $k$ that is biseparable with respect to the partition $A|\overline{A}$. Therefore, we can sort them according to their way of dividing the system and collect the states that bipartite the system with respect to partition $A|\overline{A}$ into a set $D(A)$. In this way, the summation can be rewritten as 
 \[
 \sum_{k}p_k \ket{\psi^{\mrm{bsp}}_k}\bra{\psi^{\mrm{bsp}}_{k}}
 =
@@ -611,15 +661,22 @@ where each $\ket{\psi^{\mrm{bsp}}_k} = \ket{\varphi_{A}} \ket{\varphi_{\overline
 \]
 Based on this argument, we conclude that \textbf{\textit{Eq.~\eqref{eq:equiv-bisep} is an equivalent expression to Def.~\ref{def:bisep}}}. \textbf{\textit{According to the present literature, Def.~\ref{def:bisep} is the standard definition for biseparability. Thus, whenever we call a biseparable state in the following sections, the definition is always Def.~\ref{def:bisep}.}} 
 
+% \begin{lemma}\label{lemma:special-sep}
+%     Suppose a system $\Lambda$ can be divided into $n$ parties $\Lambda \to A_1|A_2|\cdots|A_n$, such a partition is denoted by $\mathcal{D}_n$, and there exists a series of density matrices $\lrg{\rho^{(A_1)}_k, \rho^{(A_2)}_k,\cdots,\rho^{(A_n)}_k}$ and a probability distribution $\lrg{p_k}$ such that the following convex mixture
+%     \begin{equation}\label{eq:special-sep}
+%         \varrho = \sum_{k} p_k \bigotimes_{A\in\mathcal{D}_n}\rho^{(A)}_k 
+%     \end{equation}
+%     is also a density matrix, then $\varrho$ defined in the above equation is \textit{biseparable}.
+% \end{lemma}
+% \begin{proof}
+%     The proof is trivial since each component $\bigotimes_{A\in\mathcal{D}_n}\rho^{(A)}_k$ in Eq.~\eqref{eq:special-sep} is separable. 
+% \end{proof}
+
 \begin{lemma}\label{lemma:special-sep}
-    Suppose a system $\Lambda$ can be divided into $n$ parties $\Lambda \to A_1|A_2|\cdots|A_n$, such a division is denoted by $\mathcal{D}_n$, and there exists a series of density matrices $\lrg{\rho^{(A_1)}_k, \rho^{(A_2)}_k,\cdots,\rho^{(A_n)}_k}$ and a probability distribution $\lrg{p_k}$ such that the following convex mixture
-    \begin{equation}\label{eq:special-sep}
-        \varrho = \sum_{k} p_k \bigotimes_{A\in\mathcal{D}_n}\rho^{(A)}_k 
-    \end{equation}
-    is also a density matrix, then $\varrho$ defined in the above equation is \textit{biseparable}.
+    A fully separable state defined by Def.~\ref{def:fsp} is separable with respect to any bipartition $A|\overline{A}$, hence is biseparable.
 \end{lemma}
 \begin{proof}
-    The proof is trivial since each component $\bigotimes_{A\in\mathcal{D}_n}\rho^{(A)}_k$ in Eq.~\eqref{eq:special-sep} is separable. 
+    The proof is trivial since each component $\rho^{(A_1)}_{k} \otimes \rho^{(A_2)}_{k} \otimes \cdots \otimes \rho^{(A_n)}_{k}$ in Eq.~\eqref{eq:fsp-def} is separable. 
 \end{proof}
 
 \begin{definition}[Genuine Multipartite Entanglement]\label{def:GME}
@@ -837,6 +894,7 @@ two conjectures
     \]
 \end{lemma}
 \begin{proof}
+\textit{(Sketch)}
     \[
     1+\sigma_1\sigma_2 = \frac{1}{2}\lr{1+\sigma_1}\lr{1+\sigma_2} + \frac{1}{2}\lr{1-\sigma_1}\lr{1-\sigma_2}
     \]
@@ -864,7 +922,7 @@ Since any Pauli string can be decomposed into a product of Pauli operators $\Sig
 \]
 Since $\mathop{\sum_{\lrg{s=\pm}}}_{\prod_is_i = 1}
 \frac{1}{2^{\abs{\Lambda} - 1}} = 1$ and each component $\prod_{i\in\Lambda}
-\lr{\frac{\mathds{1}_i + s_i\sigma_i}{2}}$ in the above expression is a valid density matrix, the density matrix $\varrho$ is of the same form as Eq.~\ref{eq:special-sep} a biseparable state according to Lemma~\ref{lemma:special-sep}.  
+\lr{\frac{\mathds{1}_i + s_i\sigma_i}{2}}$ in the above expression is a valid density matrix, the density matrix $\varrho$ is of the same form as Eq.~\eqref{eq:fsp-def}, which is a biseparable state according to Lemma~\ref{lemma:special-sep}.  
 % The system $\Lambda$ can be separated into the bipartitioned $A|\overline{A}$. In this way, the density matrix Eq.~\eqref{eq:proj-rho-not-GME} can be rewritten in the following form 
 % \[
 % \rho = \frac{\mathds{1}_A\mathds{1}_{\overline{A}} + \Sigma_A\Sigma_{\overline{A}}}{2^{\abs{A}+\abs{\overline{A}}}}
@@ -898,21 +956,55 @@ We start with a subsystem containing only two adjoint edges in an infinitely lar
 \begin{equation}
     \varrho = \frac{1}{2^{3}}\lr{\mathds{1}+\anglelr{\sigma^x_1\sigma^x_2}\sigma^x_1\sigma^x_2 + \anglelr{\sigma^y_3\sigma^y_2}\sigma^y_3\sigma^y_2} 
     =: 
-    \frac{1}{8}\lr{\mathds{1} - x\sigma^x_1\sigma^x_2 + y\sigma^y_3\sigma^y_2}
+    \frac{1}{8}\lr{\mathds{1} + x\sigma^x_1\sigma^x_2 + y\sigma^y_3\sigma^y_2}
 \end{equation}
+If a state of a spin-1/2 system $\Lambda$ is divided into $\abs{\Lambda}$ parties, which means every party contains only one spin, then a fully separated state under this partition can be expressed as
+\begin{equation}\label{eq:fsp-decomp}
+    \varrho_{s} = \sum_{k} p_k \bigotimes_{i\in\Lambda}\lr{\frac{\mathds{1} + \bo{v}_i^{(k)}\cdot\bog{\sigma}_i}{2}}
+    =
+    \frac{1}{2^{\abs{\Lambda}}}
+    \sum_{A\subset\Lambda} 
+    \mathop{\sum_{\lrg{\mu}_A}}_{\mu=x,y,z}
+    \lr{ 
+        \sum_{k} p_k 
+        \prod_{i\in A}v^{(k)\mu_i}_i
+    }
+    \bigotimes_{i\in A}\sigma_i^{\mu_i}
+\end{equation}
+where $\bo{v}_i^{(k)} = (v_i^{(k)x}, v_i^{(k)y}, v_i^{(k)z})$ is a vector with three components.
 
-\[
-\varrho_{s} = \sum_{k} p_k \bigotimes_{i\in\Lambda}\lr{\frac{\mathds{1} + \bo{v}_i^{(k)}\cdot\bog{\sigma}_i}{2}}
-=
-\frac{1}{2^{\abs{\Lambda}}}
-\sum_{A\subset\Lambda} 
-\mathop{\sum_{\lrg{\mu}}}_{\mu=x,y,z}
-\lr{ 
-    \sum_{k} p_k 
-    \prod_{i\in A}v^{(k)\mu_i}_i
-}
-\bigotimes_{i\in A}\sigma_i^{\mu_i}
-\]
+\begin{definition}[Micropartition]
+    For a quantum mechanical system $\Lambda$ composed of $\abs{\Lambda}$ elementary degrees of freedom, e.g., spins, fermions, and bosons, a \textit{\textbf{micropartition}} of $\Lambda$ is a partition that divides the system into $\abs{\Lambda}$ parties, $\Lambda\to A_1|A_2|\cdots|A_{\abs{\lambda}}$, where each party $A_i$ contains only one elementary degree of freedom.
+\end{definition}
+It is then obvious that the expression \textbf{\textit{Eq.~\eqref{eq:fsp-decomp} is the most general form of a fully separable state with respect to a micropartition of a spin-1/2 system}}. In the meantime, since Pauli operators are the generators of $SU(2)$ operators and bear a $\mathbb{Z}_2$ feature, the density matrix of a spin-1/2 system can also be expressed as
+\begin{equation}\label{eq:spin-rho-general}
+    \varrho_s = \frac{1}{2^{\abs{\Lambda}}}
+    \sum_{A\subset \Lambda} 
+    \sum_{\lrg{u}_A} 
+    \Anglelr{\bigotimes_{i\in A}\sigma^{\mu_i}_i}
+    \bigotimes_{i\in A}\sigma^{\mu_i}_i
+\end{equation}
+Comparing Eq.~\eqref{eq:spin-rho-general} with Eq.~\eqref{eq:fsp-decomp}, we obtain a relation between the vectors $\lrg{\bo{v}^{(k)}_i}$, the probability distribution $\lrg{p_k}$, and the multi-spin correlation functions:
+\begin{equation}
+    \Anglelr{\prod_{i\in A} v^{\mu_i}_i}_{\mrm{cl}}
+    :=
+    \sum_{k} p_k
+    \prod_{i\in A} v^{(k)\mu_i}_i
+    =
+    \Anglelr{\bigotimes_{i\in A}\sigma^{\mu_i}_i}
+\end{equation}
+Or, comparing both sides term by term to obtain a series of relations
+\begin{align*}
+    \anglelr{v^{\mu}_i}_{\mrm{cl}} &:= \arrequ{\sum_{n}p_n v^{(n)\mu}_i = \anglelr{\sigma_i^{\mu}}} \\
+    \anglelr{v^{\mu}_i v^{\nu}_j}_{\mrm{cl}}  
+    &= \arrequ{\sum_{n}p_n v^{(n)\mu}_i v^{(n)\nu}_j = \anglelr{\sigma_i^{\mu}\sigma^{\nu}_j} } \\
+    \anglelr{v^{\mu}_i v^{\nu}_j v^{\lambda}_k}_{\mrm{cl}} 
+    &= \arrequ{\sum_{n}p_n v^{(n)\mu}_i v^{(n)\nu}_j v^{(n)\lambda}_k = \anglelr{\sigma_i^{\mu}\sigma^{\nu}_j\sigma^{\lambda}_k} } \\
+    &\vdots
+\end{align*}
+This relation implies that the spin correlations can be interpreted by a classical probability theory with a probability distribution $\lrg{p_k}$ and classical variables $\lrg{\bo{v}^{(k)}_i}$. Therefore, for a fully separable state, the correlation is not truly quantum. Chances are there is an equivalent classical interpretation that describes the same physical phenomena. 
+
+
 
 \appendix
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
