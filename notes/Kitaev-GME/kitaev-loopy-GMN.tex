@@ -1,5 +1,5 @@
 \documentclass[12font]{article}
-\title{\textbf{Correlation Functions in a Finite-Size Kitaev Model}}
+\title{\textbf{Loopy Genuine Multipartite Entanglement in the Kitaev Model}}
 \author{Chen-Chih Wang  }
 \date{\textit{Department of Physics, National Tsing Hua University, Hsinchu 30013, Taiwan} \\ (Dated: \today)}
 \usepackage[margin=2cm]{geometry}
@@ -579,15 +579,37 @@ Here, I adopt the definition used in Ref.~\cite{Guhne-Toth_2009}. The components
     where $\lrg{p_A}$ is a probability distribution.
 \end{definition}
 
-\begin{definition}[Strong Biseparability~\cite{Lyu-Chandorkar-Kapoor-Takei-Sorensen-Witczak-Krempa_2026}]\label{def:bisep-2}
-    Ref.~\cite{Lyu-Chandorkar-Kapoor-Takei-Sorensen-Witczak-Krempa_2026} gives a seemingly different definition. A state $\varrho$ is called \textbf{\textit{strongly biseparable}} if it can be expressed as a mixture of \textbf{biseparable pure states}
+\begin{definition}[Strong Biseparability]\label{def:bisep-2}
+    A state $\varrho$ is called \textbf{\textit{strongly biseparable}} if it can be expressed as a mixture of \textbf{biseparable pure states}
     \begin{equation}\label{eq:bisep-state-2}
         \varrho = \sum_{A \subset \Lambda}p_{A} \ket{\psi}_A\bra{\psi}_A \otimes\ket{\phi}_{\overline{A}}\bra{\phi}_{\overline{A}}
     \end{equation}
-    where $\lrg{p_A}$ is a probability distribution.
+    where $\lrg{p_A}$ is a probability distribution. 
 \end{definition}
 
 Compared to Def.~\ref{def:bisep}, Def.~\ref{def:bisep-2} covers a narrower range since separable states $\varrho^{(\mrm{sep})}_{A|\overline{A}}$ in Eq.~\eqref{eq:bisep-state} are not required to be pure. Later, we will see that genuine multipartite negativity, as a monotone of multipartite entanglement, vanishes if a state is biseparable defined by Def.~\ref{def:bisep}. In other words, \textbf{the condition required by Def.~\ref{def:bisep-2} is too strong}. The range of states that are not genuinely multipartite entangled is wider than the range restricted by Def.~\ref{def:bisep-2}. 
+
+At first glance, \textbf{Ref.~\cite{Guhne-Toth_2009} and Ref.~\cite{Lyu-Chandorkar-Kapoor-Takei-Sorensen-Witczak-Krempa_2026} seems to adopt Def.~\ref{def:bisep-2} instead of Def.~\ref{def:bisep}, but it turns out not}. Looking carefully into Eq.~(46) of Ref.~\cite{Guhne-Toth_2009} and the Method section of Ref.~\cite{Lyu-Chandorkar-Kapoor-Takei-Sorensen-Witczak-Krempa_2026}, one will find that the definition of a biseparable state is
+\begin{equation}\label{eq:equiv-bisep}
+    \varrho = \sum_{k}p_k \ket{\psi^{\mrm{bsp}}_k}\bra{\psi^{\mrm{bsp}}_{k}}
+\end{equation}
+where each $\ket{\psi^{\mrm{bsp}}_k} = \ket{\varphi_{A}} \ket{\varphi_{\overline{A}}}$ is biseparable with respect to some subsystem $A$. There may be more than one state $\psi^{\mrm{bsp}}_k$ labeled by $k$ that is biseparable with respect to the division $A|\overline{A}$. Therefore, we can sort them according to their way of dividing the system and collect the states that bipartite the system with respect to division $A|\overline{A}$ into a set $D(A)$. In this way, the summation can be rewritten as 
+\[
+\sum_{k}p_k \ket{\psi^{\mrm{bsp}}_k}\bra{\psi^{\mrm{bsp}}_{k}}
+=
+\sum_{A\subset\Lambda}
+\underbrace{\lr{\sum_{k'\in D(A)} p_{k'}}}_{p_{A}}
+\underbrace{
+\sum_{k\in D(A)} 
+\frac{p_{k}}{\sum_{k'\in D(A)} p_{k'}}
+\ket{\varphi^{(A)}_k}
+\bra{\varphi^{(A)}_k}
+\otimes
+\ket{\varphi^{(\overline{A})}_k}
+\bra{\varphi^{(\overline{A})}_k}
+}_{\varrho^{\mrm{sep}}_{A|\overline{A}}} = \text{Eq.~\eqref{eq:bisep-state}}
+\]
+Based on this argument, we conclude that \textbf{\textit{Eq.~\eqref{eq:equiv-bisep} is an equivalent expression to Def.~\ref{def:bisep}}}. \textbf{\textit{According to the present literature, Def.~\ref{def:bisep} is the standard definition for biseparability. Thus, whenever we call a biseparable state in the following sections, the definition is always Def.~\ref{def:bisep}.}} 
 
 \begin{lemma}\label{lemma:special-sep}
     Suppose a system $\Lambda$ can be divided into $n$ parties $\Lambda \to A_1|A_2|\cdots|A_n$, such a division is denoted by $\mathcal{D}_n$, and there exists a series of density matrices $\lrg{\rho^{(A_1)}_k, \rho^{(A_2)}_k,\cdots,\rho^{(A_n)}_k}$ and a probability distribution $\lrg{p_k}$ such that the following convex mixture
@@ -601,7 +623,7 @@ Compared to Def.~\ref{def:bisep}, Def.~\ref{def:bisep-2} covers a narrower range
 \end{proof}
 
 \begin{definition}[Genuine Multipartite Entanglement]\label{def:GME}
-    A state is \textbf{\textit{genuinly multipartite entangled}} if it is \textbf{not biseparable}. Note that the definition of \textit{biseparable} adopted here is based on Def.~\ref{def:bisep}.
+    A state is \textbf{\textit{genuinly multipartite entangled}} if it is \textbf{not biseparable}. %Note that the definition of \textit{biseparable} adopted here is based on Def.~\ref{def:bisep}.
 \end{definition}
 
 % \begin{definition}[Positive Partial Transpose (PPT) State]
@@ -1228,7 +1250,7 @@ notice that $\eta_{\mathfrak{D}}=1$ if $[\mathfrak{D}]\in \bo{G}$
     \]
 \end{proof}
 
-\section{blank}
+%\section{blank}
 
 \bibliographystyle{my_apsrev4-2}
 \bibliography{ref}% Produces the bibliography via BibTeX.
