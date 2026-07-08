@@ -953,7 +953,7 @@ Lemma~\ref{lemma:single-stabilizer-generator} and its corollary show that \textb
 
 \subsection{Biseparability in Kitaev Model}
 We start with a subsystem containing only two adjoint edges in an infinitely large Kitaev model. The density matrix, according to our work~\cite{wang2026exactorganizationdensitymatrices}, reads as
-\begin{equation}
+\begin{equation}\label{eq:kitaev-3spin}
     \varrho = \frac{1}{2^{3}}\lr{\mathds{1}+\anglelr{\sigma^x_1\sigma^x_2}\sigma^x_1\sigma^x_2 + \anglelr{\sigma^y_3\sigma^y_2}\sigma^y_3\sigma^y_2} 
     =: 
     \frac{1}{8}\lr{\mathds{1} + x\sigma^x_1\sigma^x_2 + y\sigma^y_3\sigma^y_2}
@@ -994,14 +994,18 @@ Comparing Eq.~\eqref{eq:spin-rho-general} with Eq.~\eqref{eq:fsp-decomp}, we obt
     \Anglelr{\bigotimes_{i\in A}\sigma^{\mu_i}_i}
 \end{equation}
 Or, comparing both sides term by term to obtain a series of relations
-\begin{align*}
-    \anglelr{v^{\mu}_i}_{\mrm{cl}} &:= \arrequ{\sum_{n}p_n v^{(n)\mu}_i = \anglelr{\sigma_i^{\mu}}} \\
-    \anglelr{v^{\mu}_i v^{\nu}_j}_{\mrm{cl}}  
-    &= \arrequ{\sum_{n}p_n v^{(n)\mu}_i v^{(n)\nu}_j = \anglelr{\sigma_i^{\mu}\sigma^{\nu}_j} } \\
-    \anglelr{v^{\mu}_i v^{\nu}_j v^{\lambda}_k}_{\mrm{cl}} 
-    &= \arrequ{\sum_{n}p_n v^{(n)\mu}_i v^{(n)\nu}_j v^{(n)\lambda}_k = \anglelr{\sigma_i^{\mu}\sigma^{\nu}_j\sigma^{\lambda}_k} } \\
-    &\vdots
-\end{align*}
+\begin{equation}\label{eq:fsp-hierarchy}
+\left\{
+    \begin{aligned}
+        \anglelr{v^{\mu}_i}_{\mrm{cl}} &:= \arrequ{\sum_{n}p_n v^{(n)\mu}_i = \anglelr{\sigma_i^{\mu}}} \\
+        \anglelr{v^{\mu}_i v^{\nu}_j}_{\mrm{cl}}  
+        &= \arrequ{\sum_{n}p_n v^{(n)\mu}_i v^{(n)\nu}_j = \anglelr{\sigma_i^{\mu}\sigma^{\nu}_j} } \\
+        \anglelr{v^{\mu}_i v^{\nu}_j v^{\lambda}_k}_{\mrm{cl}} 
+        &= \arrequ{\sum_{n}p_n v^{(n)\mu}_i v^{(n)\nu}_j v^{(n)\lambda}_k = \anglelr{\sigma_i^{\mu}\sigma^{\nu}_j\sigma^{\lambda}_k} } \\
+        &\vdots
+    \end{aligned}
+\right.
+\end{equation}
 This relation implies that the spin correlations can be interpreted by a classical probability theory with a probability distribution $\lrg{p_k}$ and classical variables $\lrg{\bo{v}^{(k)}_i}$. Therefore, for a fully separable state, the correlation is not truly quantum. Chances are there is an equivalent classical interpretation that describes the same physical phenomena. 
 
 Suppose that the following operator is a valid density matrix of a spin-1/2 system $\Lambda$, 
@@ -1012,23 +1016,39 @@ Suppose that the following operator is a valid density matrix of a spin-1/2 syst
 \lr{
 \mathds{1}_\Lambda
 +
-\sum_{A\neq \varnothing}c_A\Sigma_{A}\otimes\mathds{1}_{\overline{A}}
+\sum_{n}\anglelr{\Sigma_n}\Sigma_{n}
 },
 \]
-where $\Sigma_A$ is a Pauli string operator whose support is a subsystem $A\subset\Lambda$, and each component is accompanied by a coefficient $c_A$. Such a density matrix $\varrho$ can be decomposed as follows
+where $\Sigma_{n}$ is a Pauli string operator whose support is a subsystem $\mrm{Sup}_n\subset\Lambda$, and each component is accompanied by a coefficient $\anglelr{\Sigma_n}$. Such a density matrix $\varrho$ can be decomposed as follows
 \begin{equation}\label{eq:string-decomposition}
     \varrho
     =
-    \sum_{A\neq \varnothing} p_A \frac{1}{2^{\abs{A}}}
-    \lr{\mathds{1}_A + \frac{c_A}{p_A}\Sigma_A} \otimes \frac{1}{2^{\abs{\overline{A}}}}\mathds{1}_{\overline{A}}
+    \sum_{n} p_{n} \frac{1}{2^{\abs{\mrm{Sup}_n}}}
+    \lr{\mathds{1}_{\mrm{Sup}_n} + \frac{\anglelr{\Sigma_n}}{p_{n}}\Sigma_n} \otimes \frac{1}{2^{\abs{\overline{\mrm{Sup}_n}}}}\mathds{1}_{\overline{\mrm{Sup}_n}}
 \end{equation}
-Apparently, the operator $\frac{1}{2^{\abs{\overline{A}}}}\mathds{1}_{\overline{A}}$ is a valid density matrix. If we can further confirm that each preceding component $\frac{1}{2^{\abs{A}}}
-\lr{\mathds{1}_A + \frac{c_A}{p_A}\Sigma_A}$ is also a valid density matrix, then we can prove that $\varrho$ is separable. To this end, we need to diagonalize the operator $\frac{c_A}{p_A}\Sigma_A$ to see whether it contains eigenvalues less than $-1$. If there are such eigenvalues, the entire operator will possess negative eigenvalues, which is not allowed for a valid density matrix. Since $\Sigma_A$ is a $\mathbb{Z}_2$ operator that squares to one, the operator $\frac{c_A}{p_A}\Sigma_A$ only possesses two distinct eigenvalues: $\pm c_A/p_A$. Therefore, the criterion of Eq.~\eqref{eq:string-decomposition} takes the form of a biseparable state Eq.~\eqref{def:bisep} is $\abs{c_A} \leq p_A \; \forall A$.
-Because the probability distribution $\lrg{p_A}$ can be adjusted artificially as long as the normalization condition $\sum_{A}p_A$ holds, the above condition can be relaxed to
+Apparently, the operator $\frac{1}{2^{\abs{\overline{\mrm{Sup}_n}}}}\mathds{1}_{\overline{\mrm{Sup}_n}}$ is a valid density matrix. If we can further confirm that each preceding component $\frac{1}{2^{\abs{\mrm{Sup}_n}}}
+\lr{\mathds{1}_{A} + \frac{\anglelr{\Sigma_n}}{p_{n}}\Sigma_{n}}$ is also a valid density matrix, then we can prove that $\varrho$ is separable. To this end, we need to diagonalize the operator $\frac{\anglelr{\Sigma_n}}{p_{n}}\Sigma_{n}$ to see whether it contains eigenvalues less than $-1$. If there are such eigenvalues, the entire operator will possess negative eigenvalues, which is not allowed for a valid density matrix. Since $\Sigma_{n}$ is a $\mathbb{Z}_2$ operator that squares to one, the operator $\frac{\anglelr{\Sigma_n}}{p_{n}}\Sigma_{n}$ only possesses two distinct eigenvalues: $\pm \anglelr{\Sigma_n}/p_{n}$. Therefore, the criterion of Eq.~\eqref{eq:string-decomposition} takes the form of a biseparable state Eq.~\eqref{def:bisep} is $\abs{\anglelr{\Sigma_n}} \leq p_{n} \; \forall n $.
+Because the probability distribution $\lrg{p_n}$ can be adjusted artificially as long as the normalization condition $\sum_{{A}}p_{A}=1$ holds, the above condition can be relaxed to
 \begin{equation}\label{eq:string-decomp-condition}
-    \sum_{A}\abs{c_A} \leq 1
+    \sum_{n}\abs{\anglelr{\Sigma_n}} \leq 1
 \end{equation}
+Note that $\mrm{Sup}_n$ does not necessarily need to be exactly the \textit{shape of the string}, i.e., the positions at which the Pauli operators are placed. It is a specific union of elementary subregions in the partition such that the string operator lies exclusively inside that region.
 
+Now, we can prove that the density matrix Eq.~\eqref{eq:kitaev-3spin} is fully separable with respect to the micropartition. Define components
+\[
+\begin{aligned}
+    & \rho_1(s_1) = \frac{1}{2}\lr{\mathds{1}_1 + s_1 \sigma_1^x} \\
+    & \rho_3(s_3) = \frac{1}{2}\lr{\mathds{1}_3 + s_3 \sigma_3^y} \\
+    & \rho_2(s_1,s_3) = \frac{1}{2}\lr{\mathds{1}_2 + s_1 x \sigma_2^x + s_3 y \sigma_2^y} 
+\end{aligned}
+\]
+where $s_1,s_3 = \pm1$ are sign factors, then the density matrix can be expressed in the following fully separated form
+\[
+\frac{1}{8}\lr{\mathds{1} + x\sigma^x_1\sigma^x_2 + y\sigma^y_3\sigma^y_2}
+=
+\sum_{s_1,s_3 = \pm}\frac{1}{4}\rho_1(s_1)\otimes \rho_2(s_1, s_3) \otimes \rho_3(s_3)
+\]
+where we have used the tricks that the sum $\sum_{s_i,s_j=\pm 1}s_is_j = 0$ vanishes and the other type $\sum_{s_i,s_j}s_i^2 = 4$ survives.
 
 
 \appendix
