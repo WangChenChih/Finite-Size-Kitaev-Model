@@ -857,7 +857,7 @@ The definition of fully decomposable witnesses can be used to reformulate the ge
 
 \section{Gauge Fields and Loopy Entanglement Pattern}
 
-\section{Pauli Stabilizer Projectors and GME}
+\section{GME in Spin-1/2 Systems}
 In Ref.~\cite{Lyu-Chandorkar-Kapoor-Takei-Sorensen-Witczak-Krempa_2026}, \textit{entanglement frustration} consists of two major aspects:
 \begin{enumerate}
     \item In a quantum spin liquid phase, the GME is suppressed in non-loopy regions.
@@ -882,7 +882,7 @@ two conjectures
     \item A stabilizer projector as a density matrix is genuinely multipartite entangled.
 \end{enumerate}
 
-\subsection{General Phenomena}
+\subsection{Single Pauli Stabilizer}
 \begin{lemma}\label{lemma:pauli-decompose}
     Given a series of operators $\lrg{\sigma_i\;:\;i\in \Lambda }$ that commute with each other, the following identity holds
     \[
@@ -951,13 +951,7 @@ Since $\mathop{\sum_{\lrg{s=\pm}}}_{\prod_is_i = 1}
 \end{corollary}
 Lemma~\ref{lemma:single-stabilizer-generator} and its corollary show that \textbf{a single gauge loop (Wilson loop) without matter in a $\mathbb{Z}_2$ gauge theory is not adequate to produce GME, regardless of how large the loop is}. 
 
-\subsection{Biseparability in Kitaev Model}
-We start with a subsystem containing only two adjoint edges in an infinitely large Kitaev model. The density matrix, according to our work~\cite{wang2026exactorganizationdensitymatrices}, reads as
-\begin{equation}\label{eq:kitaev-3spin}
-    \varrho = \frac{1}{2^{3}}\lr{\mathds{1}+\anglelr{\sigma^x_1\sigma^x_2}\sigma^x_1\sigma^x_2 + \anglelr{\sigma^y_3\sigma^y_2}\sigma^y_3\sigma^y_2} 
-    =: 
-    \frac{1}{8}\lr{\mathds{1} + x\sigma^x_1\sigma^x_2 + y\sigma^y_3\sigma^y_2}
-\end{equation}
+\subsection{Full Separability with respect to Micropartition: Classical Hidden Variables}
 If a state of a spin-1/2 system $\Lambda$ is divided into $\abs{\Lambda}$ parties, which means every party contains only one spin, then a fully separated state under this partition can be expressed as
 \begin{equation}\label{eq:fsp-decomp}
     \varrho_{s} = \sum_{k} p_k \bigotimes_{i\in\Lambda}\lr{\frac{\mathds{1} + \bo{v}_i^{(k)}\cdot\bog{\sigma}_i}{2}}
@@ -1008,17 +1002,18 @@ Or, comparing both sides term by term to obtain a series of relations
 \end{equation}
 This relation implies that the spin correlations can be interpreted by a classical probability theory with a probability distribution $\lrg{p_k}$ and classical variables $\lrg{\bo{v}^{(k)}_i}$. Therefore, for a fully separable state, the correlation is not truly quantum. Chances are there is an equivalent classical interpretation that describes the same physical phenomena. 
 
+\subsection{Isolated String Decomposition}
 Suppose that the following operator is a valid density matrix of a spin-1/2 system $\Lambda$, 
-\[
-\varrho 
-= 
-\frac{1}{2^{\abs{\Lambda}}}
-\lr{
-\mathds{1}_\Lambda
-+
-\sum_{n}\anglelr{\Sigma_n}\Sigma_{n}
-},
-\]
+\begin{equation}\label{eq:string-expansion}
+    \varrho 
+    = 
+    \frac{1}{2^{\abs{\Lambda}}}
+    \lr{
+    \mathds{1}_\Lambda
+    +
+    \sum_{n}\anglelr{\Sigma_n}\Sigma_{n}
+    },
+\end{equation}
 where $\Sigma_{n}$ is a Pauli string operator whose support is a subsystem $\mrm{Sup}_n\subset\Lambda$, and each component is accompanied by a coefficient $\anglelr{\Sigma_n}$. Such a density matrix $\varrho$ can be decomposed as follows
 \begin{equation}\label{eq:string-decomposition}
     \varrho
@@ -1034,7 +1029,85 @@ Because the probability distribution $\lrg{p_n}$ can be adjusted artificially as
 \end{equation}
 Note that $\mrm{Sup}_n$ does not necessarily need to be exactly the \textit{shape of the string}, i.e., the positions at which the Pauli operators are placed. It is a specific union of elementary subregions in the partition such that the string operator lies exclusively inside that region.
 
-Now, we can prove that the density matrix Eq.~\eqref{eq:kitaev-3spin} is fully separable with respect to the micropartition. Define components
+\subsection{String-Bipartition Decomposition}
+The method introduced in the previous section is not suitable for situations where a \textit{global Pauli string} exists, which is supported on the entire system. Here, we discuss a more general decomposition of the density matrix. Consider the same density matrix Eq.~\eqref{eq:string-expansion}, we take a different decomposition
+\[
+\varrho 
+= 
+\sum_{k} p_k
+\frac{1}{2^{\abs{A_k}}}
+\lr{\mathds{1}_{A_k} + a_k\Sigma_k}
+\frac{1}{2^{\abs{\overline{A_k}}}}
+\lr{\mathds{1}_{\overline{A_k}} + \tilde{a}_k\tilde{\Sigma}_k}
+\]
+where $\Sigma_k$ is supported on $A_k$ and its counterpart $\tilde{\Sigma}_k$ is supported on $\overline{A_k}$. The counterpart of a Pauli string is not unique. Two different Pauli strings, $\Sigma_k$ and $\Sigma_{k'
+}$, may have the same counterpart $\tilde{\Sigma}_{k} = \tilde{\Sigma}_{k'}$. The number of \textit{basis pairs} $(\Sigma_k,\tilde{\Sigma}_k)$ and the corresponding coefficients $(a_k,\tilde{a}_k)$ depends on the number of elements of the probability distribution $\lrg{p_k}$.
+\[
+\varrho 
+=
+\frac{1}{2^{\abs{\Lambda}}}
+\lrm{
+\mathds{1}_{\Lambda}
++
+\sum_{k} p_k
+    \lr{
+    a_k \Sigma_{k}
+    +
+    \tilde{a}_k\tilde{\Sigma}_k
+    +
+    a_k\tilde{a}_k\Sigma_k\tilde{\Sigma}_k
+    }
+}
+\]
+
+\[
+\mrm{SD}(n) = \lrg{k \left| \Sigma_k\tilde{\Sigma}_k = \Sigma_n\right.}
+\]
+\[
+\anglelr{\Sigma_n} = p_na_n + p_{\overline{n}}\tilde{a}_{\overline{n}} 
++ 
+\sum_{k\in \mrm{SD}(n)}p_ka_k\tilde{a}_k
+\]
+$\Sigma_{\overline{n}} = \tilde{\Sigma}_n$
+
+\[
+\abs{a_k} \leq 1 \;,\; \abs{\tilde{a}_k} \leq 1
+\]
+
+\begin{align*}
+    \abs{\anglelr{\Sigma_n}} 
+    &= 
+    \abs{
+        p_na_n 
+        + 
+        p_{\overline{n}}\tilde{a}_{\overline{n}} 
+        + 
+        \sum_{k\in \mrm{SD}(n)}p_ka_k\tilde{a}_k
+    } \\
+    &\leq
+    p_n\abs{a_n}
+    +
+    p_{\overline{n}}\abs{\tilde{a}_{\overline{n}} } 
+    +
+    \abs{
+    \sum_{k\in \mrm{SD}(n)}p_ka_k\tilde{a}_k
+    } \\
+    &\leq 
+    p_n\abs{a_n}
+    +
+    p_{\overline{n}}\abs{\tilde{a}_{\overline{n}} } 
+    +
+    \sum_{k\in \mrm{SD}(n)}p_k
+    \abs{a_k}\abs{\tilde{a}_k} 
+\end{align*}
+\section{Biseparability in the Kitaev Model}
+We start with a subsystem containing only two adjoint edges in an infinitely large Kitaev model. The density matrix, according to our work~\cite{wang2026exactorganizationdensitymatrices}, reads as
+\begin{equation}\label{eq:kitaev-3spin}
+    \varrho = \frac{1}{2^{3}}\lr{\mathds{1}+\anglelr{\sigma^x_1\sigma^x_2}\sigma^x_1\sigma^x_2 + \anglelr{\sigma^y_3\sigma^y_2}\sigma^y_3\sigma^y_2} 
+    =: 
+    \frac{1}{8}\lr{\mathds{1} + x\sigma^x_1\sigma^x_2 + y\sigma^y_3\sigma^y_2}
+\end{equation}
+The density matrix Eq.~\eqref{eq:kitaev-3spin} is fully separable with respect to the micropartition. Define components
 \[
 \begin{aligned}
     & \rho_1(s_1) = \frac{1}{2}\lr{\mathds{1}_1 + s_1 \sigma_1^x} \\
@@ -1043,12 +1116,14 @@ Now, we can prove that the density matrix Eq.~\eqref{eq:kitaev-3spin} is fully s
 \end{aligned}
 \]
 where $s_1,s_3 = \pm1$ are sign factors, then the density matrix can be expressed in the following fully separated form
-\[
-\frac{1}{8}\lr{\mathds{1} + x\sigma^x_1\sigma^x_2 + y\sigma^y_3\sigma^y_2}
-=
-\sum_{s_1,s_3 = \pm}\frac{1}{4}\rho_1(s_1)\otimes \rho_2(s_1, s_3) \otimes \rho_3(s_3)
-\]
+\begin{equation}\label{eq:kitaev-spin3-micropartition}
+    \frac{1}{8}\lr{\mathds{1} + x\sigma^x_1\sigma^x_2 + y\sigma^y_3\sigma^y_2}
+    =
+    \sum_{s_1,s_3 = \pm}\frac{1}{4}\rho_1(s_1)\otimes \rho_2(s_1, s_3) \otimes \rho_3(s_3)
+\end{equation}
 where we have used the tricks that the sum $\sum_{s_i,s_j=\pm 1}s_is_j = 0$ vanishes and the other type $\sum_{s_i,s_j}s_i^2 = 4$ survives.
+
+
 
 
 \appendix
