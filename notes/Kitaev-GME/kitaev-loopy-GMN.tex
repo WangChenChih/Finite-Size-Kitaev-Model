@@ -1393,8 +1393,8 @@ where $Q_p$ satisfies $[Q_p,Q_{p'}]=0$ and $[Q_p, \sigma^z_i\sigma^z_j]=0$. Beca
     \prod_{p} \lr{\mathds{1} + \kappa_J Q_p} 
     } \nonumber \\
     &=
-    \cosh^{N_d}(\beta)
-    \cosh^{N_p}(\beta J_{\mrm{eff}})
+    \cosh^{N_d/2}(\beta)
+    \cosh^{N_p/2}(\beta J_{\mrm{eff}})
     \lr{
     1 + \kappa^{N_d}\kappa_J^{N_p/2} + \kappa^{N_d}\kappa_J^{N_p/2} + \kappa_J^{N_p}
     }
@@ -1403,7 +1403,7 @@ where $Q_p$ satisfies $[Q_p,Q_{p'}]=0$ and $[Q_p, \sigma^z_i\sigma^z_j]=0$. Beca
     2^N
     \frac
     {1 + 2\kappa^{N_d}\kappa_J^{N_p/2} +  \kappa_J^{N_p}}
-    {\lr{1 - \kappa^2}^{N_d} \lr{1 - \kappa_J^2}^{N_p}}
+    {\lr{1 - \kappa^2}^{N_d/2} \lr{1 - \kappa_J^2}^{N_p/2}}
 \end{align}
 where the shorthand notations are $\kappa \equiv \tanh\beta$ and $\kappa_J \equiv \tanh(\beta J_{\mrm{eff}})$. In the derivation, we have used the properties $\prod_{p\in\mathfrak{P}} Q_p = \prod_{\anglelr{ij}\in Z}\sigma^z_i\sigma^z_j$ and $\prod_{p}Q_p = \mathds{1}$. The density matrix is therefore
 \begin{align}
@@ -1434,9 +1434,9 @@ From the second-to-the last term to the last term, we have used the fact that th
     1 + 2\kappa^{N_d}\kappa_J^{N_p/2} + \kappa_J^{N_p}
     }
     -
-    N_d\ln\lr{1 - \kappa^2}
+    \frac{N_d}{2} \ln\lr{1 - \kappa^2}
     -
-    N_p
+    \frac{N_p}{2}
     \ln\lr{1 - \kappa_J^2}
 \]
 
@@ -1462,9 +1462,9 @@ From the second-to-the last term to the last term, we have used the fact that th
     1 + 2\kappa^{N_d}\kappa_J^{N_p/2} + \kappa_J^{N_p}
 } 
 +
-2N_d\kappa
+N_d\kappa
 +
-2N_pJ_{\mrm{eff}}\kappa_J
+N_pJ_{\mrm{eff}}\kappa_J
 \]
 
 \[
@@ -1472,7 +1472,7 @@ S = \ln Z - \beta\pdif{\beta}\ln Z
 \]
 
 \[
-\lim_{\beta\to\infty}\lrm{ -\ln\lr{1 - \kappa^2} - \beta\kappa} = -\lim_{\beta\to\infty}\ln\lr{\frac{2e^{\beta \kappa}}{e^{\beta} + e^{-\beta}}} = -\ln 2
+\lim_{\beta\to\infty}\lrm{ -\frac{1}{2}\ln\lr{1 - \kappa^2} - \beta\kappa} = -\lim_{\beta\to\infty}\ln\lr{\frac{2e^{\beta \kappa}}{e^{\beta} + e^{-\beta}}} = -\ln 2
 \]
 \[
 \lim_{\beta\to\infty} S = \ln 4
