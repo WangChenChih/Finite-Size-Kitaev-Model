@@ -1232,7 +1232,8 @@ The component for the $z$-dimers takes the correct form, although there is no pl
 \propto
 %\lr{\prod_{\anglelr{ij}\in Z}\sigma^z_i\sigma^z_j}
 \lim_{\beta\to \infty}
-\frac{Z_0}{Z}\mrm{T}_\tau \exp\lr{-\int_{0}^{\beta}\mrm{d}\tau' H'_I(\tau')}
+\frac{Z_0(\beta)}{Z(\beta)}
+\mrm{T}_\tau \exp\lr{-\int_{0}^{\beta}\mrm{d}\tau' H'_I(\tau')}
 \end{equation}
 where $Z_0 = \Tr\lrm{\exp\lr{-\beta H_Z}}$ and $Z = \Tr\lrm{\exp\lr{-\beta H_K}}$. Or, it is also possible to involve the Pauli-$z$ operators as follows
 \begin{equation}\label{eq:plaquette-proj-criterion-2}
@@ -1240,7 +1241,8 @@ where $Z_0 = \Tr\lrm{\exp\lr{-\beta H_Z}}$ and $Z = \Tr\lrm{\exp\lr{-\beta H_K}}
 \propto
 %\lr{\prod_{\anglelr{ij}\in Z}\sigma^z_i\sigma^z_j}
 \lim_{\beta\to \infty}
-\frac{Z_0}{Z}\mrm{T}_\tau \exp\lr{-\int_{0}^{\beta}\mrm{d}\tau' H'_I(\tau')}
+\frac{Z_0(\beta)}{Z(\beta)}
+\mrm{T}_\tau \exp\lr{-\int_{0}^{\beta}\mrm{d}\tau' H'_I(\tau')}
 \end{equation}
 which is equivalent to the identity for the $z$-dimer density matrix. However, we have to bear in mind that the perturbation Hamiltonian $H'_I(\tau)$ in the interaction picture already has the Pauli-$z$ operators.
 
@@ -1268,6 +1270,221 @@ Higher-order terms generate longer strings in the direction along $X$ or $Y$, wh
 
 \alert{Can the plaquette projector, which is a topological object, be produced using perturbation theory? It seems that it is a non-perturbative feature of the system.}
 
+For a finite-temperature toric code model, the density matrix is~\cite{Iblisdir-Perez-Garcia-Aguado-Pachos_2009, Iblisdir-Perez-Garcia-Aguado-Pachos_2010, Nussinov-Ortiz_2009}
+\begin{align}\label{eq:TC-DM-finite-T}
+\rho 
+&= \frac{1}{Z}\exp\lr{\beta K_m\sum_{p}P_p + \beta K_e\sum_{s}S_s} \nonumber \\
+&= 
+\frac{1}{Z}
+\lr{\prod_p e^{\beta K_m P_p}}
+\lr{\prod_s e^{\beta K_e S_s}} \nonumber \\
+&=
+\frac{
+\cosh^{N_p}(\beta K_m)
+\cosh^{N_s}(\beta K_e)
+}
+{
+2^{N_p + N_s}
+\lrm{\cosh^{N_p}(\beta K_m) + \sinh^{N_p}(\beta K_m)} 
+\lrm{\cosh^{N_s}(\beta K_e) + \sinh^{N_s}(\beta K_e)} 
+} \nonumber \\
+&\quad\quad\quad \prod_p\lr{\mathds{1} + \tanh(\beta K_m)P_p}
+\prod_s\lr{\mathds{1} + \tanh(\beta K_e)S_s} \nonumber \\
+&= 
+\frac{1}
+{
+\lr{1 + \kappa_m^{N_p}} 
+\lr{1 + \kappa_e^{N_s}} 
+}
+\prod_p
+\lr{
+\frac{\mathds{1} + \kappa_m P_p}{2}
+}
+\prod_s
+\lr{
+\frac{\mathds{1} + \kappa_e S_s}{2}
+},
+\end{align}
+where $\kappa_m \equiv \tanh(\beta K_m)$ and $\kappa_e \equiv \tanh(\beta K_e)$, both satisfies $\lim_{\beta\to \infty} \kappa = 1$. Taking the low-temperature limit, we obtain the ground-state density matrix without the topological term,
+\begin{equation}
+    \lim_{\beta\to\infty}\rho = 
+    \frac{1}{4}\prod_p\lr{\frac{\mathds{1} + P_p}{2}}
+\prod_s\lr{\frac{\mathds{1} + S_s}{2}}
+\end{equation}
+
+The reduced density matrix of a simply-connected subregion $A$ reads
+\begin{align}\label{eq:TC-RDM-finite-T}
+\rho_A 
+&= 
+\Tr_{\overline{A}}\rho \nonumber\\
+&=
+\frac{1}
+{
+    2^{N_p + N_s}
+    \lr{1 + \kappa_m^{N_p}} 
+    \lr{1 + \kappa_e^{N_s}} 
+}
+\Tr_{\overline{A}}
+\lrm{
+    \lr{
+        \sum_{\mathcal{M}_p}\kappa_m^{\abs{\mathcal{M}_p}}
+        \prod_{p\in\mathcal{M}_p} P_p
+    }
+    \lr{
+        \sum_{\mathcal{M}_s}\kappa_s^{\abs{\mathcal{M}_s}}
+        \prod_{s\in\mathcal{M}_s} S_s
+    } 
+} \nonumber\\
+&= 
+\frac{2^{N - N^A}}
+{
+    2^{N_p + N_s}
+    \lr{1 + \kappa_m^{N_p}} 
+    \lr{1 + \kappa_e^{N_s}} 
+}
+\lrm{
+\lr{1 + \kappa_m^{N_p - N_p^A}}
+    \sum_{\mathcal{M}_p\subset A}\kappa_m^{\abs{\mathcal{M}_p}}
+    \prod_{p\in\mathcal{M}_p} P_p
+}
+\lrm{
+    \lr{1 + \kappa_e^{N_s - N_s^A}} \sum_{\mathcal{M}_s \subset A} \kappa_s^{\abs{\mathcal{M}_s}}
+    \prod_{s\in\mathcal{M}_s} S_s
+} \nonumber \\
+&= 
+\frac{
+    \lr{1 + \kappa_m^{N_p - N_p^A}}
+    \lr{1 + \kappa_e^{N_s - N_s^A}}
+}
+{
+    \lr{1 + \kappa_m^{N_p}} 
+    \lr{1 + \kappa_e^{N_s}} 
+}
+\frac{1}{2^{N^A - N^A_p - N^A_s}}
+\prod_{p\in A}
+\lr{\frac{\mathds{1} + \kappa_m P_p}{2}}
+\prod_{s\in A}
+\lr{\frac{\mathds{1} + \kappa_e S_s}{2}}
+\end{align}
+
+
+\alert{\textbf{\underline{Question:}} Where does the \textbf{topological projector} come from? Is it possible to get the topological projector from a thermal state by taking the low-temperature limit? It should be, because otherwise we can never reach the topological phase by lowering the temperature in practical experiments.}
+
+A similar technique can be applied to the Kitaev model in the toric code limit. In the toric code limit, the effective Hamiltonian in the low-energy sector can be written as (up to the fourth order)
+\[
+H_K \approx -\sum_{\anglelr{ij} \in Z} \sigma^z_i\sigma^z_j
+-
+J_{\mrm{eff}} \sum_{p} Q_p
+\]
+where $Q_p$ satisfies $[Q_p,Q_{p'}]=0$ and $[Q_p, \sigma^z_i\sigma^z_j]=0$. Because the Hamiltonian is now frustration-free and each component squares to one, the corresponding Gibbs state can be separated straightforwardly as in the toric code model. First, the partition function is
+\begin{align}
+    Z 
+    &= 
+    \Tr
+    \lrm{
+    \lr{\prod_{\anglelr{ij}\in Z} e^{\beta\sigma^z_i\sigma^z_j}}
+    \lr{\prod_p e^{\beta J_{\mrm{eff}} Q_p}} 
+    } \nonumber \\
+    &= 
+    \cosh^{N_d}(\beta)
+    \cosh^{N_p}(\beta J_{\mrm{eff}})
+    \Tr\lrm{
+    \prod_{\anglelr{ij}\in Z} \lr{\mathds{1} + \kappa \sigma^z_i\sigma^z_j}
+    \prod_{p} \lr{\mathds{1} + \kappa_J Q_p} 
+    } \nonumber \\
+    &=
+    \cosh^{N_d}(\beta)
+    \cosh^{N_p}(\beta J_{\mrm{eff}})
+    \lr{
+    1 + \kappa^{N_d}\kappa_J^{N_p/2} + \kappa^{N_d}\kappa_J^{N_p/2} + \kappa_J^{N_p}
+    }
+    \Tr\mathds{1} \nonumber \\
+    &=
+    2^N
+    \frac
+    {1 + 2\kappa^{N_d}\kappa_J^{N_p/2} +  \kappa_J^{N_p}}
+    {\lr{1 - \kappa^2}^{N_d} \lr{1 - \kappa_J^2}^{N_p}}
+\end{align}
+where the shorthand notations are $\kappa \equiv \tanh\beta$ and $\kappa_J \equiv \tanh(\beta J_{\mrm{eff}})$. In the derivation, we have used the properties $\prod_{p\in\mathfrak{P}} Q_p = \prod_{\anglelr{ij}\in Z}\sigma^z_i\sigma^z_j$ and $\prod_{p}Q_p = \mathds{1}$. The density matrix is therefore
+\begin{align}
+    \rho 
+    &= 
+    \frac{1}{Z} \lr{\prod_{\anglelr{ij}\in Z} e^{\beta\sigma^z_i\sigma^z_j}}
+    \lr{\prod_p e^{\beta J_{\mrm{eff}} Q_p}} \nonumber \\
+    &=
+    \frac{1}{1 + 2\kappa^{N_d}\kappa_J^{N_p/2} + \kappa_J^{N_p}}
+    \prod_{\anglelr{ij} \in Z} \lr{\frac{\mathds{1} + \kappa \sigma^z_i\sigma^z_j}{2}}
+    \prod_{p}\lr{\frac{\mathds{1} + \kappa_J Q_p}{2}} 
+\end{align}
+Taking the low-temperature limit, we obtain
+\[
+\lim_{\beta\to\infty}\rho
+=
+\frac{1}{4}\prod_{\anglelr{ij} \in Z} \lr{\frac{\mathds{1} + \sigma^z_i\sigma^z_j}{2}}
+    \prod_{p}\lr{\frac{\mathds{1} + Q_p}{2}} 
+=
+\frac{1}{4}\prod_{\anglelr{ij} \in Z} \lr{\frac{\mathds{1} + \sigma^z_i\sigma^z_j}{2}}
+    \prod_{p}\lr{\frac{\mathds{1} + W_p}{2}} 
+\]
+From the second-to-the last term to the last term, we have used the fact that the product can be expanded, and then every $\sigma^z_i\sigma^z_j$ is absorbed into the dimer projector to transform $Q_p$ to $W_p$. However, this is valid only when $\beta = \infty$, so that the term for the $z$-dimers is a projector.
+\[
+\ln Z = N\ln 2
+    +
+    \ln\lr{
+    1 + 2\kappa^{N_d}\kappa_J^{N_p/2} + \kappa_J^{N_p}
+    }
+    -
+    N_d\ln\lr{1 - \kappa^2}
+    -
+    N_p
+    \ln\lr{1 - \kappa_J^2}
+\]
+
+\[
+\pdiff{\kappa}{\beta} = 1 - \kappa^2 \quad,\quad \pdiff{\kappa_J}{\beta} = J_{\mrm{eff}}\lr{1 - \kappa_J^2}
+\]
+
+\[
+\pdif{\beta}\ln Z 
+= 
+\kappa_J^{N_p/2} 
+\frac
+{
+    2N_d\kappa^{N_d}\lr{\kappa^{-1} - \kappa}
+    +
+    N_p J_{\mrm{eff}}
+    \lr{
+    \kappa^{N_d } + \kappa_J^{N_p/2}
+    }
+    \lr{\kappa_J^{-1} - \kappa_J}
+}
+{
+    1 + 2\kappa^{N_d}\kappa_J^{N_p/2} + \kappa_J^{N_p}
+} 
++
+2N_d\kappa
++
+2N_pJ_{\mrm{eff}}\kappa_J
+\]
+
+\[
+S = \ln Z - \beta\pdif{\beta}\ln Z 
+\]
+
+\[
+\lim_{\beta\to\infty}\lrm{ -\ln\lr{1 - \kappa^2} - \beta\kappa} = -\lim_{\beta\to\infty}\ln\lr{\frac{2e^{\beta \kappa}}{e^{\beta} + e^{-\beta}}} = -\ln 2
+\]
+\[
+\lim_{\beta\to\infty} S = \ln 4
+\]
+
+
+\begin{figure}
+    \centering
+    \includegraphics[width=\linewidth]{figures/Cv-eps-converted-to.pdf}
+    \caption{Taken from Ref.~\cite{Nasu-Udagawa-Motome_2015}. According to the right-most figure, a sharp plateau appears in a specific temperature range when the system is in a \textbf{gapped phase}. The $\alpha$ is defined as a parameter that determines the ratio of the $J_x$ and $J_y$ couplings to the $J_z$. $J_x/J_z = J_y/J_z = \frac{\alpha}{3 - 2\alpha}$. By definition, the ratio of the exchange couplings is $J_x/J_z = J_y/J_z = 0.25$ if $\alpha = 0.5$, which is the situation of the right-most panel. \alert{\textbf{Question:} What will happen in the toric code limit?}}
+    \label{fig:Cv}
+\end{figure}
 
 \appendix
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
