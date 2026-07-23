@@ -1035,6 +1035,17 @@ P_L = Z_1Z_3Z_4Z_6 \;,\; P_R = Z_2Z_4Z_5Z_7 \;,\; P_LP_R = Z_1Z_2Z_3Z_5Z_6Z_7
 
 Numerous works have utilized negativity to study the entanglement pattern in topologically ordered states~\cite{Lee-Vidal_2013, Castelnovo_2013}. Moreover, this technique sheds light on how to characterize the pattern of long-range entanglement and topological orders in mixed states~\cite{Lu-Hsieh-Grover_2020, Wang-Wu-Wang_2025, Lu-Vijay_2023}.
 
+\subsection{Benzene}
+Here we consider the simplest RVB state. An approximated wave function of the valence electrons in a benzene molecule reads
+\[
+\ket{\psi} = \ket{[12]}\ket{[34]}\ket{[56]} + \ket{[23]}\ket{[45]}\ket{[61]}
+\]
+where $\ket{[ij]} \equiv \frac{1}{\sqrt{2}}\lr{\ket{\uparrow_i \downarrow_j} - \ket{\downarrow_i\uparrow_j}}$ stands for a spin singlet pair that forms a $\pi$-bond that connects two nearby atoms.   
+
+\[
+\ket{[ij]}\bra{[ij]} = \frac{1}{2^2}\lr{\mathds{1} - \bog{\sigma}\cdot\bog{\sigma}}
+\]
+
 \subsection{Isolated String Decomposition}
 Suppose that the density matrix Eq.~\eqref{eq:string-expansion} can be decomposed as follows
 \begin{equation}\label{eq:string-decomposition}
@@ -1156,12 +1167,106 @@ where $s_1,s_3 = \pm1$ are sign factors, then the density matrix can be expresse
 \end{equation}
 where we have used the tricks that the sum $\sum_{s_i,s_j=\pm 1}s_is_j = 0$ vanishes and the other type $\sum_{s_i,s_j}s_i^2 = 4$ survives.
 
+Criterion
+\[
+x^2 + y^2 \leq 1
+\]
+
 \subsection{Block-Diagonalized Structure and Separability}
 
 \[
 \frac{1}{d}\bigoplus_{n=1}^{d}\varrho^F = \sum_{k} p_k \ket{\psi^{\mrm{bsp}}_k} \bra{\psi^{\mrm{bsp}}_k}
 \]
 Are there any constraints on the validity of this equation? What would the constraint look like?
+
+\section{Finite-Temperature Density Matrix}
+In general, the exact form of a finite-temperature density matrix of a quantum spin system is notoriously difficult to obtain. Here, we use a perturbation approach to obtain an approximate form of the density matrix of the Kitaev model in the toric-code limit (anisotropic limit). In this case, the Kitaev Hamiltonian $H_K$ can be separated into the main part $H_Z$ ($z$-direction) and the \textit{perturbation} $H'$ ($x$- and $y$-direction)
+\[
+H_Z = -\sum_{\anglelr{ij} \in Z}\sigma^z_i \sigma^z_j
+\]
+Here, $J_z$ is set to be unit.
+\[
+H' 
+= 
+-J_x\sum_{\anglelr{ij} \in X}\sigma^x_i \sigma^x_j
++
+-J_y\sum_{\anglelr{ij} \in Y}\sigma^y_i \sigma^y_j
+\equiv
+H_X + H_Y
+\]
+
+Suppose the thermal state of the Kitaev model takes the form of a Gibbs state $\rho = \frac{1}{Z}e^{-\beta H_K}$, then the Gibbs state can be expressed using the interaction picture
+\begin{equation}
+    \rho = \frac{1}{Z} e^{-\beta\lr{H_Z + H'}} = \frac{1}{Z} e^{-\beta H_Z} 
+    \mrm{T}_\tau \exp\lr{-\int_{0}^{\beta}\mrm{d}\tau' H'_I(\tau')}
+\end{equation}
+where
+\begin{equation}
+    H'_I(\tau) = e^{H_Z\tau} H' e^{-H_Z\tau}
+\end{equation}
+The partition function can be computed \alert{(?)}
+\[
+Z = \Tr\lr{e^{-\beta H_K}}
+\]
+
+\[
+e^{-\beta H_Z} = \exp \lr{\beta \sum_{\anglelr{ij}\in Z} \sigma^z_i\sigma^z_j} = \prod_{\anglelr{ij}\in Z}e^{\beta \sigma^z_i\sigma^z_j} = \prod_{\anglelr{ij}\in Z}\lrm{\cosh\beta + \lr{\sinh\beta}\sigma^z_i\sigma^z_j}
+\]
+It is straightforward to obtain the trace of this operator,
+\[
+\Tr\lr{e^{-\beta H_Z}} = 2^N\lr{\cosh\beta}^{N/2},
+\]
+where $N$ is the number of spins in the system.
+
+\[
+\lim_{\beta \to \infty} \frac{e^{-\beta H_Z}}{\Tr\lr{e^{-\beta H_Z}}} 
+= 
+\frac{1}{2^N}\lim_{\beta \to \infty}  \prod_{\anglelr{ij}\in Z}\lrm{1 + \lr{\tanh\beta}\sigma^z_i\sigma^z_j}
+=
+\frac{1}{2^{N/2}}
+\prod_{\anglelr{ij}\in Z}\lr{\frac{1 + \sigma^z_i\sigma^z_j}{2}}
+\]
+The component for the $z$-dimers takes the correct form, although there is no plaquette projector. Involving $H_X$ and $H_Y$ is necessary to reproduce the plaquette projector, but the precise way in which the plaquette projector is produced is another story. At least we know that the plaquette projector is hidden in the following operator that has appeared in the finite-temperature density matrix shown earlier
+\begin{equation}\label{eq:plaquette-proj-criterion}
+    \prod_p\lr{\frac{\mathds{1} + W_p}{2}}
+\propto
+%\lr{\prod_{\anglelr{ij}\in Z}\sigma^z_i\sigma^z_j}
+\lim_{\beta\to \infty}
+\frac{Z_0}{Z}\mrm{T}_\tau \exp\lr{-\int_{0}^{\beta}\mrm{d}\tau' H'_I(\tau')}
+\end{equation}
+where $Z_0 = \Tr\lrm{\exp\lr{-\beta H_Z}}$ and $Z = \Tr\lrm{\exp\lr{-\beta H_K}}$. Or, it is also possible to involve the Pauli-$z$ operators as follows
+\begin{equation}\label{eq:plaquette-proj-criterion-2}
+    \prod_p\lr{\frac{\mathds{1} + W_p}{2}}
+\propto
+%\lr{\prod_{\anglelr{ij}\in Z}\sigma^z_i\sigma^z_j}
+\lim_{\beta\to \infty}
+\frac{Z_0}{Z}\mrm{T}_\tau \exp\lr{-\int_{0}^{\beta}\mrm{d}\tau' H'_I(\tau')}
+\end{equation}
+which is equivalent to the identity for the $z$-dimer density matrix. However, we have to bear in mind that the perturbation Hamiltonian $H'_I(\tau)$ in the interaction picture already has the Pauli-$z$ operators.
+
+
+
+\alert{
+\begin{itemize}
+    \item Goal: Figure out where the plaquette projector comes from the thermal state.
+    \item The plaquette projector, along with the equivalence class structure, is one of the manifestations of \textit{fractionalization}. 
+    \item From hindsight, it is reasonable to choose the toric code limit, since a gapped phase is more stable for preserving the topological feature against thermal fluctuation.
+\end{itemize}
+}
+
+\[
+e^{H_Z\tau} H_X e^{-H_Z\tau} = H_X + \tau [H_Z,H_X] + \frac{1}{2!}\tau^2 [H_Z,[H_Z,H_X]] + \cdots
+\]
+
+\[
+[H_Z,H_X] 
+= J_x\sum_{\anglelr{ij}\in Z} \sum_{\anglelr{kl}\in X}[\sigma^z_i\sigma^z_j, \sigma^x_k\sigma^x_l]
+=
+2iJ_x\sum_{ijk}\sigma^z_i\sigma^y_j\sigma^x_k
+\]
+Higher-order terms generate longer strings in the direction along $X$ or $Y$, which can be discussed separately. 
+
+\alert{Can the plaquette projector, which is a topological object, be produced using perturbation theory? It seems that it is a non-perturbative feature of the system.}
 
 
 \appendix
