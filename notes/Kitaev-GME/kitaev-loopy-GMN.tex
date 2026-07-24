@@ -1466,11 +1466,13 @@ N_d\kappa
 +
 N_pJ_{\mrm{eff}}\kappa_J
 \]
-
+Substituting the above identities into the definition of the thermal entropy
 \[
-S = \ln Z - \beta\pdif{\beta}\ln Z 
+S = -\Tr \rho\ln\rho = \ln Z - \beta\pdif{\beta}\ln Z 
 \]
+gives an analytical expression for thermal entropy, which is plotted in Fig.~\ref{fig:entropy-sep}. 
 
+For numerical efficiency, we have to use the following property
 \[
 \lim_{\beta\to\infty}\lrm{ -\frac{1}{2}\ln\lr{1 - \kappa^2} - \beta\kappa} = -\lim_{\beta\to\infty}\ln\lr{\frac{2e^{\beta \kappa}}{e^{\beta} + e^{-\beta}}} = -\ln 2
 \]
@@ -1478,13 +1480,22 @@ S = \ln Z - \beta\pdif{\beta}\ln Z
 \lim_{\beta\to\infty} S = \ln 4
 \]
 
-
 \begin{figure}
     \centering
     \includegraphics[width=\linewidth]{figures/Cv-eps-converted-to.pdf}
     \caption{Taken from Ref.~\cite{Nasu-Udagawa-Motome_2015}. According to the right-most figure, a sharp plateau appears in a specific temperature range when the system is in a \textbf{gapped phase}. The $\alpha$ is defined as a parameter that determines the ratio of the $J_x$ and $J_y$ couplings to the $J_z$. $J_x/J_z = J_y/J_z = \frac{\alpha}{3 - 2\alpha}$. By definition, the ratio of the exchange couplings is $J_x/J_z = J_y/J_z = 0.25$ if $\alpha = 0.5$, which is the situation of the right-most panel. \alert{\textbf{Question:} What will happen in the toric code limit?}}
     \label{fig:Cv}
 \end{figure}
+
+\begin{figure}
+    \centering
+    \includegraphics[width=0.3\linewidth]{figures/frac-sep-fig/J100.pdf}
+    \includegraphics[width=0.3\linewidth]{figures/frac-sep-fig/J1000.pdf}
+    \includegraphics[width=0.3\linewidth]{figures/frac-sep-fig/J10000.pdf}
+    \caption{The trend of thermal entropy per spin with temperature, calculated by definition $S = \ln Z - \beta\pdif{\beta}\ln Z$ directly. The system is the Kitaev model in the toric code limit. The size of the system is fixed to be $N = 10^{10}$, and $J_{\mrm{eff}}$ is the coupling constant of the low-energy effective theory. The \textit{melting point} of the static-flux phase does not depend on the value of $J_{\mrm{eff}}$. On the other hand, the \textit{melting point} of the free-spinon phase changes significantly when we vary $J_{\mrm{eff}}$. }
+    \label{fig:entropy-sep}
+\end{figure}
+
 
 \appendix
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
