@@ -1370,30 +1370,37 @@ The reduced density matrix of a simply-connected subregion $A$ reads
 
 \alert{\textbf{\underline{Question:}} Where does the \textbf{topological projector} come from? Is it possible to get the topological projector from a thermal state by taking the low-temperature limit? It should be, because otherwise we can never reach the topological phase by lowering the temperature in practical experiments.}
 
-A similar technique can be applied to the Kitaev model in the toric code limit. In the toric code limit, the effective Hamiltonian in the low-energy sector can be written as (up to the fourth order)
+A similar technique can be applied to the Kitaev model in the toric code limit. In the toric code limit, the effective Hamiltonian in the low-energy sector can be written as (up to the fourth order)~\cite{Kitaev_2006}
 \begin{equation}\label{eq:eff-model}
-    H_K \approx -\sum_{\anglelr{ij} \in Z} \sigma^z_i\sigma^z_j
+    H_K \approx - J_z \sum_{\anglelr{ij} \in Z} \sigma^z_i\sigma^z_j
 -
 J_{\mrm{eff}} \sum_{p} Q_p
 \end{equation}
-where $Q_p$ satisfies $[Q_p,Q_{p'}]=0$ and $[Q_p, \sigma^z_i\sigma^z_j]=0$. Because the Hamiltonian is now frustration-free and each component squares to one, the corresponding Gibbs state can be separated straightforwardly as in the toric code model. First, the partition function is
+where $Q_p$ satisfies $[Q_p,Q_{p'}]=0$ and $[Q_p, \sigma^z_i\sigma^z_j]=0$. The low-energy effective coupling constant is $J_{\mrm{eff}} = \frac{J_x^2 J_y^2}{16\abs{J_z}^3}$. If we adopt the convention used in Ref.~\cite{Nasu-Udagawa-Motome_2015}, in which the coupling constant is parameterized by $\alpha$ in the way\footnote{in this way the three coupling constants satisfy $J_x + J_y + J_z = 1$} that $J_z = 1 - \frac{2}{3}\alpha$ and $J_x = J_y = \frac{1}{3}\alpha$, then the Hamiltonian can be written as
+\begin{equation}\label{eq:eff-model-alpha}
+    H_K \approx - \lr{1 - \frac{2}{3}\alpha} \sum_{\anglelr{ij} \in Z} \sigma^z_i\sigma^z_j
+-
+\frac{\alpha^4}{48\lr{3-2\alpha}^3} \sum_{p} Q_p
+\end{equation}
+
+Because the Hamiltonian is now frustration-free and each component squares to one, the corresponding Gibbs state can be separated straightforwardly as in the toric code model. First, the partition function is
 \begin{align}
     Z 
     &= 
     \Tr
     \lrm{
-    \lr{\prod_{\anglelr{ij}\in Z} e^{\beta\sigma^z_i\sigma^z_j}}
+    \lr{\prod_{\anglelr{ij}\in Z} e^{\beta J_z \sigma^z_i\sigma^z_j}}
     \lr{\prod_p e^{\beta J_{\mrm{eff}} Q_p}} 
     } \nonumber \\
     &= 
-    \cosh^{N_d}(\beta)
-    \cosh^{N_p}(\beta J_{\mrm{eff}})
+    \cosh^{N_d/2}(\beta J_z )
+    \cosh^{N_p/2}(\beta J_{\mrm{eff}})
     \Tr\lrm{
     \prod_{\anglelr{ij}\in Z} \lr{\mathds{1} + \kappa \sigma^z_i\sigma^z_j}
     \prod_{p} \lr{\mathds{1} + \kappa_J Q_p} 
     } \nonumber \\
     &=
-    \cosh^{N_d/2}(\beta)
+    \cosh^{N_d/2}(\beta J_z )
     \cosh^{N_p/2}(\beta J_{\mrm{eff}})
     \lr{
     1 + \kappa^{N_d}\kappa_J^{N_p/2} + \kappa^{N_d}\kappa_J^{N_p/2} + \kappa_J^{N_p}
@@ -1405,11 +1412,11 @@ where $Q_p$ satisfies $[Q_p,Q_{p'}]=0$ and $[Q_p, \sigma^z_i\sigma^z_j]=0$. Beca
     {1 + 2\kappa^{N_d}\kappa_J^{N_p/2} +  \kappa_J^{N_p}}
     {\lr{1 - \kappa^2}^{N_d/2} \lr{1 - \kappa_J^2}^{N_p/2}}
 \end{align}
-where the shorthand notations are $\kappa \equiv \tanh\beta$ and $\kappa_J \equiv \tanh(\beta J_{\mrm{eff}})$. In the derivation, we have used the properties $\prod_{p\in\mathfrak{P}} Q_p = \prod_{\anglelr{ij}\in Z}\sigma^z_i\sigma^z_j$ and $\prod_{p}Q_p = \mathds{1}$. The density matrix is therefore
+where the shorthand notations are $\kappa \equiv \tanh(\beta J_z )$ and $\kappa_J \equiv \tanh(\beta J_{\mrm{eff}})$. In the derivation, we have used the properties $\prod_{p\in\mathfrak{P}} Q_p = \prod_{\anglelr{ij}\in Z}\sigma^z_i\sigma^z_j$ and $\prod_{p}Q_p = \mathds{1}$. The density matrix is therefore
 \begin{align}
     \rho 
     &= 
-    \frac{1}{Z} \lr{\prod_{\anglelr{ij}\in Z} e^{\beta\sigma^z_i\sigma^z_j}}
+    \frac{1}{Z} \lr{\prod_{\anglelr{ij}\in Z} e^{\beta J_z \sigma^z_i\sigma^z_j}}
     \lr{\prod_p e^{\beta J_{\mrm{eff}} Q_p}} \nonumber \\
     &=
     \frac{1}{1 + 2\kappa^{N_d}\kappa_J^{N_p/2} + \kappa_J^{N_p}}
@@ -1441,7 +1448,7 @@ From the second-to-the last term to the last term, we have used the fact that th
 \]
 
 \[
-\pdiff{\kappa}{\beta} = 1 - \kappa^2 \quad,\quad \pdiff{\kappa_J}{\beta} = J_{\mrm{eff}}\lr{1 - \kappa_J^2}
+\pdiff{\kappa}{\beta} = J_z \lr{1 - \kappa^2} \quad,\quad \pdiff{\kappa_J}{\beta} = J_{\mrm{eff}}\lr{1 - \kappa_J^2}
 \]
 
 \[
@@ -1450,7 +1457,7 @@ From the second-to-the last term to the last term, we have used the fact that th
 \kappa_J^{N_p/2} 
 \frac
 {
-    2N_d\kappa^{N_d}\lr{\kappa^{-1} - \kappa}
+    2N_d\kappa^{N_d} J_z \lr{\kappa^{-1} - \kappa}
     +
     N_p J_{\mrm{eff}}
     \lr{
@@ -1462,7 +1469,7 @@ From the second-to-the last term to the last term, we have used the fact that th
     1 + 2\kappa^{N_d}\kappa_J^{N_p/2} + \kappa_J^{N_p}
 } 
 +
-N_d\kappa
+N_d J_z \kappa
 +
 N_pJ_{\mrm{eff}}\kappa_J
 \]
@@ -1474,7 +1481,7 @@ gives an analytical expression for thermal entropy, which is plotted in Fig.~\re
 
 For numerical efficiency, we have to use the following property
 \[
-\lim_{\beta\to\infty}\lrm{ -\frac{1}{2}\ln\lr{1 - \kappa^2} - \beta\kappa} = -\lim_{\beta\to\infty}\ln\lr{\frac{2e^{\beta \kappa}}{e^{\beta} + e^{-\beta}}} = -\ln 2
+\lim_{\beta\to\infty}\lrm{ -\frac{1}{2}\ln\lr{1 - \kappa^2} - \beta J_z \kappa} = -\lim_{\beta\to\infty}\ln\lr{\frac{2e^{\beta  J_z \kappa}}{e^{\beta J_z } + e^{-\beta J_z }}} = -\ln 2
 \]
 \[
 \lim_{\beta\to\infty} S = \ln 4
