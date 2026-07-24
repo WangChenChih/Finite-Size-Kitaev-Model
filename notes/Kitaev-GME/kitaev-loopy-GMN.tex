@@ -1371,11 +1371,11 @@ The reduced density matrix of a simply-connected subregion $A$ reads
 \alert{\textbf{\underline{Question:}} Where does the \textbf{topological projector} come from? Is it possible to get the topological projector from a thermal state by taking the low-temperature limit? It should be, because otherwise we can never reach the topological phase by lowering the temperature in practical experiments.}
 
 A similar technique can be applied to the Kitaev model in the toric code limit. In the toric code limit, the effective Hamiltonian in the low-energy sector can be written as (up to the fourth order)
-\[
-H_K \approx -\sum_{\anglelr{ij} \in Z} \sigma^z_i\sigma^z_j
+\begin{equation}\label{eq:eff-model}
+    H_K \approx -\sum_{\anglelr{ij} \in Z} \sigma^z_i\sigma^z_j
 -
 J_{\mrm{eff}} \sum_{p} Q_p
-\]
+\end{equation}
 where $Q_p$ satisfies $[Q_p,Q_{p'}]=0$ and $[Q_p, \sigma^z_i\sigma^z_j]=0$. Because the Hamiltonian is now frustration-free and each component squares to one, the corresponding Gibbs state can be separated straightforwardly as in the toric code model. First, the partition function is
 \begin{align}
     Z 
@@ -1492,7 +1492,7 @@ For numerical efficiency, we have to use the following property
     \includegraphics[width=0.3\linewidth]{figures/frac-sep-fig/J100.pdf}
     \includegraphics[width=0.3\linewidth]{figures/frac-sep-fig/J1000.pdf}
     \includegraphics[width=0.3\linewidth]{figures/frac-sep-fig/J10000.pdf}
-    \caption{The trend of thermal entropy per spin with temperature, calculated by definition $S = \ln Z - \beta\pdif{\beta}\ln Z$ directly. The system is the Kitaev model in the toric code limit. The size of the system is fixed to be $N = 10^{10}$, and $J_{\mrm{eff}}$ is the coupling constant of the low-energy effective theory. The \textit{melting point} of the static-flux phase does not depend on the value of $J_{\mrm{eff}}$. On the other hand, the \textit{melting point} of the free-spinon phase changes significantly when we vary $J_{\mrm{eff}}$. }
+    \caption{The trend of thermal entropy per spin with temperature, calculated by definition $S = \ln Z - \beta\pdif{\beta}\ln Z$ directly. The system is the Kitaev model in the toric code limit. The size of the system is fixed to be $N = 10^{10}$, and $J_{\mrm{eff}}$ is the coupling constant of the low-energy effective theory appearing in Eq.~\eqref{eq:eff-model}. The \textit{melting point} of the static-flux phase does not depend on the value of $J_{\mrm{eff}}$. On the other hand, the \textit{melting point} of the free-spinon phase changes significantly when we vary $J_{\mrm{eff}}$. }
     \label{fig:entropy-sep}
 \end{figure}
 
