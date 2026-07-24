@@ -6,7 +6,7 @@
 %Control: page (0) single
 %Control: year (1) truncated
 %Control: production of eprint (0) enabled
-\begin{thebibliography}{25}%
+\begin{thebibliography}{26}%
 \makeatletter
 \providecommand \@ifxundefined [1]{%
  \@ifx{#1\undefined}
@@ -242,6 +242,18 @@
   {https://doi.org/10.1103/PhysRevResearch.5.033031} {\bibfield  {journal}
   {\bibinfo  {journal} {Phys. Rev. Res.}\ }\textbf {\bibinfo {volume} {5}},\
   \bibinfo {pages} {033031} (\bibinfo {year} {2023})}\BibitemShut {NoStop}%
+\bibitem [{\citenamefont {Nasu}\ \emph {et~al.}(2014)\citenamefont {Nasu},
+  \citenamefont {Udagawa},\ and\ \citenamefont
+  {Motome}}]{Nasu-Udagawa-Motome_2014}%
+  \BibitemOpen
+  \bibfield  {author} {\bibinfo {author} {\bibfnamefont {J.}~\bibnamefont
+  {Nasu}}, \bibinfo {author} {\bibfnamefont {M.}~\bibnamefont {Udagawa}},\ and\
+  \bibinfo {author} {\bibfnamefont {Y.}~\bibnamefont {Motome}},\ }\bibfield
+  {title} {\emph {\bibinfo {title} {\bibinfo {title} {Vaporization of Kitaev
+  Spin Liquids}}},\ }\href {https://doi.org/10.1103/PhysRevLett.113.197205}
+  {\bibfield  {journal} {\bibinfo  {journal} {Phys. Rev. Lett.}\ }\textbf
+  {\bibinfo {volume} {113}},\ \bibinfo {pages} {197205} (\bibinfo {year}
+  {2014})}\BibitemShut {NoStop}%
 \bibitem [{\citenamefont {Iblisdir}\ \emph {et~al.}(2009)\citenamefont
   {Iblisdir}, \citenamefont {P\'erez-Garc\'{\i}a}, \citenamefont {Aguado},\
   and\ \citenamefont {Pachos}}]{Iblisdir-Perez-Garcia-Aguado-Pachos_2009}%
