@@ -1413,7 +1413,7 @@ Because the Hamiltonian is now frustration-free and each component squares to on
     {\lr{1 - \kappa^2}^{N_d/2} \lr{1 - \kappa_J^2}^{N_p/2}}
 \end{align}
 where the shorthand notations are $\kappa \equiv \tanh(\beta J_z )$ and $\kappa_J \equiv \tanh(\beta J_{\mrm{eff}})$. In the derivation, we have used the properties $\prod_{p\in\mathfrak{P}} Q_p = \prod_{\anglelr{ij}\in Z}\sigma^z_i\sigma^z_j$ and $\prod_{p}Q_p = \mathds{1}$. The density matrix is therefore
-\begin{align}
+\begin{align}\label{eq:kitaev-DM-finite-T}
     \rho 
     &= 
     \frac{1}{Z} \lr{\prod_{\anglelr{ij}\in Z} e^{\beta J_z \sigma^z_i\sigma^z_j}}
@@ -1502,6 +1502,42 @@ For numerical efficiency, we have to use the following property
     \caption{The trend of thermal entropy per spin with temperature, calculated by definition $S = \ln Z - \beta\pdif{\beta}\ln Z$ directly. The system is the Kitaev model in the toric code limit. The size of the system is fixed to be $N = 10^{10}$. The \textit{melting point} of the free-spinon phase does not depend on the value of $\alpha$. On the other hand, the \textit{melting point} of the static-flux phase changes significantly when we vary $\alpha$. }
     \label{fig:entropy-sep}
 \end{figure}
+
+We can also compute the expectation of the $\mathbb{Z}_2$ flux to see if the first cliff implies the melting of the static-flux phase. According to the density matrix Eq.~\eqref{eq:kitaev-DM-finite-T}, the expectation value can be calculated as follows
+\begin{align}\label{eq:finite-T-flux}
+    \anglelr{W_p} 
+    &= 
+    \Tr\lr{\rho W_p} \nonumber \\
+    &= 
+    \underbrace{
+    \frac{1}{1 + 2\kappa^{N_d}\kappa_J^{N_p/2} + \kappa_J^{N_p}}
+    }_{\equiv C}
+    \Tr\lrm{
+        W_p
+        \prod_{\anglelr{ij} \in Z} \lr{\frac{\mathds{1} + \kappa \sigma^z_i\sigma^z_j}{2}}
+        \prod_{q}\lr{\frac{\mathds{1} + \kappa_J Q_q}{2}} 
+    } \nonumber \\
+    &=
+    \frac{C}{2^{N_d + N_p}}
+    \Tr\lrm{
+    Q_p 
+    \lr{\sigma^z_{l1}\sigma^z_{l2}}
+    \lr{\sigma^z_{r_1}\sigma^z_{r2}}
+        \prod_{\anglelr{ij} \in Z} \lr{\mathds{1} + \kappa \sigma^z_i\sigma^z_j}
+        \prod_{q}\lr{\mathds{1} + \kappa_J Q_q} 
+    } \nonumber \\
+    &= 
+    \frac{
+        \kappa^2\kappa_J 
+        + 
+        2 \kappa^{N_d-2} \kappa_J^{N_p/2 - 1}
+        +
+        \kappa^2 \kappa_J^{N_p - 1}
+    }
+    {
+        1 + 2\kappa^{N_d}\kappa_J^{N_p/2} + \kappa_J^{N_p}
+    }
+\end{align}
 
 
 \appendix
