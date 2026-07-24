@@ -6,7 +6,7 @@
 %Control: page (0) single
 %Control: year (1) truncated
 %Control: production of eprint (0) enabled
-\begin{thebibliography}{12}%
+\begin{thebibliography}{24}%
 \makeatletter
 \providecommand \@ifxundefined [1]{%
  \@ifx{#1\undefined}
@@ -157,6 +157,14 @@
   {https://doi.org/10.1103/PhysRevA.65.032314} {\bibfield  {journal} {\bibinfo
   {journal} {Phys. Rev. A}\ }\textbf {\bibinfo {volume} {65}},\ \bibinfo
   {pages} {032314} (\bibinfo {year} {2002})}\BibitemShut {NoStop}%
+\bibitem [{\citenamefont {Plenio}(2005)}]{Plenio_2005}%
+  \BibitemOpen
+  \bibfield  {author} {\bibinfo {author} {\bibfnamefont {M.~B.}\ \bibnamefont
+  {Plenio}},\ }\bibfield  {title} {\emph {\bibinfo {title} {\bibinfo {title}
+  {Logarithmic Negativity: A Full Entanglement Monotone That is not Convex}}},\
+  }\href {https://doi.org/10.1103/PhysRevLett.95.090503} {\bibfield  {journal}
+  {\bibinfo  {journal} {Phys. Rev. Lett.}\ }\textbf {\bibinfo {volume} {95}},\
+  \bibinfo {pages} {090503} (\bibinfo {year} {2005})}\BibitemShut {NoStop}%
 \bibitem [{\citenamefont {Hofmann}\ \emph {et~al.}(2014)\citenamefont
   {Hofmann}, \citenamefont {Moroder},\ and\ \citenamefont
   {Gühne}}]{Hofmann-Moroder-Guhne_2014}%
@@ -183,6 +191,108 @@
   {https://doi.org/10.1103/PhysRevA.62.052310} {\bibfield  {journal} {\bibinfo
   {journal} {Phys. Rev. A}\ }\textbf {\bibinfo {volume} {62}},\ \bibinfo
   {pages} {052310} (\bibinfo {year} {2000})}\BibitemShut {NoStop}%
+\bibitem [{\citenamefont {Lee}\ and\ \citenamefont
+  {Vidal}(2013)}]{Lee-Vidal_2013}%
+  \BibitemOpen
+  \bibfield  {author} {\bibinfo {author} {\bibfnamefont {Y.~A.}\ \bibnamefont
+  {Lee}}\ and\ \bibinfo {author} {\bibfnamefont {G.}~\bibnamefont {Vidal}},\
+  }\bibfield  {title} {\emph {\bibinfo {title} {\bibinfo {title} {Entanglement
+  negativity and topological order}}},\ }\href
+  {https://doi.org/10.1103/PhysRevA.88.042318} {\bibfield  {journal} {\bibinfo
+  {journal} {Phys. Rev. A}\ }\textbf {\bibinfo {volume} {88}},\ \bibinfo
+  {pages} {042318} (\bibinfo {year} {2013})}\BibitemShut {NoStop}%
+\bibitem [{\citenamefont {Castelnovo}(2013)}]{Castelnovo_2013}%
+  \BibitemOpen
+  \bibfield  {author} {\bibinfo {author} {\bibfnamefont {C.}~\bibnamefont
+  {Castelnovo}},\ }\bibfield  {title} {\emph {\bibinfo {title} {\bibinfo
+  {title} {Negativity and topological order in the toric code}}},\ }\href
+  {https://doi.org/10.1103/PhysRevA.88.042319} {\bibfield  {journal} {\bibinfo
+  {journal} {Phys. Rev. A}\ }\textbf {\bibinfo {volume} {88}},\ \bibinfo
+  {pages} {042319} (\bibinfo {year} {2013})}\BibitemShut {NoStop}%
+\bibitem [{\citenamefont {Lu}\ \emph {et~al.}(2020)\citenamefont {Lu},
+  \citenamefont {Hsieh},\ and\ \citenamefont {Grover}}]{Lu-Hsieh-Grover_2020}%
+  \BibitemOpen
+  \bibfield  {author} {\bibinfo {author} {\bibfnamefont {T.-C.}\ \bibnamefont
+  {Lu}}, \bibinfo {author} {\bibfnamefont {T.~H.}\ \bibnamefont {Hsieh}},\ and\
+  \bibinfo {author} {\bibfnamefont {T.}~\bibnamefont {Grover}},\ }\bibfield
+  {title} {\emph {\bibinfo {title} {\bibinfo {title} {Detecting Topological
+  Order at Finite Temperature Using Entanglement Negativity}}},\ }\href
+  {https://doi.org/10.1103/PhysRevLett.125.116801} {\bibfield  {journal}
+  {\bibinfo  {journal} {Phys. Rev. Lett.}\ }\textbf {\bibinfo {volume} {125}},\
+  \bibinfo {pages} {116801} (\bibinfo {year} {2020})}\BibitemShut {NoStop}%
+\bibitem [{\citenamefont {Wang}\ \emph {et~al.}(2025)\citenamefont {Wang},
+  \citenamefont {Wu},\ and\ \citenamefont {Wang}}]{Wang-Wu-Wang_2025}%
+  \BibitemOpen
+  \bibfield  {author} {\bibinfo {author} {\bibfnamefont {Z.}~\bibnamefont
+  {Wang}}, \bibinfo {author} {\bibfnamefont {Z.}~\bibnamefont {Wu}},\ and\
+  \bibinfo {author} {\bibfnamefont {Z.}~\bibnamefont {Wang}},\ }\bibfield
+  {title} {\emph {\bibinfo {title} {\bibinfo {title} {Intrinsic Mixed-State
+  Topological Order}}},\ }\href {https://doi.org/10.1103/PRXQuantum.6.010314}
+  {\bibfield  {journal} {\bibinfo  {journal} {PRX Quantum}\ }\textbf {\bibinfo
+  {volume} {6}},\ \bibinfo {pages} {010314} (\bibinfo {year}
+  {2025})}\BibitemShut {NoStop}%
+\bibitem [{\citenamefont {Lu}\ and\ \citenamefont
+  {Vijay}(2023)}]{Lu-Vijay_2023}%
+  \BibitemOpen
+  \bibfield  {author} {\bibinfo {author} {\bibfnamefont {T.-C.}\ \bibnamefont
+  {Lu}}\ and\ \bibinfo {author} {\bibfnamefont {S.}~\bibnamefont {Vijay}},\
+  }\bibfield  {title} {\emph {\bibinfo {title} {\bibinfo {title}
+  {Characterizing long-range entanglement in a mixed state through an emergent
+  order on the entangling surface}}},\ }\href
+  {https://doi.org/10.1103/PhysRevResearch.5.033031} {\bibfield  {journal}
+  {\bibinfo  {journal} {Phys. Rev. Res.}\ }\textbf {\bibinfo {volume} {5}},\
+  \bibinfo {pages} {033031} (\bibinfo {year} {2023})}\BibitemShut {NoStop}%
+\bibitem [{\citenamefont {Iblisdir}\ \emph {et~al.}(2009)\citenamefont
+  {Iblisdir}, \citenamefont {P\'erez-Garc\'{\i}a}, \citenamefont {Aguado},\
+  and\ \citenamefont {Pachos}}]{Iblisdir-Perez-Garcia-Aguado-Pachos_2009}%
+  \BibitemOpen
+  \bibfield  {author} {\bibinfo {author} {\bibfnamefont {S.}~\bibnamefont
+  {Iblisdir}}, \bibinfo {author} {\bibfnamefont {D.}~\bibnamefont
+  {P\'erez-Garc\'{\i}a}}, \bibinfo {author} {\bibfnamefont {M.}~\bibnamefont
+  {Aguado}},\ and\ \bibinfo {author} {\bibfnamefont {J.}~\bibnamefont
+  {Pachos}},\ }\bibfield  {title} {\emph {\bibinfo {title} {\bibinfo {title}
+  {Scaling law for topologically ordered systems at finite temperature}}},\
+  }\href {https://doi.org/10.1103/PhysRevB.79.134303} {\bibfield  {journal}
+  {\bibinfo  {journal} {Phys. Rev. B}\ }\textbf {\bibinfo {volume} {79}},\
+  \bibinfo {pages} {134303} (\bibinfo {year} {2009})}\BibitemShut {NoStop}%
+\bibitem [{\citenamefont {Iblisdir}\ \emph {et~al.}(2010)\citenamefont
+  {Iblisdir}, \citenamefont {Pérez-García}, \citenamefont {Aguado},\ and\
+  \citenamefont {Pachos}}]{Iblisdir-Perez-Garcia-Aguado-Pachos_2010}%
+  \BibitemOpen
+  \bibfield  {author} {\bibinfo {author} {\bibfnamefont {S.}~\bibnamefont
+  {Iblisdir}}, \bibinfo {author} {\bibfnamefont {D.}~\bibnamefont
+  {Pérez-García}}, \bibinfo {author} {\bibfnamefont {M.}~\bibnamefont
+  {Aguado}},\ and\ \bibinfo {author} {\bibfnamefont {J.}~\bibnamefont
+  {Pachos}},\ }\bibfield  {title} {\emph {\bibinfo {title} {\bibinfo {title}
+  {Thermal states of anyonic systems}}},\ }\href
+  {https://doi.org/https://doi.org/10.1016/j.nuclphysb.2009.11.009} {\bibfield
+  {journal} {\bibinfo  {journal} {Nuclear Physics B}\ }\textbf {\bibinfo
+  {volume} {829}},\ \bibinfo {pages} {401} (\bibinfo {year}
+  {2010})}\BibitemShut {NoStop}%
+\bibitem [{\citenamefont {Nussinov}\ and\ \citenamefont
+  {Ortiz}(2009)}]{Nussinov-Ortiz_2009}%
+  \BibitemOpen
+  \bibfield  {author} {\bibinfo {author} {\bibfnamefont {Z.}~\bibnamefont
+  {Nussinov}}\ and\ \bibinfo {author} {\bibfnamefont {G.}~\bibnamefont
+  {Ortiz}},\ }\bibfield  {title} {\emph {\bibinfo {title} {\bibinfo {title} {A
+  symmetry principle for topological quantum order}}},\ }\href
+  {https://doi.org/https://doi.org/10.1016/j.aop.2008.11.002} {\bibfield
+  {journal} {\bibinfo  {journal} {Annals of Physics}\ }\textbf {\bibinfo
+  {volume} {324}},\ \bibinfo {pages} {977} (\bibinfo {year}
+  {2009})}\BibitemShut {NoStop}%
+\bibitem [{\citenamefont {Nasu}\ \emph {et~al.}(2015)\citenamefont {Nasu},
+  \citenamefont {Udagawa},\ and\ \citenamefont
+  {Motome}}]{Nasu-Udagawa-Motome_2015}%
+  \BibitemOpen
+  \bibfield  {author} {\bibinfo {author} {\bibfnamefont {J.}~\bibnamefont
+  {Nasu}}, \bibinfo {author} {\bibfnamefont {M.}~\bibnamefont {Udagawa}},\ and\
+  \bibinfo {author} {\bibfnamefont {Y.}~\bibnamefont {Motome}},\ }\bibfield
+  {title} {\emph {\bibinfo {title} {\bibinfo {title} {Thermal fractionalization
+  of quantum spins in a Kitaev model: Temperature-linear specific heat and
+  coherent transport of Majorana fermions}}},\ }\href
+  {https://doi.org/10.1103/PhysRevB.92.115122} {\bibfield  {journal} {\bibinfo
+  {journal} {Phys. Rev. B}\ }\textbf {\bibinfo {volume} {92}},\ \bibinfo
+  {pages} {115122} (\bibinfo {year} {2015})}\BibitemShut {NoStop}%
 \bibitem [{\citenamefont {Kitaev}(2006)}]{Kitaev_2006}%
   \BibitemOpen
   \bibfield  {author} {\bibinfo {author} {\bibfnamefont {A.}~\bibnamefont
@@ -192,4 +302,25 @@
   {journal} {\bibinfo  {journal} {Annals of Physics}\ }\textbf {\bibinfo
   {volume} {321}},\ \bibinfo {pages} {2} (\bibinfo {year} {2006})},\ \bibinfo
   {note} {january Special Issue}\BibitemShut {NoStop}%
+\bibitem [{\citenamefont {Petrova}\ \emph {et~al.}(2014)\citenamefont
+  {Petrova}, \citenamefont {Mellado},\ and\ \citenamefont
+  {Tchernyshyov}}]{Petrova-Mellado-Tchernychyov_2014}%
+  \BibitemOpen
+  \bibfield  {author} {\bibinfo {author} {\bibfnamefont {O.}~\bibnamefont
+  {Petrova}}, \bibinfo {author} {\bibfnamefont {P.}~\bibnamefont {Mellado}},\
+  and\ \bibinfo {author} {\bibfnamefont {O.}~\bibnamefont {Tchernyshyov}},\
+  }\bibfield  {title} {\emph {\bibinfo {title} {\bibinfo {title} {Unpaired
+  Majorana modes on dislocations and string defects in Kitaev's honeycomb
+  model}}},\ }\href {https://doi.org/10.1103/PhysRevB.90.134404} {\bibfield
+  {journal} {\bibinfo  {journal} {Phys. Rev. B}\ }\textbf {\bibinfo {volume}
+  {90}},\ \bibinfo {pages} {134404} (\bibinfo {year} {2014})}\BibitemShut
+  {NoStop}%
+\bibitem [{\citenamefont {Shankar}(2017)}]{Shankar_2017}%
+  \BibitemOpen
+  \bibfield  {author} {\bibinfo {author} {\bibfnamefont {R.}~\bibnamefont
+  {Shankar}},\ }\bibinfo {title} {\bibinfo {title} {Majorana Fermions}},\ in\
+  \href {https://doi.org/10.1017/9781139044349.010} {\emph {\bibinfo
+  {booktitle} {Quantum Field Theory and Condensed Matter: An Introduction}}}\
+  (\bibinfo  {publisher} {Cambridge University Press},\ \bibinfo {year}
+  {2017})\ p.\ \bibinfo {pages} {143–156}\BibitemShut {NoStop}%
 \end{thebibliography}%
