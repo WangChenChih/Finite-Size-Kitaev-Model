@@ -6,7 +6,7 @@
 %Control: page (0) single
 %Control: year (1) truncated
 %Control: production of eprint (0) enabled
-\begin{thebibliography}{24}%
+\begin{thebibliography}{25}%
 \makeatletter
 \providecommand \@ifxundefined [1]{%
  \@ifx{#1\undefined}
@@ -302,6 +302,17 @@
   {https://doi.org/10.1103/PhysRevB.92.115122} {\bibfield  {journal} {\bibinfo
   {journal} {Phys. Rev. B}\ }\textbf {\bibinfo {volume} {92}},\ \bibinfo
   {pages} {115122} (\bibinfo {year} {2015})}\BibitemShut {NoStop}%
+\bibitem [{\citenamefont {Takegami}\ and\ \citenamefont
+  {Morinari}(2025)}]{Takegami-Morinari_2025}%
+  \BibitemOpen
+  \bibfield  {author} {\bibinfo {author} {\bibfnamefont {H.}~\bibnamefont
+  {Takegami}}\ and\ \bibinfo {author} {\bibfnamefont {T.}~\bibnamefont
+  {Morinari}},\ }\bibfield  {title} {\emph {\bibinfo {title} {\bibinfo {title}
+  {Static and dynamical spin correlations in the Kitaev model at finite
+  temperatures via Green's function equation of motion}}},\ }\href
+  {https://doi.org/10.1103/PhysRevB.111.054413} {\bibfield  {journal} {\bibinfo
+   {journal} {Phys. Rev. B}\ }\textbf {\bibinfo {volume} {111}},\ \bibinfo
+  {pages} {054413} (\bibinfo {year} {2025})}\BibitemShut {NoStop}%
 \bibitem [{\citenamefont {Petrova}\ \emph {et~al.}(2014)\citenamefont
   {Petrova}, \citenamefont {Mellado},\ and\ \citenamefont
   {Tchernyshyov}}]{Petrova-Mellado-Tchernychyov_2014}%
