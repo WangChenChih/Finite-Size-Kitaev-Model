@@ -1521,8 +1521,8 @@ We can also compute the expectation of the $\mathbb{Z}_2$ flux to see if the fir
     \frac{C}{2^{N_d + N_p}}
     \Tr\lrm{
     Q_p 
-    \lr{\sigma^z_{l1}\sigma^z_{l2}}
-    \lr{\sigma^z_{r_1}\sigma^z_{r2}}
+    \lr{\sigma^z_{l_1}\sigma^z_{l_2}}
+    \lr{\sigma^z_{r_1}\sigma^z_{r_2}}
         \prod_{\anglelr{ij} \in Z} \lr{\mathds{1} + \kappa \sigma^z_i\sigma^z_j}
         \prod_{q}\lr{\mathds{1} + \kappa_J Q_q} 
     } \nonumber \\
@@ -1538,6 +1538,30 @@ We can also compute the expectation of the $\mathbb{Z}_2$ flux to see if the fir
         1 + 2\kappa^{N_d}\kappa_J^{N_p/2} + \kappa_J^{N_p}
     }
 \end{align}
+
+The spin correlation of two spins in one $z$-dimer can also be evaluated similarly,
+\begin{align}
+    \anglelr{\sigma^z_1 \sigma^z_2} 
+    &=
+    \Tr\lr{\rho \sigma^z_1\sigma^z_2} \nonumber \\
+    &= 
+    \frac{C}{2^{N_d + N_p}}
+    \Tr\lrm{
+    \sigma^z_1\sigma^z_2
+        \prod_{\anglelr{ij} \in Z} \lr{\mathds{1} + \kappa \sigma^z_i\sigma^z_j}
+        \prod_{q}\lr{\mathds{1} + \kappa_J Q_q} 
+    }  \nonumber \\
+    &=
+    \frac{
+        \kappa + 2\kappa^{N_d-1}\kappa_J^{N_p/2} + \kappa \kappa_J^{N_p}
+    }
+    {
+        1 + 2\kappa^{N_d}\kappa_J^{N_p/2} + \kappa_J^{N_p}
+    }
+\end{align}
+
+\section{Green's Function}
+\cite{Takegami-Morinari_2025}
 
 
 \appendix
