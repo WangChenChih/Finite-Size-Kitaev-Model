@@ -280,6 +280,15 @@
   {journal} {\bibinfo  {journal} {Annals of Physics}\ }\textbf {\bibinfo
   {volume} {324}},\ \bibinfo {pages} {977} (\bibinfo {year}
   {2009})}\BibitemShut {NoStop}%
+\bibitem [{\citenamefont {Kitaev}(2006)}]{Kitaev_2006}%
+  \BibitemOpen
+  \bibfield  {author} {\bibinfo {author} {\bibfnamefont {A.}~\bibnamefont
+  {Kitaev}},\ }\bibfield  {title} {\emph {\bibinfo {title} {\bibinfo {title}
+  {Anyons in an exactly solved model and beyond}}},\ }\href
+  {https://doi.org/https://doi.org/10.1016/j.aop.2005.10.005} {\bibfield
+  {journal} {\bibinfo  {journal} {Annals of Physics}\ }\textbf {\bibinfo
+  {volume} {321}},\ \bibinfo {pages} {2} (\bibinfo {year} {2006})},\ \bibinfo
+  {note} {january Special Issue}\BibitemShut {NoStop}%
 \bibitem [{\citenamefont {Nasu}\ \emph {et~al.}(2015)\citenamefont {Nasu},
   \citenamefont {Udagawa},\ and\ \citenamefont
   {Motome}}]{Nasu-Udagawa-Motome_2015}%
@@ -293,15 +302,6 @@
   {https://doi.org/10.1103/PhysRevB.92.115122} {\bibfield  {journal} {\bibinfo
   {journal} {Phys. Rev. B}\ }\textbf {\bibinfo {volume} {92}},\ \bibinfo
   {pages} {115122} (\bibinfo {year} {2015})}\BibitemShut {NoStop}%
-\bibitem [{\citenamefont {Kitaev}(2006)}]{Kitaev_2006}%
-  \BibitemOpen
-  \bibfield  {author} {\bibinfo {author} {\bibfnamefont {A.}~\bibnamefont
-  {Kitaev}},\ }\bibfield  {title} {\emph {\bibinfo {title} {\bibinfo {title}
-  {Anyons in an exactly solved model and beyond}}},\ }\href
-  {https://doi.org/https://doi.org/10.1016/j.aop.2005.10.005} {\bibfield
-  {journal} {\bibinfo  {journal} {Annals of Physics}\ }\textbf {\bibinfo
-  {volume} {321}},\ \bibinfo {pages} {2} (\bibinfo {year} {2006})},\ \bibinfo
-  {note} {january Special Issue}\BibitemShut {NoStop}%
 \bibitem [{\citenamefont {Petrova}\ \emph {et~al.}(2014)\citenamefont
   {Petrova}, \citenamefont {Mellado},\ and\ \citenamefont
   {Tchernyshyov}}]{Petrova-Mellado-Tchernychyov_2014}%
